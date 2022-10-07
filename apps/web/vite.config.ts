@@ -4,14 +4,19 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 
 export default defineConfig({
-  build: {
-    outDir: 'build',
-  },
+  // build: {
+  //   outDir: 'dist/apps/web',
+  // },
   plugins: [
     tsconfigPaths(),
     reactPreset({ removeDevtoolsInProd: true, injectReact: true }),
   ],
+  // server: {
+  //   proxy: {
+  //     "/api": "http://localhost:3333"
+  //   }
+  // },
   esbuild: {
     logOverride: { 'this-is-undefined-in-esm': 'silent' }
-  },
+  }
 });

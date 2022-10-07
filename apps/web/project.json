@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/web/src",
   "tags": [],
@@ -11,23 +11,18 @@
         "configFile": "apps/web/vite.config.ts",
         "port": 3000,
         "host": false,
-        "https": false
-      }
-    },
-    "preview": {
-      "executor": "nx-plugin-vite:preview",
-      "options": {
-        "configFile": "apps/web/vite.config.ts"
+        "https": false,
+        "proxyConfig": "apps/web/proxy.conf.json"
       }
     },
     "build": {
       "executor": "nx-plugin-vite:build",
       "options": {
-        "outDir": "dist",
         "configFile": "apps/web/vite.config.ts",
         "watch": false,
         "write": true,
-        "emitAtRootLevel": false,
+        "emitAtRootLevel": true,
+        "outDir": "dist/apps/web",
         "manifest": true,
         "postcssConfig": "apps/web/postcss.config.js"
       }
