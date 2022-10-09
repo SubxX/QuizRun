@@ -1,4 +1,4 @@
-import { UIButton } from '@web/ui';
+import { UIButton } from '@quizrun/ui';
 import { MdFileCopy } from 'react-icons/md';
 
 const NoQuizes = () => {

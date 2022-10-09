@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import cn from "classnames";
-import { IconType } from "react-icons";
+import { ReactNode } from 'react';
+import cn from 'classnames';
+import { IconType } from 'react-icons';
 
 type Props = {
   className?: string;
@@ -13,9 +13,9 @@ type CardHeaderProps = {
   Icon: IconType;
 };
 
-const Card = ({ className = "", children }: Props) => {
-  let classNames = cn(
-    "bg-blackish rounded-lg border border-card py-4 space-y-4",
+const Card = ({ className = '', children }: Props) => {
+  const classNames = cn(
+    'bg-blackish rounded-lg border border-card py-4 space-y-4',
     className
   );
   return <div className={classNames}>{children}</div>;
@@ -37,8 +37,8 @@ const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
   );
 };
 
-const Content = ({ className = "", children }: Props) => {
-  let classNames = cn("px-4", className);
+const Content = ({ className = '', children }: Props) => {
+  const classNames = cn('px-4', className);
   return <div className={classNames}>{children}</div>;
 };
 

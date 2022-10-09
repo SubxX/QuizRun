@@ -1,4 +1,4 @@
-import { UIInput, UIButton, Card } from '@web/ui';
+import { UIInput, UIButton, Card } from '@quizrun/ui';
 import { IoDocument } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 

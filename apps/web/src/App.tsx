@@ -26,19 +26,3 @@ function App() {
 }
 
 export default App;
-
-// import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-{
-  /* <DropdownMenu.Root>
-<DropdownMenu.Trigger asChild>
-  <button>Open</button>
-</DropdownMenu.Trigger>
-
-<DropdownMenu.Content className="bg-blue-500 text-white shadow-xl p-2 rounded-md w-[200px] dropdown">
-  <DropdownMenu.Item>Test</DropdownMenu.Item>
-  <DropdownMenu.Item>Test 2</DropdownMenu.Item>
-  <DropdownMenu.Item>Test 3</DropdownMenu.Item>
-  <DropdownMenu.Arrow className="fill-blue-500" offset={12} />
-</DropdownMenu.Content>
-</DropdownMenu.Root> */
-}

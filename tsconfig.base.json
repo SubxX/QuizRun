@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@web/*": ["apps/web/src/*"],
-      "@api/*": ["apps/api/src/*"]
+      "@api/*": ["apps/api/src/*"],
+      "@quizrun/ui": ["libs/ui/src/index.ts"],
+      "@web/*": ["apps/web/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

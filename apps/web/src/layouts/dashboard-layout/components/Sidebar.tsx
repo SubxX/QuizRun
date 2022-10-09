@@ -1,5 +1,5 @@
 import useSwitchInstitute from '@web/hooks/useSwitchInstitute';
-import { Card, IconButton, ToolTip } from '@web/ui';
+import { Card, IconButton, ToolTip } from '@quizrun/ui';
 import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';

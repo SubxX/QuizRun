@@ -1,0 +1,8 @@
+@import './animation.css';
+/* Input */
+
+input {
+  @apply bg-transparent block w-full text-sm px-4 py-2 placeholder-white placeholder-opacity-30 outline-none rounded-md;
+  @apply border border-white border-opacity-30;
+  @apply focus:ring focus:ring-[#333] focus:border-[#707070] focus:shadow-md;
+}

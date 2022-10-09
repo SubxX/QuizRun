@@ -1,4 +1,4 @@
-import { Card } from '@web/ui';
+import { Card } from '@quizrun/ui';
 import { MdScience } from 'react-icons/md';
 import { GiMechanicalArm, GiCircuitry } from 'react-icons/gi';
 

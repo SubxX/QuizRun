@@ -1,9 +1,4 @@
 @import './styles/tailwind.css';
-@import './styles/animation.css';
-
-:root {
-  --app-bg: #1c1c1c;
-}
 
 body {
   margin: 0;
@@ -12,26 +7,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--app-bg);
   min-height: 100vh;
+  @apply bg-dark;
 }
 
 /* Common classes */
 .flex-center {
   @apply flex items-center justify-center;
-}
-
-/* Input */
-label {
-  @apply text-white text-opacity-30 mb-1.5 block text-base;
-}
-input {
-  @apply bg-transparent block w-full text-sm px-4 py-2 placeholder-white placeholder-opacity-30 outline-none rounded-md;
-  @apply border border-white border-opacity-30;
-  @apply focus:ring focus:ring-[#333] focus:border-[#707070] focus:shadow-md;
-}
-
-/* Buttons */
-button.ui-button.primary {
-  @apply bg-primary py-2 px-4 rounded-md text-sm text-white truncate text-opacity-80;
 }
