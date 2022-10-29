@@ -22,7 +22,7 @@ const Signin = () => {
           />
 
           <UIInput
-            containerClassname="mt-2"
+            containerClassName="mt-2"
             label="Password"
             type="password"
             placeholder="Enter password"

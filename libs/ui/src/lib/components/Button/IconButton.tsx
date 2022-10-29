@@ -1,49 +1,42 @@
-import { forwardRef, HTMLProps, ReactNode } from "react";
-import cn from "classnames";
-import { ImSpinner9 } from "react-icons/im";
+import { forwardRef, HTMLProps, ReactNode } from 'react';
+import { ImSpinner9 } from 'react-icons/im';
+import { iconButtonStyles } from './styles';
+import { VariantProps } from 'cva';
 
-type Props = HTMLProps<HTMLButtonElement> & {
-  type?: "submit" | "reset" | "button";
-  children: ReactNode;
-  isRounded?: boolean;
-  isLoading?: boolean;
-};
+type Props = HTMLProps<HTMLButtonElement> &
+  VariantProps<typeof iconButtonStyles> & {
+    type?: 'submit' | 'reset' | 'button';
+    children: ReactNode;
+    loading?: boolean;
+  };
 
-const IconButton = forwardRef<HTMLButtonElement, Props>(
-  (
-    {
-      children,
-      type = "button",
-      className,
-      isRounded,
-      isLoading,
-      disabled,
-      ...rest
-    },
-    ref
-  ) => {
-    const isDisabled = disabled || isLoading;
-    const classNames = cn(
-      "bg-white bg-opacity-10 w-10 h-10 flex-center transition-colors text-white text-opacity-50",
-      isDisabled
-        ? "opacity-80 cursor-default pointer-events-none"
-        : "hover:bg-opacity-[.15] hover:text-opacity-80",
-      isRounded ? "rounded-full" : "rounded-lg",
-      className
-    );
+const IconButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
+  const {
+    children,
+    type = 'button',
+    className,
+    rounded,
+    loading,
+    disabled,
+    ...rest
+  } = props;
+  const isDisabled = disabled || loading;
 
-    return (
-      <button
-        {...rest}
-        ref={ref}
-        type={type}
-        className={classNames}
-        disabled={isDisabled}
-      >
-        {isLoading ? <ImSpinner9 className="animate-spin" /> : children}
-      </button>
-    );
-  }
-);
+  return (
+    <button
+      {...rest}
+      ref={ref}
+      type={type}
+      className={iconButtonStyles({
+        class: className,
+        disabled: isDisabled,
+        rounded,
+      })}
+      disabled={isDisabled}
+    >
+      {loading ? <ImSpinner9 className="animate-spin" /> : children}
+    </button>
+  );
+});
 
 export default IconButton;

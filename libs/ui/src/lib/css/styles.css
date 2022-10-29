@@ -1,8 +1,18 @@
 @import './animation.css';
-/* Input */
 
-input {
-  @apply bg-transparent block w-full text-sm px-4 py-2 placeholder-white placeholder-opacity-30 outline-none rounded-md;
-  @apply border border-white border-opacity-30;
-  @apply focus:ring focus:ring-[#333] focus:border-[#707070] focus:shadow-md;
+/* Input autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: unset;
+  box-shadow: unset;
+  transition: background-color 5000s ease-in-out 0s;
+  @apply border-white border-opacity-30;
 }

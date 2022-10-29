@@ -1,11 +1,7 @@
-import { ReactNode } from 'react';
+import { HTMLProps } from 'react';
 import cn from 'classnames';
 import { IconType } from 'react-icons';
-
-type Props = {
-  className?: string;
-  children: ReactNode;
-};
+import { cardStyles } from './styles';
 
 type CardHeaderProps = {
   title: string;
@@ -13,12 +9,16 @@ type CardHeaderProps = {
   Icon: IconType;
 };
 
-const Card = ({ className = '', children }: Props) => {
-  const classNames = cn(
-    'bg-blackish rounded-lg border border-card py-4 space-y-4',
-    className
+const Card = ({
+  className = '',
+  children,
+  ...rest
+}: HTMLProps<HTMLDivElement>) => {
+  return (
+    <div {...rest} className={cardStyles({ class: className })}>
+      {children}
+    </div>
   );
-  return <div className={classNames}>{children}</div>;
 };
 
 const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
@@ -37,9 +37,17 @@ const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
   );
 };
 
-const Content = ({ className = '', children }: Props) => {
+const Content = ({
+  className = '',
+  children,
+  ...rest
+}: HTMLProps<HTMLDivElement>) => {
   const classNames = cn('px-4', className);
-  return <div className={classNames}>{children}</div>;
+  return (
+    <div {...rest} className={classNames}>
+      {children}
+    </div>
+  );
 };
 
 export default Object.assign(Card, { Header, Content });

@@ -1,6 +1,7 @@
 import { UIInput, UIButton, Card } from '@quizrun/ui';
 import { IoDocument } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
 
 const Signup = () => {
   return (
@@ -19,22 +20,25 @@ const Signup = () => {
             placeholder="Enter email"
             id="email"
             autoFocus={true}
+            startAdornment={<MdAlternateEmail className="opacity-50" />}
           />
 
           <UIInput
-            containerClassname="mt-2"
+            containerClassName="mt-2"
             label="Password"
             type="password"
             placeholder="Enter password"
             id="password"
+            startAdornment={<MdLockOutline className="opacity-50" />}
           />
 
           <UIInput
-            containerClassname="mt-2"
+            containerClassName="mt-2"
             label="Confirm Password"
             type="password"
             placeholder="Confirm password"
-            id="password"
+            id="confirm-password"
+            startAdornment={<MdLockOutline className="opacity-50" />}
           />
 
           <UIButton className=" w-full mt-4">Become a member</UIButton>

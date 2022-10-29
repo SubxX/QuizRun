@@ -1,30 +1,42 @@
 import { forwardRef } from 'react';
 import { HTMLProps } from 'react';
-import cn from 'classnames';
+import { buttonStyles } from './styles';
+import { VariantProps } from 'cva';
+import { ImSpinner9 } from 'react-icons/im';
 
-type ButtonProps = HTMLProps<HTMLButtonElement> & {
-  variant?: 'primary';
-  type?: 'submit' | 'reset' | 'button';
-};
+type ButtonProps = HTMLProps<HTMLButtonElement> &
+  VariantProps<typeof buttonStyles> & {
+    type?: 'submit' | 'reset' | 'button';
+    loading?: boolean;
+  };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { variant = 'primary', children, className, type = 'button', ...rest },
+    {
+      children,
+      className,
+      type = 'button',
+      intent,
+      disabled,
+      loading,
+      ...rest
+    },
     ref
   ) => {
-    const classNames = cn(
-      variant === 'primary' &&
-        'bg-primary py-2 px-4 rounded-md text-sm text-white truncate text-opacity-80',
-      className
-    );
+    const isDisabled = disabled || loading;
 
     return (
       <button
         {...rest}
         type={type}
         ref={ref}
-        className={`ui-button ${classNames}`}
+        className={buttonStyles({
+          class: className,
+          intent,
+          disabled: isDisabled,
+        })}
       >
+        {loading && <ImSpinner9 className="animate-spin text-white" />}
         {children}
       </button>
     );
