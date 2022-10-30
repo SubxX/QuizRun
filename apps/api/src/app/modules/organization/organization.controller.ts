@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Get, Param } from '@nestjs/common';
-import { CreateDepartmentDto } from './dto/department.dto';
 import { CreateOrganizationDto } from './dto/organization.dto';
 import { OrganizationService } from './organization.service';
 
@@ -10,11 +9,6 @@ export class OrganizationController {
   @Post('register')
   async register(@Body() createUserPayload: CreateOrganizationDto) {
     return this.organizationService.register(createUserPayload)
-  }
-
-  @Post('add-department')
-  async addDepartment(@Body() createDepartmentPayload: CreateDepartmentDto) {
-    return this.organizationService.createDepartmentForOrganization(createDepartmentPayload)
   }
 
   @Get(':id') // :id refers to organization id

@@ -5,9 +5,11 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { OrganizationModule } from './organization/organization.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { DepartmentModule } from './modules/department/department.module';
+
 
 @Module({
   imports: [
@@ -19,8 +21,11 @@ import { OrganizationModule } from './organization/organization.module';
     UserModule,
     AuthModule,
     OrganizationModule,
+    DepartmentModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService
+  ],
 })
 export class AppModule { }

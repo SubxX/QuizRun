@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
-import { Department } from "./department.schema";
+import { Department } from "../../department/schema/department.schema";
 
 @Schema({ timestamps: true })
 export class Organization {

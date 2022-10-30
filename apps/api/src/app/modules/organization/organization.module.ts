@@ -3,9 +3,9 @@ import { OrganizationService } from './organization.service';
 import { OrganizationController } from './organization.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Organization, OrganizationSchema } from './schema/organization.schema';
-import { Department, DepartmentSchema } from './schema/department.schema';
+import { Department, DepartmentSchema } from '../department/schema/department.schema';
 import { BcryptService } from '@api/app/shared/bcrypt.service';
-import { DepartmentService } from './department.service';
+import { DepartmentService } from '../department/department.service';
 
 @Module({
   imports: [
