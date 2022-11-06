@@ -1,11 +1,13 @@
 import { cva } from 'cva';
 
 export const buttonStyles = cva(
-  `py-2 px-4 rounded-md text-sm text-white truncate transition-colors text-center inline-flex items-center justify-center gap-2`,
+  `py-2 px-4 rounded-md text-sm text-white truncate transition-colors text-center inline-flex items-center justify-center
+   focus:ring-2 focus:outline-none
+  `,
   {
     variants: {
       intent: {
-        primary: 'bg-primary text-opacity-80',
+        primary: 'bg-primary text-opacity-80 ring-primary ring-opacity-50',
       },
       disabled: {
         true: 'bg-opacity-50 text-opacity-50 cursor-not-allowed',

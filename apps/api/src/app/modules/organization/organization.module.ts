@@ -19,6 +19,9 @@ import { DepartmentService } from '../department/department.service';
     OrganizationService,
     DepartmentService,
     BcryptService
+  ],
+  exports: [
+    OrganizationService
   ]
 })
 export class OrganizationModule { }

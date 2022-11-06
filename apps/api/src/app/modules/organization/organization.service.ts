@@ -27,6 +27,10 @@ export class OrganizationService {
     }
   }
 
+  async findByEmail(email: string) {
+    return this.orgModel.findOne({ email })
+  }
+
   getOrganizationByEmail(email: string) {
     return this.orgModel.findOne({ email })
   }
@@ -51,5 +55,23 @@ export class OrganizationService {
     const organization = await this.getOrganizationById(id, 'departments')
     if (!organization) throw new HttpException({ status: HttpStatus.NO_CONTENT, error: 'No Organization found' }, HttpStatus.NO_CONTENT);
     return this._getOrganizationDetails(organization)
+  }
+
+  async addDepartments(organization_id: string, departmenentIds: string | string[]) {
+    const updatedDepartment = await this.orgModel.findOneAndUpdate({ _id: organization_id }, {
+      $addToSet: {
+        departments: Array.isArray(departmenentIds) ? { $each: departmenentIds } : departmenentIds
+      }
+    }, { new: true, populate: 'departments' })
+    return this._getOrganizationDetails(updatedDepartment)
+  }
+
+  async removeDepartments(organization_id: string, departmenentIds: string | string[]) {
+    const updatedDepartment = await this.orgModel.findOneAndUpdate({ _id: organization_id }, {
+      $pull: {
+        departments: Array.isArray(departmenentIds) ? { $in: departmenentIds } : departmenentIds
+      }
+    }, { new: true, populate: 'departments' })
+    return this._getOrganizationDetails(updatedDepartment)
   }
 }

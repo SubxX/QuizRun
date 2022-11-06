@@ -1,4 +1,4 @@
-import { UIInput, UIButton, Card } from '@quizrun/ui';
+import { UIInput, UIButton, Card, UISelect } from '@quizrun/ui';
 import { IoDocument } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
@@ -40,6 +40,8 @@ const Signup = () => {
             id="confirm-password"
             startAdornment={<MdLockOutline className="opacity-50" />}
           />
+
+          <UISelect />
 
           <UIButton className=" w-full mt-4">Become a member</UIButton>
 

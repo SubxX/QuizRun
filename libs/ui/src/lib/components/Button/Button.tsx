@@ -36,7 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           disabled: isDisabled,
         })}
       >
-        {loading && <ImSpinner9 className="animate-spin text-white" />}
+        {loading && <ImSpinner9 className="animate-spin text-white mr-2" />}
         {children}
       </button>
     );
