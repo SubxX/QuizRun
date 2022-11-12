@@ -34,6 +34,7 @@ const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
             css={{
               padding: '$2',
               marginRight: '$3',
+              lineHeight: 0,
             }}
           >
             <Icon size={18} />

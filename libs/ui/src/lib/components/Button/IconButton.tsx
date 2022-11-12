@@ -4,18 +4,17 @@ import { styled } from '../../theme/stitches.config';
 import { ComponentProps } from '@stitches/react';
 
 const StyledIconButton = styled('button', {
-  $$btnBg: '255, 255, 255',
-  background: 'rgba($$btnBg,0.1)',
+  background: 'rgba($white-rgb,0.1)',
   width: 40,
   height: 40,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: 'rgb($$btnBg,0.5)',
+  color: 'rgb($white-rgb,0.5)',
   transition: 'color 0.25s ease',
   '&:not(:disabled):hover': {
-    background: 'rgba($$btnBg,0.15)',
-    color: 'rgba($$btnBg,0.8)',
+    background: 'rgba($white-rgb,0.15)',
+    color: 'rgba($white-rgb,0.8)',
   },
   '&:disabled': {
     opacity: 0.8,

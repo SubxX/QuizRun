@@ -7,6 +7,7 @@ const Adornment = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$1',
+  opacity: 0.5,
 });
 
 export default Adornment;

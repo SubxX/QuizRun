@@ -12,17 +12,16 @@ import { styled } from '../../theme/stitches.config';
 import { UIBox } from '../Box';
 
 export const StyledInput = styled('input', {
-  $$wh: '255, 255, 255',
   display: 'block',
   fontSize: '$sm',
   padding: '$2 $4',
   outline: 'none',
-  border: '1px solid rgba($$wh,0.3)',
+  border: '1px solid rgba($white-rgb,0.3)',
   borderRadius: '$md',
   background: '#6060601f',
   width: '100%',
   '&::placeholder': {
-    color: 'rgba($$wh,0.3)',
+    color: 'rgba($white-rgb,0.3)',
   },
   '&:focus': {
     boxShadow: '0 0 0 3px #333',

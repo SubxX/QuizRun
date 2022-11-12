@@ -1,14 +1,15 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "./components/Sidebar";
+import { Outlet } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import { UIBox } from '@quizrun/ui';
 
 const DashboardLayout = () => {
   return (
-    <div className="h-screen text-white flex overflow-y-auto">
+    <UIBox css={{ height: '100vh', display: 'flex', overflowY: 'auto' }}>
       <Sidebar />
-      <main className="flex-1 min-h-screen">
+      <UIBox as="main" css={{ flex: 1 }}>
         <Outlet />
-      </main>
-    </div>
+      </UIBox>
+    </UIBox>
   );
 };
 

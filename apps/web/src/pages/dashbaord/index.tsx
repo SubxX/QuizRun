@@ -1,17 +1,24 @@
-import { UICard } from '@quizrun/ui';
+import { UICard, UIGridBox, UIBox, UIText } from '@quizrun/ui';
 import { MdScience } from 'react-icons/md';
 import { GiMechanicalArm, GiCircuitry } from 'react-icons/gi';
 
 const Dashboard = () => {
   return (
-    <div className="mx-auto p-4 max-w-4xl h-full">
-      <header className="mb-8">
-        <h4 className="text-lg font-medium truncate">
+    <UIBox
+      css={{
+        margin: '0 auto',
+        padding: '$4',
+        maxWidth: '896px',
+        height: '100%',
+      }}
+    >
+      <UIBox as="header" css={{ marginBottom: '$8' }}>
+        <UIText as="h4" fontSize="lg" weight="medium" className="truncate">
           JIS Institute of Engineering
-        </h4>
-      </header>
+        </UIText>
+      </UIBox>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <UIGridBox columns={{ '@sm': 2, '@lg': 3 }} gap="3">
         <UICard>
           <UICard.Header
             Icon={MdScience}
@@ -35,8 +42,8 @@ const Dashboard = () => {
             subtitle="It is an engineering discipline concerned with the study, design, and application of electronic devices."
           />
         </UICard>
-      </div>
-    </div>
+      </UIGridBox>
+    </UIBox>
   );
 };
 

@@ -1,5 +1,34 @@
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
-import { ReactElement } from "react";
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+import { ReactElement } from 'react';
+import {
+  slideDownAndFade,
+  slideLeftAndFade,
+  slideRightAndFade,
+  slideUpAndFade,
+  fadeOut,
+} from '../../animations/animations';
+import { styled } from '../../theme/stitches.config';
+
+const TooltipContent = styled(TooltipPrimitive.Content, {
+  borderRadius: '$md',
+  padding: '$2 $4',
+  fontSize: '$sm',
+  color: '$white',
+  backgroundColor: '#000',
+  userSelect: 'none',
+  animationDuration: '250ms',
+  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  willChange: 'transform, opacity',
+  '&[data-state="delayed-open"]': {
+    '&[data-side="top"]': { animationName: slideDownAndFade },
+    '&[data-side="right"]': { animationName: slideLeftAndFade },
+    '&[data-side="bottom"]': { animationName: slideUpAndFade },
+    '&[data-side="left"]': { animationName: slideRightAndFade },
+  },
+  '&[data-state="closed"]': {
+    animationName: fadeOut,
+  },
+});
 
 type Props = {
   defaultOpen?: boolean;
@@ -8,19 +37,19 @@ type Props = {
   children: ReactElement;
   sideOffset?: number;
   title?: string;
-  align?: "start" | "center" | "end";
-  side?: "right" | "top" | "bottom" | "left";
+  align?: 'start' | 'center' | 'end';
+  side?: 'right' | 'top' | 'bottom' | 'left';
 };
 
 const ToolTip = ({
   defaultOpen,
-  delayDuration,
+  delayDuration = 0.25,
   disableHoverableContent,
   children,
   sideOffset = 8,
   title,
-  align = "start",
-  side = "right",
+  align = 'start',
+  side = 'right',
 }: Props) => {
   return (
     <TooltipPrimitive.Root
@@ -30,17 +59,10 @@ const ToolTip = ({
     >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Portal>
-        <TooltipPrimitive.Content
-          align={align}
-          side={side}
-          sideOffset={sideOffset}
-          className="tooltip-content"
-        >
-          <div className="bg-black px-4 py-2 rounded-md text-sm text-white text-opacity-80">
-            {title}
-          </div>
+        <TooltipContent align={align} side={side} sideOffset={sideOffset}>
+          {title}
           <TooltipPrimitive.Arrow width={11} height={5} />
-        </TooltipPrimitive.Content>
+        </TooltipContent>
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
   );

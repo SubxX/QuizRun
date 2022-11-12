@@ -1,6 +1,6 @@
 import { createStitches } from '@stitches/react';
 
-export const { theme, styled, globalCss } = createStitches({
+export const { theme, styled, globalCss, keyframes } = createStitches({
   theme: {
     colors: {
       dark: '#1C1C1C',
@@ -8,13 +8,18 @@ export const { theme, styled, globalCss } = createStitches({
       blackish: '#232323',
       card: '#282828',
       'custom-white': 'EDEDED',
-      white: '#fff'
+      white: '#fff',
+      'white-rgb': '255,255,255'
     },
     space: {
       1: '4px',
       2: '8px',
       3: '12px',
-      4: '16px'
+      4: '16px',
+      5: '20px',
+      6: '24px',
+      7: '28px',
+      8: '32px'
     },
     fontSizes: {
       xs: '12px',
@@ -40,13 +45,22 @@ export const { theme, styled, globalCss } = createStitches({
     borderWidths: {},
     borderStyles: {},
     radii: {
+      md: '6px',
       lg: "8px",
+      xl: '12px',
+      '2xl': '16px',
       full: "9999999px",
-      md: '6px'
     },
     shadows: {},
     zIndices: {},
     transitions: {},
+  },
+  media: {
+    sm: '(min-width: 640px)',
+    md: '(min-width: 768px)',
+    lg: '(min-width: 1023px)',
+    xl: '(min-width: 1280px)',
+    "2xl": '(min-width: 1536px)',
   },
   utils: {
     spaceY: (value: string) => ({
@@ -63,13 +77,25 @@ export const { theme, styled, globalCss } = createStitches({
 })
 
 export const globalStyles = globalCss({
-  '*': { margin: 0, padding: 0, boxSizing: 'border-box' },
-  html: {
-    background: '$dark'
+  '*, *::after, *::before': {
+    margin: 0,
+    padding: 0,
+    boxSizing: 'border-box'
   },
-  body: {
+  html: {
+    background: '$dark',
     fontFamily: '$untitled',
     color: '$white',
+    "lineHeight": 1.5,
+    "-webkit-text-size-adjust": "100%",
+    "-moz-tab-size": 4,
+    "tab-size": 4,
+    "font-feature-settings": 5,
+  },
+  body: {
+    fontFamily: 'inherit',
+    lineHeight: 'inherit',
+    color: 'inherit',
     fontSize: '$base',
     '-webkit-font-smoothing': "antialiased",
     "-moz-osx-font-smoothing": "grayscale",
@@ -78,5 +104,30 @@ export const globalStyles = globalCss({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  truncate: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  },
+  a: {
+    color: "inherit",
+    textDecoration: "inherit"
+  },
+  'ul, ol': {
+    listStyle: 'none',
+  },
+  button: {
+    border: 'none',
+    '&:hover': {
+      outline: 'none',
+    }
+  },
+  'button, input, optgroup, select, textarea': {
+    fontFamily: 'inherit',
+    fontSize: '100%',
+    fontWeight: 'inherit',
+    lineHeight: 'inherit',
+    color: 'inherit'
   }
 });

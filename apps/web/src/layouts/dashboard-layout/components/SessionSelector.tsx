@@ -1,31 +1,41 @@
-import classNames from "classnames";
-import { MouseEventHandler } from "react";
+import { styled } from '@quizrun/ui';
 
-interface Props {
-  name: string;
-  isActive: boolean;
-  setactive: MouseEventHandler<HTMLDivElement>;
-}
+const StyledSessionSelector = styled('button', {
+  height: '48px',
+  width: '48px',
+  position: 'relative',
+  cursor: 'pointer',
+  background: 'rgba($white-rgb,0.1)',
+  borderRadius: '$full',
 
-const SessionSelector = ({ name, isActive, setactive }: Props) => {
-  var rootClassNames = classNames(
-    "tracking-wide h-12 flex items-center justify-center relative group",
-    "rounded-full hover:rounded-xl",
-    isActive
-      ? "rounded-xl cursor-default bg-primary"
-      : "cursor-pointer bg-white bg-opacity-10"
-  );
-  const lineClassNames = classNames(
-    "absolute top-2/4 transform -translate-y-2/4 bg-white rounded-r-2xl w-1 transition-all",
-    isActive ? "-left-2 h-2/3" : "h-2/5 -left-3 group-hover:-left-2"
-  );
+  '&::after': {
+    content: '',
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: '$white',
+    borderRadius: '0 $2xl $2xl 0',
+    width: '0',
+    transition: '0.25s ease width',
+    height: '80%',
+    left: '-$2',
+  },
+  '&[data-active="true"]': {
+    borderRadius: '$2xl',
+    cursor: 'default',
+    background: '$primary',
+    '&::after': {
+      width: '4px',
+    },
+  },
+  '&:hover': {
+    background: '$primary',
+    borderRadius: '$2xl',
+  },
+  '&:disabled': {
+    cursor: 'not-allowed',
+    opacity: 0.8,
+  },
+});
 
-  return (
-    <div className={rootClassNames} onClick={setactive}>
-      <span>{name}</span>
-      <span className={lineClassNames} />
-    </div>
-  );
-};
-
-export default SessionSelector;
+export default StyledSessionSelector;

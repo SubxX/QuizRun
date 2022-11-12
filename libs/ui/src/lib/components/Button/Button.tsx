@@ -15,6 +15,9 @@ const StyledButton = styled('button', {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+  '&:focus': {
+    boxShadow: '0 0 0 3px #333',
+  },
   variants: {
     color: {
       primary: {

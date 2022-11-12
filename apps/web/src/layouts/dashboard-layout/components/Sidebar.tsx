@@ -1,5 +1,5 @@
 import useSwitchInstitute from '@web/hooks/useSwitchInstitute';
-import { UICard, IconButton, ToolTip } from '@quizrun/ui';
+import { UICard, IconButton, ToolTip, UIBox, UIText } from '@quizrun/ui';
 import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
@@ -7,59 +7,69 @@ import { BiLogOutCircle } from 'react-icons/bi';
 const Sidebar = () => {
   const { currentInstitute, changeInstitute } = useSwitchInstitute();
   return (
-    <aside className="w-16 h-screen sticky top-0 left-0">
-      <UICard
+    <UIBox
+      as="aside"
+      css={{
+        width: '64px',
+        height: '100%',
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        background: '$card',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      {/* Sidebar Logo */}
+      <UIBox
         css={{
-          paddingTop: 0,
-          height: '100%',
-          border: 'none',
-          rounded: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
+          height: '64px',
+          textAlign: 'center',
+          width: '100%',
+          background: 'rgba($white-rgb,0.2)',
         }}
+        className="flex-center"
       >
-        <div className="bg-white bg-opacity-10 h-16 text-center flex-center w-full">
-          <span className="text-xl tracking-widest">QR</span>
-        </div>
+        <UIText fontSize="xl">QR</UIText>
+      </UIBox>
 
-        <div className="p-2 mt-3 flex-1 w-full">
-          <ul className="space-y-3">
-            <li>
-              <SessionSelector
-                name="JIS"
-                isActive={currentInstitute === '1'}
-                setactive={changeInstitute.bind(this, '1')}
-              />
-            </li>
-            <li>
-              <SessionSelector
-                name="IIT"
-                isActive={currentInstitute === '2'}
-                setactive={changeInstitute.bind(this, '2')}
-              />
-            </li>
+      {/* Sidebar Fevourites */}
+      <UIBox css={{ padding: '$2', marginTop: '$3', flex: 1, width: '100%' }}>
+        <UIBox as="ul" css={{ spaceY: '$3' }}>
+          <li>
+            <SessionSelector
+              data-active={currentInstitute === '1'}
+              onClick={changeInstitute.bind(this, '1')}
+            >
+              JIS
+            </SessionSelector>
+          </li>
+          <li>
+            <SessionSelector
+              data-active={currentInstitute === '2'}
+              onClick={changeInstitute.bind(this, '2')}
+            >
+              IIT
+            </SessionSelector>
+          </li>
+        </UIBox>
+      </UIBox>
 
-            {/* <li>
-              <AddSessionButton />
-            </li> */}
-          </ul>
-        </div>
-
-        <div className="space-y-3">
-          <ToolTip title="Settings">
-            <IconButton disabled>
-              <AiFillSetting size={20} />
-            </IconButton>
-          </ToolTip>
-          <ToolTip title="Logout">
-            <IconButton>
-              <BiLogOutCircle size={20} />
-            </IconButton>
-          </ToolTip>
-        </div>
-      </UICard>
-    </aside>
+      {/* Sidebar botttom actions */}
+      <UIBox css={{ spaceY: '$3', paddingBottom: '$4' }}>
+        <ToolTip title="Settings">
+          <IconButton disabled>
+            <AiFillSetting size={20} />
+          </IconButton>
+        </ToolTip>
+        <ToolTip title="Logout">
+          <IconButton>
+            <BiLogOutCircle size={20} />
+          </IconButton>
+        </ToolTip>
+      </UIBox>
+    </UIBox>
   );
 };
 

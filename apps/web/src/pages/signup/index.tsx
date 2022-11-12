@@ -1,4 +1,4 @@
-import { UIInput, UIButton, UICard, UISeparator } from '@quizrun/ui';
+import { UIInput, UIButton, UICard, UISeparator, UIText } from '@quizrun/ui';
 import { IoDocument } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
@@ -44,12 +44,20 @@ const Signup = () => {
 
         <UISeparator css={{ marginTop: '$4' }} />
 
-        <span className="block text-center text-xs mt-3 text-white text-opacity-30">
+        <UIText
+          as="span"
+          fontSize="xs"
+          css={{
+            color: 'rgba($white-rgb,0.4)',
+            textAlign: 'center',
+            display: 'block',
+          }}
+        >
           Already have an account ?{' '}
-          <Link to="/signin" className="text-primary cursor-pointer">
+          <UIText as={Link} to="/signin" color="primary">
             Login
-          </Link>
-        </span>
+          </UIText>
+        </UIText>
       </UICard.Content>
     </UICard>
   );

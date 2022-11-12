@@ -1,10 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
+import { UIBox } from '@quizrun/ui';
 
 const AuthLayout = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center text-white p-4">
+    <UIBox css={{ minHeight: '100vh', padding: '$4' }} className="flex-center">
       <Outlet />
-    </div>
+    </UIBox>
   );
 };
 
