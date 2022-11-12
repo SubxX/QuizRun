@@ -6,29 +6,38 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import { inputStyles } from './styles';
 import { UILabel } from '../';
 import Adornment from './Adornment';
+import { styled } from '../../theme/stitches.config';
+import { UIBox } from '../Box';
+
+export const StyledInput = styled('input', {
+  $$wh: '255, 255, 255',
+  display: 'block',
+  fontSize: '$sm',
+  padding: '$2 $4',
+  outline: 'none',
+  border: '1px solid rgba($$wh,0.3)',
+  borderRadius: '$md',
+  background: '#6060601f',
+  width: '100%',
+  '&::placeholder': {
+    color: 'rgba($$wh,0.3)',
+  },
+  '&:focus': {
+    boxShadow: '0 0 0 3px #333',
+    borderColor: '#707070',
+  },
+});
 
 type Props = HTMLProps<HTMLInputElement> & {
   label?: string;
-  labelClassName?: string;
-  containerClassName?: string;
   endAdornment?: ReactNode;
   startAdornment?: ReactNode;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const {
-    id,
-    containerClassName,
-    label,
-    labelClassName,
-    className,
-    startAdornment,
-    endAdornment,
-    ...rest
-  } = props;
+  const { id, label, className, startAdornment, endAdornment, ...rest } = props;
 
   const _ref = useRef<HTMLInputElement>(null);
   const inputRef = (ref ?? _ref) as MutableRefObject<HTMLInputElement>;
@@ -47,30 +56,22 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
   }, [endAdornmentRef]);
 
   return (
-    <div className={`${containerClassName ?? ''}`}>
-      {Boolean(label) && (
-        <UILabel htmlFor={id} className={labelClassName}>
-          {label}
-        </UILabel>
-      )}
-      <div className="relative">
+    <UIBox>
+      {Boolean(label) && <UILabel htmlFor={id}>{label}</UILabel>}
+      <UIBox css={{ position: 'relative' }}>
         {Boolean(startAdornment) && (
-          <Adornment ref={startAdornmentRef} intent="start">
+          <Adornment ref={startAdornmentRef} css={{ left: '$2' }}>
             {startAdornment}
           </Adornment>
         )}
-        <input
-          {...rest}
-          ref={inputRef}
-          className={inputStyles({ class: className })}
-        />
+        <StyledInput {...rest} ref={inputRef} />
         {Boolean(endAdornment) && (
-          <Adornment ref={endAdornmentRef} intent="end">
+          <Adornment ref={endAdornmentRef} css={{ right: '$2' }}>
             {endAdornment}
           </Adornment>
         )}
-      </div>
-    </div>
+      </UIBox>
+    </UIBox>
   );
 });
 

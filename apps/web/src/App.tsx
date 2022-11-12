@@ -3,8 +3,10 @@ import { DashboardLayout, AuthLayout } from './layouts';
 import Dashboard from './pages/dashbaord';
 import Signin from './pages/signin';
 import Signup from './pages/signup';
+import { globalStyles } from '@quizrun/ui';
 
 function App() {
+  globalStyles();
   return (
     <BrowserRouter>
       <Routes>

@@ -1,19 +1,12 @@
-import { forwardRef, HTMLProps } from 'react';
-import { VariantProps } from 'cva';
-import { adornmentStyles } from './styles';
+import { styled } from '../../theme/stitches.config';
 
-interface AdornmentProps
-  extends HTMLProps<HTMLDivElement>,
-    VariantProps<typeof adornmentStyles> {}
-
-const Adornment = forwardRef<HTMLDivElement, AdornmentProps>(
-  ({ children, className, intent }, ref) => {
-    return (
-      <div className={adornmentStyles({ class: className, intent })} ref={ref}>
-        {children}
-      </div>
-    );
-  }
-);
+const Adornment = styled('div', {
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$1',
+});
 
 export default Adornment;

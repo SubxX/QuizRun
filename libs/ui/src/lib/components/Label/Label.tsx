@@ -1,14 +1,11 @@
-import { HTMLProps } from 'react';
-import { labelStyles } from './styles';
+import { styled } from '../../theme/stitches.config';
 
-type Props = HTMLProps<HTMLLabelElement>;
-
-const Label = ({ children, className, ...rest }: Props) => {
-  return (
-    <label className={labelStyles({ class: className })} {...rest}>
-      {children}
-    </label>
-  );
-};
+const Label = styled('label', {
+  color: '$white',
+  opacity: 0.3,
+  marginBottom: '$1',
+  fontSize: '$sm',
+  display: 'inline-block',
+});
 
 export default Label;

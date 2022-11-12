@@ -1,5 +1,5 @@
 import useSwitchInstitute from '@web/hooks/useSwitchInstitute';
-import { Card, IconButton, ToolTip } from '@quizrun/ui';
+import { UICard, IconButton, ToolTip } from '@quizrun/ui';
 import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
@@ -8,7 +8,17 @@ const Sidebar = () => {
   const { currentInstitute, changeInstitute } = useSwitchInstitute();
   return (
     <aside className="w-16 h-screen sticky top-0 left-0">
-      <Card className="h-full border-none !rounded-none pt-0 flex flex-col items-center pb-2">
+      <UICard
+        css={{
+          paddingTop: 0,
+          height: '100%',
+          border: 'none',
+          rounded: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }}
+      >
         <div className="bg-white bg-opacity-10 h-16 text-center flex-center w-full">
           <span className="text-xl tracking-widest">QR</span>
         </div>
@@ -38,7 +48,7 @@ const Sidebar = () => {
 
         <div className="space-y-3">
           <ToolTip title="Settings">
-            <IconButton>
+            <IconButton disabled>
               <AiFillSetting size={20} />
             </IconButton>
           </ToolTip>
@@ -48,7 +58,7 @@ const Sidebar = () => {
             </IconButton>
           </ToolTip>
         </div>
-      </Card>
+      </UICard>
     </aside>
   );
 };

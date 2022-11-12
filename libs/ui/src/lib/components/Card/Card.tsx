@@ -1,53 +1,53 @@
-import { HTMLProps } from 'react';
-import cn from 'classnames';
 import { IconType } from 'react-icons';
-import { cardStyles } from './styles';
+import { styled } from '../../theme/stitches.config';
+import { UIBox } from '../Box';
+import { UIText } from '../Text';
+
+const Card = styled('div', {
+  borderRadius: '$lg',
+  background: '$blackish',
+  border: '1px solid $card',
+  paddingTop: '$4',
+  paddingBottom: '$4',
+  spaceY: '$4',
+});
 
 type CardHeaderProps = {
   title: string;
   subtitle: string;
   Icon: IconType;
 };
-
-const Card = ({
-  className = '',
-  children,
-  ...rest
-}: HTMLProps<HTMLDivElement>) => {
-  return (
-    <div {...rest} className={cardStyles({ class: className })}>
-      {children}
-    </div>
-  );
-};
-
 const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
   return (
-    <div className="px-4">
-      <div className="flex items-center text-xl">
+    <UIBox css={{ padding: '0 $4' }}>
+      <UIBox
+        css={{
+          display: 'flex',
+          alignItems: 'center',
+          fontSize: '$xl',
+        }}
+      >
         {Icon && (
-          <div className="bg-primary rounded-full p-2 mr-3">
+          <UIBox
+            rounded="full"
+            background="primary"
+            css={{
+              padding: '$2',
+              marginRight: '$3',
+            }}
+          >
             <Icon size={18} />
-          </div>
+          </UIBox>
         )}
         <span>{title}</span>
-      </div>
-      <p className="mt-2 text-white text-opacity-50 text-sm">{subtitle}</p>
-    </div>
+      </UIBox>
+      <UIText fontSize="sm" css={{ marginTop: '$2', opacity: 0.5 }}>
+        {subtitle}
+      </UIText>
+    </UIBox>
   );
 };
 
-const Content = ({
-  className = '',
-  children,
-  ...rest
-}: HTMLProps<HTMLDivElement>) => {
-  const classNames = cn('px-4', className);
-  return (
-    <div {...rest} className={classNames}>
-      {children}
-    </div>
-  );
-};
+const Content = styled(UIBox, { padding: '0 $4' });
 
 export default Object.assign(Card, { Header, Content });
