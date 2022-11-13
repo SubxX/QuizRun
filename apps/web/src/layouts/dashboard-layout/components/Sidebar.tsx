@@ -1,11 +1,20 @@
 import useSwitchInstitute from '@web/hooks/useSwitchInstitute';
-import { UICard, IconButton, ToolTip, UIBox, UIText } from '@quizrun/ui';
+import {
+  UIIconButton,
+  ToolTip,
+  UIBox,
+  UIText,
+  UIAlertDialog,
+} from '@quizrun/ui';
 import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const { currentInstitute, changeInstitute } = useSwitchInstitute();
+  const navigate = useNavigate();
+
   return (
     <UIBox
       as="aside"
@@ -59,14 +68,21 @@ const Sidebar = () => {
       {/* Sidebar botttom actions */}
       <UIBox css={{ spaceY: '$3', paddingBottom: '$4' }}>
         <ToolTip title="Settings">
-          <IconButton disabled>
+          <UIIconButton disabled>
             <AiFillSetting size={20} />
-          </IconButton>
+          </UIIconButton>
         </ToolTip>
         <ToolTip title="Logout">
-          <IconButton>
-            <BiLogOutCircle size={20} />
-          </IconButton>
+          <div>
+            <UIAlertDialog
+              subtitle="You are about to logout from this this platform"
+              onResolve={() => navigate('/auth/signup')}
+            >
+              <UIIconButton>
+                <BiLogOutCircle size={20} />
+              </UIIconButton>
+            </UIAlertDialog>
+          </div>
         </ToolTip>
       </UIBox>
     </UIBox>

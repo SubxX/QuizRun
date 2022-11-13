@@ -12,7 +12,8 @@ const StyledIconButton = styled('button', {
   justifyContent: 'center',
   color: 'rgb($white-rgb,0.5)',
   transition: 'color 0.25s ease',
-  '&:not(:disabled):hover': {
+  cursor: 'pointer',
+  '&:not(:disabled):hover,&:not(:disabled):focus': {
     background: 'rgba($white-rgb,0.15)',
     color: 'rgba($white-rgb,0.8)',
   },

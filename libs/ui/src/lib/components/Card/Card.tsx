@@ -10,12 +10,23 @@ const Card = styled('div', {
   paddingTop: '$4',
   paddingBottom: '$4',
   spaceY: '$4',
+  variants: {
+    hover: {
+      true: {
+        transition: '0.25s ease transform,box-shadow',
+        '&:hover': {
+          transform: 'scale(1.015)',
+          boxShadow: '0px 0px 33px 0px rgba(0,0,0,0.25)',
+        },
+      },
+    },
+  },
 });
 
 type CardHeaderProps = {
   title: string;
   subtitle: string;
-  Icon: IconType;
+  Icon?: IconType;
 };
 const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
   return (

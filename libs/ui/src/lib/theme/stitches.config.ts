@@ -7,9 +7,11 @@ export const { theme, styled, globalCss, keyframes } = createStitches({
       primary: '#34b27b',
       blackish: '#232323',
       card: '#282828',
-      'custom-white': 'EDEDED',
+      'custom-white': '#EDEDED',
+      'white-muted': '#A0A0A0',
+      'light-white': '#707070',
       white: '#fff',
-      'white-rgb': '255,255,255'
+      'white-rgb': '255,255,255',
     },
     space: {
       1: '4px',
@@ -119,7 +121,7 @@ export const globalStyles = globalCss({
   },
   button: {
     border: 'none',
-    '&:hover': {
+    '&:hover,&:focus': {
       outline: 'none',
     }
   },

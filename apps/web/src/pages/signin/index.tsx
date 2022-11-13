@@ -43,7 +43,7 @@ const Signin = () => {
           }}
         >
           Dont have an account ?{' '}
-          <UIText as={Link} to="/signup" color="primary">
+          <UIText as={Link} to="/auth/signup" color="primary">
             Signup
           </UIText>
         </UIText>

@@ -4,9 +4,9 @@ import { UIBox } from '@quizrun/ui';
 
 const DashboardLayout = () => {
   return (
-    <UIBox css={{ height: '100vh', display: 'flex', overflowY: 'auto' }}>
+    <UIBox css={{ height: '100vh', display: 'flex' }}>
       <Sidebar />
-      <UIBox as="main" css={{ flex: 1 }}>
+      <UIBox as="main" css={{ flex: 1, overflow: 'auto' }}>
         <Outlet />
       </UIBox>
     </UIBox>

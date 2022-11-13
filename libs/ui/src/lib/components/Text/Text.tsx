@@ -6,11 +6,17 @@ const Text = styled('p', {
       white: {
         color: '$white',
       },
-      custom_white: {
+      'custom-white': {
         color: '$custom-white',
       },
       primary: {
         color: '$primary',
+      },
+      'white-muted': {
+        color: '$white-muted',
+      },
+      'light-white': {
+        color: '$light-white',
       },
     },
     fontSize: {

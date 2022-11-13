@@ -54,7 +54,7 @@ const Signup = () => {
           }}
         >
           Already have an account ?{' '}
-          <UIText as={Link} to="/signin" color="primary">
+          <UIText as={Link} to="/auth/signin" color="primary">
             Login
           </UIText>
         </UIText>

@@ -15,18 +15,27 @@ const StyledButton = styled('button', {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
+  cursor: 'pointer',
   '&:focus': {
     boxShadow: '0 0 0 3px #333',
+  },
+  '&:disabled': {
+    opacity: 0.5,
+    cursor: 'not-allowed',
   },
   variants: {
     color: {
       primary: {
         backgroundColor: '$primary',
         color: '$white',
-        '&:disabled': {
-          opacity: 0.5,
-          cursor: 'not-allowed',
-        },
+      },
+      danger: {
+        backgroundColor: 'rgba(205, 43, 48, 0.1)',
+        color: 'rgb(205, 43, 49)',
+      },
+      light: {
+        backgroundColor: 'rgba($white-rgb,0.1)',
+        color: '$white',
       },
     },
     fullWidth: {
