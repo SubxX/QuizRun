@@ -1,0 +1,33 @@
+_id: req_7e78828f36e94b01bd6ea2e98915c768
+type: Request
+parentId: fld_34e00105b01040f99413ae52ec6c2e83
+modified: 1668937087474
+created: 1667047679521
+url: "{{base_url}}organization/register"
+name: Register
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name":"Jis Engineering",
+    	"email":"jis@gmail.com",
+    	"password":"tomrider",
+    	"information":"This is jis college information",
+    	"website":"www.jis.com",
+    	"address":"Kalyani"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1667719386030
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

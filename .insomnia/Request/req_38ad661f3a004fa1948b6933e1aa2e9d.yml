@@ -1,0 +1,33 @@
+_id: req_38ad661f3a004fa1948b6933e1aa2e9d
+type: Request
+parentId: fld_34e00105b01040f99413ae52ec6c2e83
+modified: 1668937090063
+created: 1667719429937
+url: "{{base_url}}organization/635d22e239ccc5f894837d17/remove-department"
+name: Remove Department
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"departments":[
+    		"635e92811d66b20a2d1fdff8"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  prefix: ""
+  token: "{{org_token}}"
+metaSortKey: -1667719357721.875
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

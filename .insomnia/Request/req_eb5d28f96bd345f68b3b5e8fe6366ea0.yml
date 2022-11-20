@@ -1,0 +1,21 @@
+_id: req_eb5d28f96bd345f68b3b5e8fe6366ea0
+type: Request
+parentId: fld_85a497ba4d0a4279a3604877749b569e
+modified: 1667142145312
+created: 1667142063014
+url: "{{ base_url }}department/seed"
+name: Seed
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1667142063014
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

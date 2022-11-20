@@ -1,0 +1,29 @@
+_id: req_5f825f38070d4005b532d8644735a145
+type: Request
+parentId: fld_3b98f8aab51a48d1950b6ca94f9fb675
+modified: 1668936888083
+created: 1667734923690
+url: "{{base_url}}auth/login-department"
+name: Organization Login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email":"jis@gmail.com",
+    	"password":"tomrider"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1667733758171.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
