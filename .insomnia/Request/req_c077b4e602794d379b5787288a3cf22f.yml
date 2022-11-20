@@ -1,0 +1,29 @@
+_id: req_c077b4e602794d379b5787288a3cf22f
+type: Request
+parentId: fld_3b98f8aab51a48d1950b6ca94f9fb675
+modified: 1668936934176
+created: 1667733780603
+url: "{{base_url}}auth/login"
+name: Login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email":"subham@gmail.com",
+    	"password":"tomrider"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1667733780603
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

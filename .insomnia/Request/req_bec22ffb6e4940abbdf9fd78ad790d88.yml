@@ -1,0 +1,35 @@
+_id: req_bec22ffb6e4940abbdf9fd78ad790d88
+type: Request
+parentId: fld_34e00105b01040f99413ae52ec6c2e83
+modified: 1668936877303
+created: 1667719385980
+url: "{{base_url}}organization/635d22e239ccc5f894837d17/add-department"
+name: Add Department
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"departments":[
+    		"635e92811d66b20a2d1fdff8",
+    		"635e92811d66b20a2d1fdff7",
+     		"635e92811d66b20a2d1fdff9"
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{{org_token}}"
+  prefix: ""
+metaSortKey: -1667719385980
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
