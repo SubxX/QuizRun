@@ -47,14 +47,14 @@ const AlertDialogContent = styled(RadixAlertDialog.Content, {
 const AlertDialogTitle = styled(RadixAlertDialog.Title, {
   margin: 0,
   color: '$white',
-  fontSize: '$xl',
+  fontSize: '$lg',
   fontWeight: '$bold',
 });
 
 const AlertDialogDescription = styled(RadixAlertDialog.Description, {
   margin: '$2 0 $4 0',
   color: '$white-muted',
-  fontSize: '$base',
+  fontSize: '$sm',
 });
 
 type Props = {

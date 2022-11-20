@@ -1,22 +1,13 @@
-import { UIBox, UIGridBox, UIIconButton, UIText, UIFlexBox } from '@quizrun/ui';
+import { UIGridBox, UIIconButton, UIText, UIFlexBox } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { AiOutlineMail, AiOutlineGlobal, AiOutlineHeart } from 'react-icons/ai';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
-import { useMemo } from 'react';
 import QuizList from './components/QuizList';
 
 const OrganizationDetails = () => {
-  const { id } = useParams();
-  const type = useSearchParams()[0].get('type') ?? 'department';
-  const tabs: Record<string, JSX.Element | null> = useMemo(
-    () => ({
-      department: <DepartmentList />,
-      quizes: <QuizList />,
-    }),
-    []
-  );
+  const type = useSearchParams()[0].get('type');
 
   return (
     <Container>
@@ -47,23 +38,26 @@ const OrganizationDetails = () => {
       </UIFlexBox>
 
       <UIFlexBox gap="2" css={{ margin: '$6 0', fontSize: '$lg' }}>
-        {Object.keys(tabs).map((key) => (
-          <UIText
-            key={key}
-            as={Link}
-            css={{
-              color: type === key ? '$primary' : 'white',
-              textTransform: 'capitalize',
-            }}
-            to={`/organization/${id}?type=${key}`}
-          >
-            {key}
-          </UIText>
-        ))}
+        <UIText
+          as={Link}
+          css={{ color: !type ? '$primary' : 'white' }}
+          to={`${location.pathname}`}
+          replace={true}
+        >
+          Departments
+        </UIText>
+        <UIText
+          as={Link}
+          css={{ color: type === 'quizes' ? '$primary' : 'white' }}
+          to={`${location.pathname}?type=quizes`}
+          replace={true}
+        >
+          Quizes
+        </UIText>
       </UIFlexBox>
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {tabs[type]}
+        {type == 'quizes' ? <QuizList /> : <DepartmentList />}
       </UIGridBox>
     </Container>
   );

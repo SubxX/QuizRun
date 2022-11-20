@@ -12,6 +12,11 @@ export class OrganizationController {
     return this.organizationService.register(payload)
   }
 
+  @Get('all')
+  async getAllOrganizations() {
+    return this.organizationService.getAllOrganizations()
+  }
+
   @Get(':id') // :id refers to organization id
   async getOrganizationById(@Param() params) {
     return this.organizationService.getOrganization(params.id)

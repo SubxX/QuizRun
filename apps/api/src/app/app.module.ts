@@ -9,6 +9,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { DepartmentModule } from './modules/department/department.module';
+import { QuizModule } from './modules/quiz/quiz.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { DepartmentModule } from './modules/department/department.module';
     AuthModule,
     OrganizationModule,
     DepartmentModule,
+    QuizModule
   ],
   controllers: [AppController],
   providers: [

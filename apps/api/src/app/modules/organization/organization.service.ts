@@ -57,6 +57,13 @@ export class OrganizationService {
     return this._getOrganizationDetails(organization)
   }
 
+  async getAllOrganizations() {
+    const allOrganizations = await this.orgModel.find({}, { password: 0 })
+    return allOrganizations
+  }
+
+
+  // [TODO] add checking only organization owner can make changes to their organization
   async addDepartments(organization_id: string, departmenentIds: string | string[]) {
     const updatedDepartment = await this.orgModel.findOneAndUpdate({ _id: organization_id }, {
       $addToSet: {

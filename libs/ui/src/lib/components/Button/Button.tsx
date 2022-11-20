@@ -16,12 +16,12 @@ const StyledButton = styled('button', {
   alignItems: 'center',
   justifyContent: 'center',
   cursor: 'pointer',
-  '&:focus': {
-    boxShadow: '0 0 0 3px #333',
-  },
   '&:disabled': {
     opacity: 0.5,
     cursor: 'not-allowed',
+  },
+  '&:focus': {
+    boxShadow: '0 0 0 3px #333',
   },
   variants: {
     color: {
@@ -32,6 +32,9 @@ const StyledButton = styled('button', {
       danger: {
         backgroundColor: 'rgba(205, 43, 48, 0.1)',
         color: 'rgb(205, 43, 49)',
+        '&:focus': {
+          boxShadow: '0 0 0 3px rgba(205, 43, 49,0.4)',
+        },
       },
       light: {
         backgroundColor: 'rgba($white-rgb,0.1)',

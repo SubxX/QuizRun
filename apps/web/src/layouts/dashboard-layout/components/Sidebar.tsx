@@ -66,24 +66,25 @@ const Sidebar = () => {
       </UIBox>
 
       {/* Sidebar botttom actions */}
-      <UIBox css={{ spaceY: '$3', paddingBottom: '$4' }}>
+      <UIBox css={{ spaceY: '$3', paddingBottom: '$3' }}>
         <ToolTip title="Settings">
           <UIIconButton disabled>
             <AiFillSetting size={20} />
           </UIIconButton>
         </ToolTip>
-        <ToolTip title="Logout">
+
+        <UIAlertDialog
+          subtitle="You are about to logout from this this platform"
+          onResolve={() => navigate('/auth/signup')}
+        >
           <div>
-            <UIAlertDialog
-              subtitle="You are about to logout from this this platform"
-              onResolve={() => navigate('/auth/signup')}
-            >
+            <ToolTip title="Logout">
               <UIIconButton>
                 <BiLogOutCircle size={20} />
               </UIIconButton>
-            </UIAlertDialog>
+            </ToolTip>
           </div>
-        </ToolTip>
+        </UIAlertDialog>
       </UIBox>
     </UIBox>
   );
