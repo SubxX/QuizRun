@@ -13,7 +13,6 @@ import { OrganizationModule } from '../organization/organization.module';
 @Module({
   imports: [
     UserModule,
-    OrganizationModule,
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.JWT_SECRET,

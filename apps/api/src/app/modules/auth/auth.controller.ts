@@ -11,10 +11,4 @@ export class AuthController {
   async login(@Body() credentils: LoginDto) {
     return this.authService.login(credentils)
   }
-
-  @Post('login-department')
-  @HttpCode(HttpStatus.OK)
-  async departmentLogin(@Body() credentils: LoginDto) {
-    return this.authService.departmentLogin(credentils)
-  }
 }

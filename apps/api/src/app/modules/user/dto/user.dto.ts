@@ -3,5 +3,6 @@ export class CreateUserDto {
     name: string;
     profile_picture?: string
     password: string
-    role?: string
+    organizations?: string[]
+    favourite_organizations?: string[]
 }

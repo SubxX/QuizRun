@@ -9,8 +9,8 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Get('me')
-  async test(@Request() req) {
-    return req.user
+  async getLoggedInUserInfo(@Request() req) {
+    return this.userService.findById(req?.user?._id)
   }
 
   @Post('register')

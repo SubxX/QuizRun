@@ -4,8 +4,8 @@ import { OrganizationController } from './organization.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Organization, OrganizationSchema } from './schema/organization.schema';
 import { Department, DepartmentSchema } from '../department/schema/department.schema';
-import { BcryptService } from '@api/app/shared/bcrypt.service';
 import { DepartmentService } from '../department/department.service';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -13,12 +13,12 @@ import { DepartmentService } from '../department/department.service';
       { name: Organization.name, schema: OrganizationSchema },
       { name: Department.name, schema: DepartmentSchema }
     ]),
+    UserModule
   ],
   controllers: [OrganizationController],
   providers: [
     OrganizationService,
-    DepartmentService,
-    BcryptService
+    DepartmentService
   ],
   exports: [
     OrganizationService

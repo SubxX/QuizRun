@@ -16,9 +16,6 @@ export class Question {
   @Prop({ default: null })
   hint: string;
 
-  @Prop({ default: null })
-  correctAnswer: number; // correct answer shound be the option index
-
   @Prop({ default: [] })
   options: any[]
 
@@ -26,8 +23,7 @@ export class Question {
   point: number
 
   @Prop({ type: Types.ObjectId, ref: 'Quiz', required: true })
-  ouiz_id: Quiz;
-
+  quiz_id: Quiz;
 }
 
 export type QuestionDocument = Question & Document
