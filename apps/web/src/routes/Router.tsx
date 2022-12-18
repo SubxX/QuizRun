@@ -4,6 +4,7 @@ import OrganizationDetails from '../pages/organization-details';
 import Signin from '../pages/signin';
 import Signup from '../pages/signup';
 import Organizations from '../pages/organizations';
+import EmailConfirmed from '@web/pages/email-confirmed';
 
 const Router = () => {
   const routes = useRoutes([
@@ -13,6 +14,7 @@ const Router = () => {
       children: [
         { index: true, element: <Organizations /> },
         { path: 'organization/:id', element: <OrganizationDetails /> },
+        { path: 'email-confirmed', element: <EmailConfirmed /> },
       ],
     },
     {

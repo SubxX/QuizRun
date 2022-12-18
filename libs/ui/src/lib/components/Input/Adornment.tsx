@@ -7,7 +7,7 @@ const Adornment = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$1',
-  opacity: 0.5,
+  color: 'rgba($white-rgb,0.5)',
 });
 
 export default Adornment;

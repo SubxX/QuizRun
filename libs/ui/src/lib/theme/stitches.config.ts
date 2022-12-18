@@ -12,6 +12,7 @@ export const { theme, styled, globalCss, keyframes } = createStitches({
       'light-white': '#707070',
       white: '#fff',
       'white-rgb': '255,255,255',
+      'error': '#ffa6a67d'
     },
     space: {
       1: '4px',

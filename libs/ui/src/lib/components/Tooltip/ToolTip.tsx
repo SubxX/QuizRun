@@ -11,9 +11,9 @@ import { styled } from '../../theme/stitches.config';
 
 const TooltipContent = styled(TooltipPrimitive.Content, {
   borderRadius: '$md',
-  padding: '$2 $4',
-  fontSize: '$sm',
-  color: '$white',
+  padding: '$2 $3',
+  fontSize: '$xs',
+  color: 'rgba($white-rgb,0.8)',
   backgroundColor: '#000',
   userSelect: 'none',
   animationDuration: '250ms',

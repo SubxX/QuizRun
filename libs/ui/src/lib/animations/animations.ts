@@ -40,3 +40,8 @@ export const contentHide = keyframes({
   '0%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
   '100%': { opacity: 0, transform: 'translate(-50%, -48%) scale(.96)' },
 });
+
+export const rotate = keyframes({
+  '0%': { transform: 'rotate(0)' },
+  '100%': { transform: 'rotate(360deg)' },
+});

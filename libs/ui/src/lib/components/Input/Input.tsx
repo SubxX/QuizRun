@@ -6,10 +6,11 @@ import {
   useLayoutEffect,
   useRef,
 } from 'react';
-import { UILabel } from '../';
+import { ToolTip, UILabel } from '../';
 import Adornment from './Adornment';
-import { styled } from '../../theme/stitches.config';
+import { styled, theme } from '../../theme/stitches.config';
 import { UIBox } from '../Box';
+import { TbAlertOctagon } from 'react-icons/tb';
 
 export const StyledInput = styled('input', {
   display: 'block',
@@ -27,16 +28,21 @@ export const StyledInput = styled('input', {
     boxShadow: '0 0 0 3px #333',
     borderColor: '#707070',
   },
+  '&[aria-invalid="true"]': {
+    borderColor: '$error',
+  },
 });
 
 type Props = HTMLProps<HTMLInputElement> & {
   label?: string;
   endAdornment?: ReactNode;
   startAdornment?: ReactNode;
+  error?: string;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { id, label, className, startAdornment, endAdornment, ...rest } = props;
+  const { id, label, className, startAdornment, endAdornment, error, ...rest } =
+    props;
 
   const _ref = useRef<HTMLInputElement>(null);
   const inputRef = (ref ?? _ref) as MutableRefObject<HTMLInputElement>;
@@ -52,7 +58,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
   useLayoutEffect(() => {
     const width = (endAdornmentRef.current?.offsetWidth || 0) + 16;
     if (inputRef.current) inputRef.current.style.paddingRight = `${width}px`;
-  }, [endAdornmentRef]);
+  }, [endAdornment]);
 
   return (
     <UIBox>
@@ -63,12 +69,18 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
             {startAdornment}
           </Adornment>
         )}
-        <StyledInput {...rest} ref={inputRef} />
-        {Boolean(endAdornment) && (
-          <Adornment ref={endAdornmentRef} css={{ right: '$2' }}>
-            {endAdornment}
-          </Adornment>
-        )}
+        <StyledInput aria-invalid={Boolean(error)} {...rest} ref={inputRef} />
+
+        <Adornment ref={endAdornmentRef} css={{ right: '$2' }}>
+          {endAdornment}
+          {Boolean(error) && (
+            <ToolTip title={error} align="center" side="bottom">
+              <UIBox css={{ display: 'inline-flex', color: '$error' }}>
+                <TbAlertOctagon />
+              </UIBox>
+            </ToolTip>
+          )}
+        </Adornment>
       </UIBox>
     </UIBox>
   );

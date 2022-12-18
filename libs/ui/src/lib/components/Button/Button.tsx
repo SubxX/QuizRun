@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 import { ImSpinner9 } from 'react-icons/im';
 import { styled } from '../../theme/stitches.config';
 import { ComponentProps } from '@stitches/react';
+import { UIBox } from '../Box';
+import { rotate } from '../../animations/animations';
 
 const StyledButton = styled('button', {
   borderRadius: '6px',
@@ -60,7 +62,17 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <StyledButton {...rest} ref={ref} disabled={isDisabled}>
-        {loading && <ImSpinner9 className="animate-spin text-white mr-2" />}
+        {loading && (
+          <UIBox
+            css={{
+              marginRight: '$2',
+              transformOrigin: 'center',
+              animation: `${rotate} 1s linear infinite`,
+            }}
+          >
+            <ImSpinner9 display="block" />
+          </UIBox>
+        )}
         {children}
       </StyledButton>
     );

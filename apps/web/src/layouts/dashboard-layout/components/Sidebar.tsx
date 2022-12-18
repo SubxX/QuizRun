@@ -10,10 +10,17 @@ import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '@web/hooks/useAuth';
 
 const Sidebar = () => {
   const { currentInstitute, changeInstitute } = useSwitchInstitute();
   const navigate = useNavigate();
+  const { signout } = useAuth();
+
+  const logout = async () => {
+    await signout();
+    navigate('/auth/signin');
+  };
 
   return (
     <UIBox
@@ -75,7 +82,7 @@ const Sidebar = () => {
 
         <UIAlertDialog
           subtitle="You are about to logout from this this platform"
-          onResolve={() => navigate('/auth/signup')}
+          onResolve={logout}
         >
           <div>
             <ToolTip title="Logout">
