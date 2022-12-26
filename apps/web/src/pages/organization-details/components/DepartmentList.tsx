@@ -2,10 +2,22 @@ import { MdScience } from 'react-icons/md';
 import { UICard } from '@quizrun/ui';
 import { GiMechanicalArm, GiCircuitry } from 'react-icons/gi';
 
-const DepartmentList = () => {
+const DepartmentList = ({ departments }: any) => {
   return (
     <>
-      <UICard>
+      {departments.map((d: any) => {
+        const department = d?.department_id;
+        return (
+          <UICard key={department.id}>
+            <UICard.Header
+              // Icon={MdScience}
+              title={department?.name ?? ''}
+              subtitle={department?.description ?? ''}
+            />
+          </UICard>
+        );
+      })}
+      {/* <UICard>
         <UICard.Header
           Icon={MdScience}
           title="Computer science"
@@ -27,7 +39,7 @@ const DepartmentList = () => {
           title="Electrical"
           subtitle="It is an engineering discipline concerned with the study, design, and application of electronic devices."
         />
-      </UICard>
+      </UICard> */}
     </>
   );
 };

@@ -16,11 +16,12 @@ const DialogContent = styled(RUIDialog.Content, {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '90vw',
-  maxWidth: '450px',
+  maxWidth: '400px',
   maxHeight: '85vh',
   padding: '$5',
   animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   spaceY: '$3',
+  overflowY: 'auto',
   '&:focus': { outline: 'none' },
 });
 
@@ -45,6 +46,7 @@ const DialogOverlay = styled(RUIDialog.Overlay, {
 
 const Dialog = RUIDialog.Root;
 const Trigger = RUIDialog.Trigger;
+const Close = RUIDialog.Close;
 
 export const Content = forwardRef<HTMLDivElement, { children: ReactNode }>(
   ({ children, ...props }, forwardedRef) => (
@@ -62,7 +64,7 @@ type HeaderProps = {
   description?: string;
   closeButton?: boolean;
 };
-const Header = ({ title, description, closeButton = true }: HeaderProps) => (
+const Header = ({ title, description, closeButton = false }: HeaderProps) => (
   <UIBox
     css={{
       display: 'flex',
@@ -77,11 +79,11 @@ const Header = ({ title, description, closeButton = true }: HeaderProps) => (
       )}
     </div>
     {closeButton && (
-      <RUIDialog.Close asChild>
+      <Close asChild>
         <UIIconButton aria-label="Close" rounded css={{ flex: 'none' }}>
           <AiOutlineClose />
         </UIIconButton>
-      </RUIDialog.Close>
+      </Close>
     )}
   </UIBox>
 );

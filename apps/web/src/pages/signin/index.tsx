@@ -14,7 +14,11 @@ type SigninForm = {
 const Signin = () => {
   const { signin } = useAuth();
   const [loading, setLoading] = useState(false);
-  const { control, handleSubmit } = useForm<SigninForm>();
+  const { control, handleSubmit } = useForm<SigninForm>({
+    defaultValues: {
+      email: 'subhambhattacharya700@gmail.com',
+    },
+  });
 
   const onSubmit = async ({ email, password }: SigninForm) => {
     try {
@@ -61,7 +65,7 @@ const Signin = () => {
               placeholder="Enter email"
               id="email"
               autoFocus={true}
-              startAdornment={<MdAlternateEmail className="opacity-50" />}
+              startAdornment={<MdAlternateEmail />}
               error={errors?.email?.message}
             />
           )}
@@ -82,7 +86,7 @@ const Signin = () => {
               type="password"
               placeholder="Enter password"
               id="password"
-              startAdornment={<MdLockOutline className="opacity-50" />}
+              startAdornment={<MdLockOutline />}
               error={errors?.password?.message}
             />
           )}

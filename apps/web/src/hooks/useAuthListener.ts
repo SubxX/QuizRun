@@ -9,7 +9,7 @@ export default function useAuthListener() {
 
         supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') {
-                session ? set(session) : clear()
+                session ? set(session.user) : clear()
             }
 
             if (event === 'SIGNED_OUT') {

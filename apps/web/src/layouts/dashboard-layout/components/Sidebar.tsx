@@ -11,11 +11,21 @@ import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '@web/hooks/useAuth';
+import AddOrganization from './AddOrganization';
+import { useGetMyOrganizationStore } from '@web/store/organization.store';
+import { useEffect } from 'react';
+import { useUserStore } from '@web/store/user.store';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
-  const { currentInstitute, changeInstitute } = useSwitchInstitute();
+  const { user } = useUserStore();
+  const { fetch, data: myOrgs } = useGetMyOrganizationStore();
   const navigate = useNavigate();
   const { signout } = useAuth();
+
+  useEffect(() => {
+    if (user?.id) fetch(user?.id);
+  }, [user?.id]);
 
   const logout = async () => {
     await signout();
@@ -53,7 +63,21 @@ const Sidebar = () => {
       {/* Sidebar Fevourites */}
       <UIBox css={{ padding: '$2', marginTop: '$3', flex: 1, width: '100%' }}>
         <UIBox as="ul" css={{ spaceY: '$3' }}>
-          <li>
+          {myOrgs.map((org) => (
+            <li key={`nav-${org.id}`}>
+              <NavLink to={`/organization/${org.id}`}>
+                {({ isActive }) => (
+                  <SessionSelector as="div" data-active={isActive}>
+                    {org.name
+                      .split(' ')
+                      .map((word) => word[0].toUpperCase())
+                      .join('')}
+                  </SessionSelector>
+                )}
+              </NavLink>
+            </li>
+          ))}
+          {/* <li>
             <SessionSelector
               data-active={currentInstitute === '1'}
               onClick={changeInstitute.bind(this, '1')}
@@ -68,6 +92,9 @@ const Sidebar = () => {
             >
               IIT
             </SessionSelector>
+          </li> */}
+          <li>
+            <AddOrganization />
           </li>
         </UIBox>
       </UIBox>

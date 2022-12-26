@@ -12,9 +12,9 @@ const DashboardLayout = () => {
     checkSession();
   }, []);
 
+  if (loading) return <p>Loading</p>;
   if (error?.message === '401') return <Navigate to="/auth/signin" />;
   if (error) return <ErrorView />;
-  if (loading) return <p>Loading</p>;
 
   return (
     <UIBox css={{ height: '100vh', display: 'flex' }}>

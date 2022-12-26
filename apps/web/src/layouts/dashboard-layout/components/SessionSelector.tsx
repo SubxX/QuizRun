@@ -7,6 +7,9 @@ const StyledSessionSelector = styled('button', {
   cursor: 'pointer',
   background: 'rgba($white-rgb,0.1)',
   borderRadius: '$full',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
   '&::after': {
     content: '',
@@ -15,8 +18,8 @@ const StyledSessionSelector = styled('button', {
     transform: 'translateY(-50%)',
     background: '$white',
     borderRadius: '0 $2xl $2xl 0',
-    width: '0',
-    transition: '0.25s ease width',
+    width: '0px',
+    transition: '0.15s ease width',
     height: '80%',
     left: '-$2',
   },

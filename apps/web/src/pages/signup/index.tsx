@@ -64,7 +64,7 @@ const Signup = () => {
               placeholder="Enter email"
               id="email"
               autoFocus={true}
-              startAdornment={<MdAlternateEmail className="opacity-50" />}
+              startAdornment={<MdAlternateEmail />}
               error={errors?.email?.message}
             />
           )}
@@ -85,7 +85,7 @@ const Signup = () => {
               type="password"
               placeholder="Enter password"
               id="password"
-              startAdornment={<MdLockOutline className="opacity-50" />}
+              startAdornment={<MdLockOutline />}
               error={errors?.password?.message}
             />
           )}
@@ -113,7 +113,7 @@ const Signup = () => {
               type="password"
               placeholder="Confirm password"
               id="confirm-password"
-              startAdornment={<MdLockOutline className="opacity-50" />}
+              startAdornment={<MdLockOutline />}
               error={errors?.confirmPassword?.message}
             />
           )}

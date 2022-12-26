@@ -1,14 +1,11 @@
 import { UICard, UIText, UIBox, UIFlexBox } from '@quizrun/ui';
 import { MdFoundation, MdOutlineLocationOn } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { Organization } from '@web/store/organization.store';
 
-type Props = {
-  id?: number;
-};
-
-const OrganizationCard = ({ id }: Props) => {
+const OrganizationCard = ({ org }: { org: Organization }) => {
   return (
-    <UICard hover as={Link} to={`/organization/${id}`}>
+    <UICard hover as={Link} to={`/organization/${org.id}`}>
       <UICard.Content
         css={{
           color: '$light-white',
@@ -16,11 +13,10 @@ const OrganizationCard = ({ id }: Props) => {
         }}
       >
         <UIText fontSize="xl" color="white-muted" weight="medium">
-          Technique Polytechnic Institute
+          {org.name}
         </UIText>
         <UIText as="span" css={{ marginTop: '$2', display: 'block' }}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard
+          {org.description}
         </UIText>
 
         <UIBox
@@ -32,13 +28,13 @@ const OrganizationCard = ({ id }: Props) => {
           }}
         >
           <MdFoundation color="white" size={18} />
-          <UIText>2016</UIText>
+          <UIText>{new Date(org.created_at).getFullYear()}</UIText>
         </UIBox>
 
-        <UIFlexBox items="center" gap="2">
+        {/* <UIFlexBox items="center" gap="2">
           <MdOutlineLocationOn color="white" size={18} />
           <UIText>Sughandhya, India WestBengal</UIText>
-        </UIFlexBox>
+        </UIFlexBox> */}
       </UICard.Content>
     </UICard>
   );

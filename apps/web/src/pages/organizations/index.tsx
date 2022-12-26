@@ -1,9 +1,16 @@
-import { UIGridBox, UIDalog, UIButton } from '@quizrun/ui';
+import { UIGridBox } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import OrganizationCard from './components/OrganizationCard';
 import Header from '@web/layouts/dashboard-layout/components/Header';
+import useFetch from '@web/hooks/useFetch';
+import { Organization } from '@web/store/organization.store';
+import { getAllOrganizations } from '@web/api/organization.api';
 
 const Organizations = () => {
+  const { data: organizations } = useFetch<Organization[]>(() =>
+    getAllOrganizations()
+  );
+
   return (
     <Container>
       <Header title="Organizations" />
@@ -15,23 +22,10 @@ const Organizations = () => {
         }}
         gap="3"
       >
-        {[1, 2, 3, 4, 5, 6].map((org) => (
-          <OrganizationCard key={org} id={org} />
+        {organizations?.map((org) => (
+          <OrganizationCard key={org.id} org={org} />
         ))}
       </UIGridBox>
-
-      {/* <UIDalog>
-        <UIDalog.Trigger asChild>
-          <UIButton>open</UIButton>
-        </UIDalog.Trigger>
-        <UIDalog.Content>
-          <UIDalog.Header
-            title="My title"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
-          />
-          <div>asd</div>
-        </UIDalog.Content>
-      </UIDalog> */}
     </Container>
   );
 };
