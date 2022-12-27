@@ -6,13 +6,11 @@ const DepartmentList = ({ departments }: any) => {
   return (
     <>
       {departments.map((d: any) => {
-        const department = d?.department_id;
         return (
-          <UICard key={department.id}>
+          <UICard key={d.id}>
             <UICard.Header
-              // Icon={MdScience}
-              title={department?.name ?? ''}
-              subtitle={department?.description ?? ''}
+              title={d?.name ?? ''}
+              subtitle={d?.description ?? ''}
             />
           </UICard>
         );

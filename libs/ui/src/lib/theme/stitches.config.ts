@@ -108,6 +108,9 @@ export const globalStyles = globalCss({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  ".h-full": {
+    height: '100%'
+  },
   truncate: {
     overflow: "hidden",
     textOverflow: "ellipsis",

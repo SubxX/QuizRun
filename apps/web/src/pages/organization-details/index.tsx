@@ -6,38 +6,38 @@ import {
   UIBox,
   ErrorView,
   rotate,
+  NotFoundView,
+  UIButton,
 } from '@quizrun/ui';
 import useFetch from '@web/hooks/useFetch';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { AiOutlineMail, AiOutlineGlobal, AiOutlineHeart } from 'react-icons/ai';
-import { Link, useSearchParams, useParams } from 'react-router-dom';
+import {
+  Link,
+  useSearchParams,
+  useParams,
+  useNavigate,
+} from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
 import QuizList from './components/QuizList';
-import { Organization } from '@web/store/organization.store';
 import { getOrganizationDetails } from '@web/api/organization.api';
 import { ImSpinner9 } from 'react-icons/im';
+import { AiFillSetting } from 'react-icons/ai';
 
 const OrganizationDetails = () => {
   const type = useSearchParams()[0].get('type');
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { loading, data, error } = useFetch<Organization[]>(
+  const { loading, data, error } = useFetch(
     () => getOrganizationDetails(id as string),
     [id]
   );
-  const organization = data?.[0];
 
   if (loading)
     return (
-      <UIBox
-        className="flex-center"
-        css={{
-          padding: '$4',
-          height: '100%',
-          spaceX: '$3',
-        }}
-      >
+      <UIBox className="h-full flex-center" css={{ spaceX: '$3' }}>
         <UIText color="white-muted">Loading</UIText>
         <ImSpinner9
           display="block"
@@ -45,14 +45,39 @@ const OrganizationDetails = () => {
         />
       </UIBox>
     );
-  if (error) return <ErrorView errorMessage={error?.message} />;
+
+  if (error)
+    return (
+      <Container className="h-full flex-center">
+        {error?.message === '404' ? (
+          <NotFoundView>
+            <UIButton
+              css={{ marginTop: '$5' }}
+              onClick={navigate.bind(this, -1)}
+            >
+              I understand take me back
+            </UIButton>
+          </NotFoundView>
+        ) : (
+          <ErrorView errorMessage={error?.message} />
+        )}
+      </Container>
+    );
 
   return (
     <Container>
-      <Header title={organization?.name ?? ''} backButton />
+      <Header
+        title={data?.name ?? ''}
+        backButton
+        actions={
+          <UIIconButton>
+            <AiFillSetting />
+          </UIIconButton>
+        }
+      />
 
       <UIText color="white-muted" fontSize="sm">
-        {organization?.description}
+        {data?.description}
       </UIText>
 
       {/* <UIFlexBox gap="2" css={{ margin: '$6 0' }}>
@@ -90,9 +115,7 @@ const OrganizationDetails = () => {
         {type == 'quizes' ? (
           <QuizList />
         ) : (
-          <DepartmentList
-            departments={organization?.organization_departments}
-          />
+          <DepartmentList departments={data?.departments} />
         )}
       </UIGridBox>
     </Container>

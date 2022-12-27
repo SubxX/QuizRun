@@ -5,6 +5,7 @@ import Signin from '../pages/signin';
 import Signup from '../pages/signup';
 import Organizations from '../pages/organizations';
 import EmailConfirmed from '@web/pages/email-confirmed';
+import NotFoundPage from '@web/pages/404';
 
 const Router = () => {
   const routes = useRoutes([
@@ -28,7 +29,7 @@ const Router = () => {
     },
     {
       path: '*',
-      element: <p>404</p>,
+      element: <NotFoundPage />,
     },
   ]);
   return routes;

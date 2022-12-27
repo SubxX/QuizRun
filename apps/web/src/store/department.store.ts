@@ -1,16 +1,16 @@
 import { supabase } from '@web/supabase/supabaseClient'
 import create from 'zustand'
 
-interface Department {
+export interface IDepartment {
+    id: string
     created_at: string
     description: string
-    id: string
     image?: string
     name: string
 }
 
 interface DepartmentState {
-    data: Department[]
+    data: IDepartment[]
     loading: boolean
     error: Error | null
     fetch: () => Promise<void>

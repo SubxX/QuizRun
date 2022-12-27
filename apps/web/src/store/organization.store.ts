@@ -1,18 +1,19 @@
 import { supabase } from '@web/supabase/supabaseClient'
 import create from 'zustand'
+import { IDepartment } from './department.store'
 
-export interface Organization {
+export interface IOrganization {
     id: string
     created_at: string
     created_by: string
     name: string
     description: string
     logo?: string
-    organization_departments: any[]
+    departments: IDepartment[]
 }
 
-interface OrganizationState {
-    data: Organization[]
+interface MyOrganizationState {
+    data: IOrganization[]
     loading: boolean
     error: Error | null
     fetch: (user_id: string) => Promise<void>
@@ -22,7 +23,7 @@ interface OrganizationState {
  * @author Subham
  * @purpose To fetch authenticated users created organization from database
  */
-export const useGetMyOrganizationStore = create<OrganizationState>()(
+export const useGetMyOrganizationStore = create<MyOrganizationState>()(
     (set) => ({
         data: [],
         loading: true,

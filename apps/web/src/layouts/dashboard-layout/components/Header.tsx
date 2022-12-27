@@ -35,7 +35,11 @@ const Header = ({ subtitle, title, backButton, actions }: Props) => {
         )}
       </UIBox>
 
-      {Boolean(actions) && actions}
+      {Boolean(actions) && (
+        <UIFlexBox css={{ alignSelf: 'flex-start' }} gap="1">
+          {actions}
+        </UIFlexBox>
+      )}
     </UIFlexBox>
   );
 };

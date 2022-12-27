@@ -77,22 +77,6 @@ const Sidebar = () => {
               </NavLink>
             </li>
           ))}
-          {/* <li>
-            <SessionSelector
-              data-active={currentInstitute === '1'}
-              onClick={changeInstitute.bind(this, '1')}
-            >
-              JIS
-            </SessionSelector>
-          </li>
-          <li>
-            <SessionSelector
-              data-active={currentInstitute === '2'}
-              onClick={changeInstitute.bind(this, '2')}
-            >
-              IIT
-            </SessionSelector>
-          </li> */}
           <li>
             <AddOrganization />
           </li>
