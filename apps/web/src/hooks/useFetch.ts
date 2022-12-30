@@ -23,5 +23,7 @@ export default function useFetch<T>(apiCall: () => Promise<T>, deps: DependencyL
         fetchData()
     }, deps)
 
-    return { data, loading, error }
+
+
+    return { data, loading, error, mutateData: setData }
 }

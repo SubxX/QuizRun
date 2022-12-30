@@ -9,7 +9,7 @@ import {
 import SessionSelector from './SessionSelector';
 import { AiFillSetting } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '@web/hooks/useAuth';
 import AddOrganization from './AddOrganization';
 import { useGetMyOrganizationStore } from '@web/store/organization.store';
@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (user?.id) fetch(user?.id);
-  }, [user?.id]);
+  }, [user]);
 
   const logout = async () => {
     await signout();
@@ -49,6 +49,8 @@ const Sidebar = () => {
     >
       {/* Sidebar Logo */}
       <UIBox
+        as={Link}
+        to="/"
         css={{
           height: '64px',
           textAlign: 'center',

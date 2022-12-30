@@ -18,7 +18,7 @@ const Header = ({ subtitle, title, backButton, actions }: Props) => {
       {backButton && (
         <UIIconButton
           onClick={navigate.bind(this, -1)}
-          css={{ alignSelf: 'flex-start' }}
+          css={{ alignSelf: 'flex-start', flex: 'none' }}
         >
           <IoIosArrowBack />
         </UIIconButton>
@@ -36,7 +36,7 @@ const Header = ({ subtitle, title, backButton, actions }: Props) => {
       </UIBox>
 
       {Boolean(actions) && (
-        <UIFlexBox css={{ alignSelf: 'flex-start' }} gap="1">
+        <UIFlexBox css={{ alignSelf: 'flex-start', flex: 'none' }} gap="1">
           {actions}
         </UIFlexBox>
       )}

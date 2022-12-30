@@ -1,6 +1,7 @@
+import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
 import { styled } from '../../theme/stitches.config';
-import { UIBox } from '../Box';
+import { UIBox, UIFlexBox } from '../Box';
 import { UIText } from '../Text';
 
 const Card = styled('div', {
@@ -13,6 +14,7 @@ const Card = styled('div', {
   variants: {
     hover: {
       true: {
+        cursor: 'pointer',
         transition: '0.25s ease transform,box-shadow',
         '&:hover': {
           transform: 'scale(1.015)',
@@ -27,32 +29,32 @@ type CardHeaderProps = {
   title: string;
   subtitle: string;
   Icon?: IconType;
+  actions?: ReactNode;
 };
-const Header = ({ Icon, title, subtitle }: CardHeaderProps) => {
+const Header = ({ Icon, title, subtitle, actions }: CardHeaderProps) => {
   return (
     <UIBox css={{ padding: '0 $4' }}>
-      <UIBox
-        css={{
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: '$xl',
-        }}
-      >
+      <UIFlexBox items="center" css={{ fontSize: '$xl' }} gap={3}>
         {Icon && (
           <UIBox
             rounded="full"
             background="primary"
             css={{
               padding: '$2',
-              marginRight: '$3',
               lineHeight: 0,
+              flex: 'none',
             }}
           >
             <Icon size={18} />
           </UIBox>
         )}
-        <span>{title}</span>
-      </UIBox>
+        <span className="flex-one">{title}</span>
+        {Boolean(actions) && (
+          <UIFlexBox gap="2" css={{ flex: 'none' }}>
+            {actions}
+          </UIFlexBox>
+        )}
+      </UIFlexBox>
       <UIText fontSize="sm" css={{ marginTop: '$2', opacity: 0.5 }}>
         {subtitle}
       </UIText>

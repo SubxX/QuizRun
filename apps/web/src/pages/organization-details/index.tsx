@@ -3,81 +3,64 @@ import {
   UIIconButton,
   UIText,
   UIFlexBox,
-  UIBox,
-  ErrorView,
-  rotate,
-  NotFoundView,
-  UIButton,
+  UIDropdownMenu,
+  UIDalog,
 } from '@quizrun/ui';
-import useFetch from '@web/hooks/useFetch';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
-import { AiOutlineMail, AiOutlineGlobal, AiOutlineHeart } from 'react-icons/ai';
 import {
-  Link,
-  useSearchParams,
-  useParams,
-  useNavigate,
-} from 'react-router-dom';
+  AiOutlineMail,
+  AiOutlineGlobal,
+  AiOutlineHeart,
+  AiFillSetting,
+} from 'react-icons/ai';
+import { Link, useSearchParams } from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
 import QuizList from './components/QuizList';
-import { getOrganizationDetails } from '@web/api/organization.api';
-import { ImSpinner9 } from 'react-icons/im';
-import { AiFillSetting } from 'react-icons/ai';
+import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 
-const OrganizationDetails = () => {
+import { BsTrash } from 'react-icons/bs';
+import { useState } from 'react';
+import CreateEditOrganization from '@web/shared/CreateEditOrganization';
+
+const Page = () => {
+  const { organization } = useOrgDetailsContext();
   const type = useSearchParams()[0].get('type');
-  const { id } = useParams();
-  const navigate = useNavigate();
 
-  const { loading, data, error } = useFetch(
-    () => getOrganizationDetails(id as string),
-    [id]
-  );
-
-  if (loading)
-    return (
-      <UIBox className="h-full flex-center" css={{ spaceX: '$3' }}>
-        <UIText color="white-muted">Loading</UIText>
-        <ImSpinner9
-          display="block"
-          style={{ animation: `${rotate} 1s linear infinite` }}
-        />
-      </UIBox>
-    );
-
-  if (error)
-    return (
-      <Container className="h-full flex-center">
-        {error?.message === '404' ? (
-          <NotFoundView>
-            <UIButton
-              css={{ marginTop: '$5' }}
-              onClick={navigate.bind(this, -1)}
-            >
-              I understand take me back
-            </UIButton>
-          </NotFoundView>
-        ) : (
-          <ErrorView errorMessage={error?.message} />
-        )}
-      </Container>
-    );
+  const [open, setOpen] = useState(false);
+  const closeDialog = () => setOpen(false);
 
   return (
     <Container>
       <Header
-        title={data?.name ?? ''}
+        title={organization?.name ?? ''}
         backButton
         actions={
-          <UIIconButton>
-            <AiFillSetting />
-          </UIIconButton>
+          <>
+            <UIDropdownMenu>
+              <UIDropdownMenu.Trigger asChild>
+                <UIIconButton>
+                  <AiFillSetting />
+                </UIIconButton>
+              </UIDropdownMenu.Trigger>
+              <UIDropdownMenu.Content align="end">
+                <UIDropdownMenu.Item onClick={() => setOpen(true)}>
+                  Edit
+                </UIDropdownMenu.Item>
+                <UIDropdownMenu.Item color="danger">
+                  Delete
+                  <UIDropdownMenu.RightSlot>
+                    <BsTrash />
+                  </UIDropdownMenu.RightSlot>
+                </UIDropdownMenu.Item>
+              </UIDropdownMenu.Content>
+            </UIDropdownMenu>
+          </>
         }
       />
 
       <UIText color="white-muted" fontSize="sm">
-        {data?.description}
+        {organization?.description}
       </UIText>
 
       {/* <UIFlexBox gap="2" css={{ margin: '$6 0' }}>
@@ -112,14 +95,27 @@ const OrganizationDetails = () => {
       </UIFlexBox>
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {type == 'quizes' ? (
-          <QuizList />
-        ) : (
-          <DepartmentList departments={data?.departments} />
-        )}
+        {type == 'quizes' ? <QuizList /> : <DepartmentList />}
       </UIGridBox>
+
+      {/*  Edit Organization Dialog */}
+      <UIDalog open={open}>
+        <UIDalog.Content>
+          <UIDalog.Header
+            title="Edit organization"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
+          />
+          <CreateEditOrganization closeDialog={closeDialog} />
+        </UIDalog.Content>
+      </UIDalog>
     </Container>
   );
 };
 
-export default OrganizationDetails;
+export default function OrganizationDetails() {
+  return (
+    <ContenxtWrapper>
+      <Page />
+    </ContenxtWrapper>
+  );
+}

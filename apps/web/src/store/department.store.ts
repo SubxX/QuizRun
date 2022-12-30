@@ -3,7 +3,7 @@ import create from 'zustand'
 
 export interface IDepartment {
     id: string
-    created_at: string
+    created_at?: string
     description: string
     image?: string
     name: string

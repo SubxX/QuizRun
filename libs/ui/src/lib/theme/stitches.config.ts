@@ -111,6 +111,9 @@ export const globalStyles = globalCss({
   ".h-full": {
     height: '100%'
   },
+  ".flex-one": {
+    flex: 1
+  },
   truncate: {
     overflow: "hidden",
     textOverflow: "ellipsis",
