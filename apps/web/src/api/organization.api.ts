@@ -38,7 +38,7 @@ export const getAllOrganizations = async (): Promise<IOrganization[]> => {
     return data;
 };
 
-export const createOrganizations = async (payload: Omit<IOrganization, 'departments'>): Promise<IOrganization> => {
+export const createOrganization = async (payload: Omit<IOrganization, 'departments' | 'created_at' | 'id'>): Promise<IOrganization> => {
     const { data, error } = await supabase
         .from('organization')
         .insert(payload)
@@ -46,4 +46,14 @@ export const createOrganizations = async (payload: Omit<IOrganization, 'departme
         .single()
     if (error) throw new Error(error.message, { cause: error });
     return data;
+};
+
+export const deleteOrganization = async (orgId: string): Promise<boolean> => {
+    const { error } = await supabase
+        .from('organization')
+        .delete()
+        .eq('id', orgId)
+
+    if (error) throw new Error(error.message, { cause: error });
+    return true;
 };

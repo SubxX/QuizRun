@@ -14,7 +14,7 @@ import {
   AiOutlineHeart,
   AiFillSetting,
 } from 'react-icons/ai';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
 import QuizList from './components/QuizList';
 import ContenxtWrapper, { useOrgDetailsContext } from './Context';
@@ -22,13 +22,27 @@ import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 import { BsTrash } from 'react-icons/bs';
 import { useState } from 'react';
 import CreateEditOrganization from '@web/shared/CreateEditOrganization';
+import { deleteOrganization } from '@web/api/organization.api';
+import { useGetMyOrganizationStore } from '@web/store/organization.store';
 
 const Page = () => {
   const { organization } = useOrgDetailsContext();
   const type = useSearchParams()[0].get('type');
+  const navigate = useNavigate();
+  const { removeOrganization } = useGetMyOrganizationStore();
 
   const [open, setOpen] = useState(false);
   const closeDialog = () => setOpen(false);
+
+  const deleteOrganizationHandler = async () => {
+    try {
+      await deleteOrganization(organization?.id as string);
+      removeOrganization(organization?.id as string);
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container>
@@ -47,7 +61,10 @@ const Page = () => {
                 <UIDropdownMenu.Item onClick={() => setOpen(true)}>
                   Edit
                 </UIDropdownMenu.Item>
-                <UIDropdownMenu.Item color="danger">
+                <UIDropdownMenu.Item
+                  color="danger"
+                  onClick={deleteOrganizationHandler}
+                >
                   Delete
                   <UIDropdownMenu.RightSlot>
                     <BsTrash />

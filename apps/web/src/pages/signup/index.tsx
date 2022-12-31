@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
 import useAuth from '@web/hooks/useAuth';
 import { useForm, Controller } from 'react-hook-form';
-import { useState } from 'react';
+import useLoader from '@web/hooks/useLoader';
 
 type SignUpForm = {
   email: string;
@@ -13,19 +13,18 @@ type SignUpForm = {
 };
 
 const Signup = () => {
-  const [loading, setLoading] = useState(false);
+  const { loading, startLoading, stopLoading } = useLoader();
   const { signup } = useAuth();
   const { control, handleSubmit, getValues } = useForm<SignUpForm>();
 
   const submitForm = async (payload: SignUpForm) => {
     try {
-      setLoading(true);
-      setTimeout(() => setLoading(false), 2500);
+      startLoading();
       await signup(payload.email, payload.password);
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false);
+      stopLoading();
     }
   };
 

@@ -20,6 +20,8 @@ interface MyOrganizationState {
     loading: boolean
     error: Error | null
     fetch: (user_id: string) => Promise<void>
+    addOrganization: (newOrg: IOrganization) => void
+    removeOrganization: (orgId: string) => void
 }
 
 /**
@@ -27,7 +29,7 @@ interface MyOrganizationState {
  * @purpose To fetch authenticated users created organization from database
  */
 export const useGetMyOrganizationStore = create<MyOrganizationState>()(
-    (set) => ({
+    (set, get) => ({
         data: [],
         loading: true,
         error: null,
@@ -42,6 +44,12 @@ export const useGetMyOrganizationStore = create<MyOrganizationState>()(
             } finally {
                 set({ loading: false })
             }
+        },
+        addOrganization: (newOrg: IOrganization) => {
+            set({ data: [...get().data, newOrg] })
+        },
+        removeOrganization: (orgId: string) => {
+            set({ data: get().data.filter((org) => org.id !== orgId) })
         }
     })
 )
