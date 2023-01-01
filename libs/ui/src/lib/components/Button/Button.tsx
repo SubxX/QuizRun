@@ -57,11 +57,11 @@ const StyledButton = styled('button', {
 type ButtonProps = ComponentProps<typeof StyledButton> & { loading?: boolean };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ disabled, loading, children, ...rest }, ref) => {
+  ({ disabled, loading, children, type = 'button', ...rest }, ref) => {
     const isDisabled = disabled || loading;
 
     return (
-      <StyledButton {...rest} ref={ref} disabled={isDisabled}>
+      <StyledButton {...rest} ref={ref} disabled={isDisabled} type={type}>
         {loading && (
           <UIBox
             css={{

@@ -111,6 +111,9 @@ export const globalStyles = globalCss({
   ".h-full": {
     height: '100%'
   },
+  ".w-full": {
+    width: '100%'
+  },
   ".flex-one": {
     flex: 1
   },
