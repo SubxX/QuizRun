@@ -1,9 +1,9 @@
-import { UICard, UIText, UIBox, UIFlexBox } from '@quizrun/ui';
-import { MdFoundation, MdOutlineLocationOn } from 'react-icons/md';
+import { UICard, UIText, UIBox } from '@quizrun/ui';
+import { MdFoundation } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { Organization } from '@web/store/organization.store';
+import { IOrganization } from '@web/store/organization.store';
 
-const OrganizationCard = ({ org }: { org: Organization }) => {
+const OrganizationCard = ({ org }: { org: IOrganization }) => {
   return (
     <UICard hover as={Link} to={`/organization/${org.id}`}>
       <UICard.Content
@@ -12,10 +12,27 @@ const OrganizationCard = ({ org }: { org: Organization }) => {
           fontSize: '$xs',
         }}
       >
-        <UIText fontSize="xl" color="white-muted" weight="medium">
+        <UIText
+          fontSize="xl"
+          color="white-muted"
+          weight="medium"
+          className="truncate"
+        >
           {org.name}
         </UIText>
-        <UIText as="span" css={{ marginTop: '$2', display: 'block' }}>
+        <UIText
+          as="span"
+          css={{
+            marginTop: '$2',
+            display: '-webkit-box',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            '-webkit-line-clamp': 3,
+            lineClamp: 3,
+            '-webkit-box-orient': 'vertical',
+            minHeight: 52,
+          }}
+        >
           {org.description}
         </UIText>
 
@@ -28,7 +45,7 @@ const OrganizationCard = ({ org }: { org: Organization }) => {
           }}
         >
           <MdFoundation color="white" size={18} />
-          <UIText>{new Date(org.created_at).getFullYear()}</UIText>
+          <UIText>{new Date(org.created_at as string).getFullYear()}</UIText>
         </UIBox>
 
         {/* <UIFlexBox items="center" gap="2">

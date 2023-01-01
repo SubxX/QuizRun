@@ -25,7 +25,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (user?.id) fetch(user?.id);
-  }, [user]);
+  }, [user?.id]);
 
   const logout = async () => {
     await signout();

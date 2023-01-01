@@ -114,7 +114,7 @@ export const globalStyles = globalCss({
   ".flex-one": {
     flex: 1
   },
-  truncate: {
+  '.truncate': {
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap"

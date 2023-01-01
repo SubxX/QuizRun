@@ -1,10 +1,16 @@
-import { UIInput, UIButton, UICard, UISeparator, UIText } from '@quizrun/ui';
+import {
+  UIInput,
+  UIButton,
+  UICard,
+  UISeparator,
+  UIText,
+  useBoolean,
+} from '@quizrun/ui';
 import { IoDocument } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { MdAlternateEmail, MdLockOutline } from 'react-icons/md';
 import useAuth from '@web/hooks/useAuth';
-import useLoader from '@web/hooks/useLoader';
 
 type SigninForm = {
   email: string;
@@ -13,7 +19,7 @@ type SigninForm = {
 
 const Signin = () => {
   const { signin } = useAuth();
-  const { loading, startLoading, stopLoading } = useLoader();
+  const { value: loading, set: setLoading } = useBoolean();
   const { control, handleSubmit } = useForm<SigninForm>({
     defaultValues: {
       email: 'subhambhattacharya700@gmail.com',
@@ -22,12 +28,12 @@ const Signin = () => {
 
   const onSubmit = async ({ email, password }: SigninForm) => {
     try {
-      startLoading();
+      setLoading(true);
       await signin(email, password);
     } catch (error) {
       console.log(error);
     } finally {
-      stopLoading();
+      setLoading(false);
     }
   };
   return (

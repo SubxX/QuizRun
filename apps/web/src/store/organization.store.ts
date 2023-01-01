@@ -2,9 +2,6 @@ import { supabase } from '@web/supabase/supabaseClient'
 import create from 'zustand'
 import { IDepartment } from './department.store'
 
-export interface IOrganizationDepartment extends IDepartment {
-    dep_id: string
-}
 export interface IOrganization {
     id: string
     created_at?: string
@@ -12,7 +9,7 @@ export interface IOrganization {
     name: string
     description: string
     logo?: string
-    departments: IOrganizationDepartment[]
+    departments: string[]
 }
 
 interface MyOrganizationState {

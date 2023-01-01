@@ -6,10 +6,7 @@ import {
   useContext,
   useMemo,
 } from 'react';
-import {
-  IOrganization,
-  IOrganizationDepartment,
-} from '@web/store/organization.store';
+import { IOrganization } from '@web/store/organization.store';
 import useFetch from '@web/hooks/useFetch';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOrganizationDetails } from '@web/api/organization.api';
@@ -21,10 +18,6 @@ const OrganizationDetails = createContext(
     organization?: IOrganization;
     id?: string;
     mutateData: Dispatch<SetStateAction<IOrganization | undefined>>;
-    manageDepartment: (
-      department: IOrganizationDepartment,
-      action: 'add' | 'remove'
-    ) => void;
   }
 );
 
@@ -39,28 +32,11 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
     [id]
   );
 
-  const manageDepartment = (
-    department: IOrganizationDepartment,
-    action: 'add' | 'remove'
-  ) => {
-    mutateData((prev) => {
-      const updatedDepartment =
-        action === 'add'
-          ? [...(prev?.departments ?? []), department]
-          : (prev?.departments ?? []).filter((d) => d.id !== department.id);
-      return {
-        ...(prev ?? {}),
-        departments: updatedDepartment,
-      } as IOrganization;
-    });
-  };
-
   const values = useMemo(
     () => ({
       organization: data,
       id,
       mutateData,
-      manageDepartment,
     }),
     [id, data]
   );

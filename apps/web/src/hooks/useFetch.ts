@@ -1,16 +1,16 @@
 import { useEffect, useState, DependencyList } from 'react';
-import useLoader from './useLoader';
+import { useBoolean } from '@quizrun/ui'
 
 
 export default function useFetch<T>(apiCall: () => Promise<T>, deps: DependencyList = []) {
-    const { loading, startLoading, stopLoading } = useLoader()
+    const { value: loading, set: setLoading } = useBoolean()
     const [data, setData] = useState<T>()
     const [error, setError] = useState<Error>()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                startLoading();
+                setLoading(true);
                 const data = await apiCall()
                 setData(data);
                 setError(undefined);
@@ -18,7 +18,7 @@ export default function useFetch<T>(apiCall: () => Promise<T>, deps: DependencyL
                 setData(undefined)
                 setError(error);
             } finally {
-                stopLoading();
+                setLoading(false);
             }
         };
         fetchData()

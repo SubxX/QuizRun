@@ -58,7 +58,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
       <UIBox css={{ position: 'relative' }}>
         <StyledTextarea
           aria-invalid={Boolean(error)}
-          rows={2}
+          rows={4}
           {...rest}
           ref={inputRef}
         />

@@ -5,15 +5,11 @@ import {
   UIFlexBox,
   UIDropdownMenu,
   UIDalog,
+  UIAlertDialog,
 } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
-import {
-  AiOutlineMail,
-  AiOutlineGlobal,
-  AiOutlineHeart,
-  AiFillSetting,
-} from 'react-icons/ai';
+import { AiFillSetting } from 'react-icons/ai';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import DepartmentList from './components/DepartmentList';
 import QuizList from './components/QuizList';
@@ -24,9 +20,11 @@ import { useState } from 'react';
 import CreateEditOrganization from '@web/shared/CreateEditOrganization';
 import { deleteOrganization } from '@web/api/organization.api';
 import { useGetMyOrganizationStore } from '@web/store/organization.store';
+import PermissionHandler from './components/PermissionHandler';
+import { preventDefault } from '@web/utils/app.utils';
 
 const Page = () => {
-  const { organization } = useOrgDetailsContext();
+  const { organization, mutateData } = useOrgDetailsContext();
   const type = useSearchParams()[0].get('type');
   const navigate = useNavigate();
   const { removeOrganization } = useGetMyOrganizationStore();
@@ -50,7 +48,7 @@ const Page = () => {
         title={organization?.name ?? ''}
         backButton
         actions={
-          <>
+          <PermissionHandler>
             <UIDropdownMenu>
               <UIDropdownMenu.Trigger asChild>
                 <UIIconButton>
@@ -61,18 +59,21 @@ const Page = () => {
                 <UIDropdownMenu.Item onClick={() => setOpen(true)}>
                   Edit
                 </UIDropdownMenu.Item>
-                <UIDropdownMenu.Item
-                  color="danger"
-                  onClick={deleteOrganizationHandler}
+
+                <UIAlertDialog
+                  subtitle="You are about to delete this organization"
+                  onResolve={deleteOrganizationHandler}
                 >
-                  Delete
-                  <UIDropdownMenu.RightSlot>
-                    <BsTrash />
-                  </UIDropdownMenu.RightSlot>
-                </UIDropdownMenu.Item>
+                  <UIDropdownMenu.Item color="danger" onSelect={preventDefault}>
+                    Delete
+                    <UIDropdownMenu.RightSlot>
+                      <BsTrash />
+                    </UIDropdownMenu.RightSlot>
+                  </UIDropdownMenu.Item>
+                </UIAlertDialog>
               </UIDropdownMenu.Content>
             </UIDropdownMenu>
-          </>
+          </PermissionHandler>
         }
       />
 
@@ -122,7 +123,11 @@ const Page = () => {
             title="Edit organization"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
           />
-          <CreateEditOrganization closeDialog={closeDialog} />
+          <CreateEditOrganization
+            closeDialog={closeDialog}
+            orgData={organization}
+            updateOrganization={mutateData}
+          />
         </UIDalog.Content>
       </UIDalog>
     </Container>

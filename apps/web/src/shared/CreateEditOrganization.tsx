@@ -1,35 +1,90 @@
-import { UIBox, UIButton, UIInput, UITextarea } from '@quizrun/ui';
+import {
+  UIBox,
+  UIButton,
+  UIInput,
+  UITextarea,
+  UIChip,
+  UILabel,
+  UIFlexBox,
+  useBoolean,
+} from '@quizrun/ui';
 import { BiBuilding } from 'react-icons/bi';
 import { useForm, Controller } from 'react-hook-form';
-import { createOrganization } from '@web/api/organization.api';
+import {
+  createOrganization,
+  editOrganization,
+} from '@web/api/organization.api';
 import { useUserStore } from '@web/store/user.store';
-import { useGetMyOrganizationStore } from '@web/store/organization.store';
-import useLoader from '@web/hooks/useLoader';
+import {
+  IOrganization,
+  useGetMyOrganizationStore,
+} from '@web/store/organization.store';
+import { useDepartmentStore } from '@web/store/department.store';
 
 type OrganizationForm = {
   name: string;
   description: string;
+  departments: string[];
 };
-const CreateEditOrganization = ({ closeDialog }: { closeDialog: any }) => {
-  const { control, handleSubmit } = useForm<OrganizationForm>();
-  const { user } = useUserStore();
-  const { loading, startLoading, stopLoading } = useLoader();
-  const { addOrganization } = useGetMyOrganizationStore();
 
-  const submitForm = async (value: OrganizationForm) => {
+type Props = {
+  closeDialog: any;
+  orgData?: IOrganization;
+  updateOrganization?: (org: IOrganization) => void;
+};
+
+const CreateEditOrganization = ({
+  closeDialog,
+  orgData,
+  updateOrganization,
+}: Props) => {
+  const { control, handleSubmit, setValue, watch } = useForm<OrganizationForm>({
+    defaultValues: {
+      name: orgData?.name ?? '',
+      description: orgData?.description ?? '',
+      departments: orgData?.departments ?? [],
+    },
+  });
+  const { user } = useUserStore();
+  const { value: loading, set: setLoading } = useBoolean();
+  const { addOrganization } = useGetMyOrganizationStore();
+  const { data: departments } = useDepartmentStore();
+
+  const formDeparments = watch('departments');
+  const isEditing = Boolean(orgData);
+
+  const submitForm = async (payload: OrganizationForm) => {
     try {
-      startLoading();
-      const newOrg = await createOrganization({
-        ...value,
-        created_by: user.id as string,
-      });
-      addOrganization(newOrg);
+      setLoading(true);
+
+      if (!isEditing) {
+        const newOrg = await createOrganization({
+          ...payload,
+          created_by: user.id as string,
+        });
+        addOrganization(newOrg);
+      } else {
+        const updatedOrg = await editOrganization({
+          ...payload,
+          id: orgData?.id as string,
+        });
+        updateOrganization?.(updatedOrg);
+      }
+
       closeDialog();
     } catch (error) {
       console.log(error);
     } finally {
-      stopLoading();
+      setLoading(false);
     }
+  };
+
+  const handleDepartment = (id: string) => {
+    const value = formDeparments ?? [];
+    setValue(
+      'departments',
+      value.includes(id) ? value.filter((v) => v !== id) : [...value, id]
+    );
   };
 
   return (
@@ -46,7 +101,7 @@ const CreateEditOrganization = ({ closeDialog }: { closeDialog: any }) => {
             id="org_name"
             autoFocus={true}
             startAdornment={<BiBuilding />}
-            value={value ?? ''}
+            value={value}
             onChange={onChange}
             error={errors?.name?.message}
           />
@@ -63,16 +118,31 @@ const CreateEditOrganization = ({ closeDialog }: { closeDialog: any }) => {
             type="text"
             placeholder="Enter Description"
             id="org_description"
-            value={value ?? ''}
+            value={value}
             onChange={onChange}
             error={errors?.name?.message}
           />
         )}
       />
 
+      <UIBox>
+        <UILabel>Departments</UILabel>
+        <UIFlexBox gap={2} css={{ flexWrap: 'wrap' }}>
+          {departments.map((department) => (
+            <UIChip
+              onClick={handleDepartment.bind(this, department.id)}
+              selected={formDeparments.includes(department.id)}
+              key={`org-form-deps-${department.id}`}
+            >
+              {department.name}
+            </UIChip>
+          ))}
+        </UIFlexBox>
+      </UIBox>
+
       <UIBox css={{ marginTop: '$5', spaceY: '$3' }}>
         <UIButton fullWidth loading={loading}>
-          Submit
+          {isEditing ? 'Save' : 'Submit'}
         </UIButton>
         <UIButton
           fullWidth

@@ -4,13 +4,19 @@ import { UIBox } from '@quizrun/ui';
 import { useEffect } from 'react';
 import { useUserStore } from '@web/store/user.store';
 import ErrorView from './components/ErrorView';
+import useInitilzer from './hooks/useInitilzer';
 
 const DashboardLayout = () => {
-  const { loading, error, checkSession } = useUserStore();
+  const { loading, error, checkSession, user } = useUserStore();
+  const { initlize } = useInitilzer();
 
   useEffect(() => {
     checkSession();
   }, []);
+
+  useEffect(() => {
+    if (user?.id) initlize();
+  }, [user]);
 
   if (loading) return <p>Loading</p>;
   if (error?.message === '401') return <Navigate to="/auth/signin" />;

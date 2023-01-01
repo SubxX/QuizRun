@@ -2,13 +2,14 @@ import { styled } from '../../theme/stitches.config';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
 import { UIButton } from '../Button';
 import { UIFlexBox } from '../Box';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import {
   fadeIn,
   fadeOut,
   contentShow,
   contentHide,
 } from '../../animations/animations';
+import useBoolean from '../../hooks/useBoolean';
 
 const AlertDialogOverlay = styled(RadixAlertDialog.Overlay, {
   backgroundColor: 'rgba(0, 0, 0,0.60)',
@@ -74,8 +75,25 @@ const AlertDialog = ({
   title,
   subtitle,
 }: Props) => {
-  const [open, setOpen] = useState(false);
-  const closeDialog = () => setOpen(false);
+  const { value: open, set: setOpen } = useBoolean(); // Alert Dialog state
+  const { value: loading, set: setLoading } = useBoolean(); // Resolve function loading state
+
+  const closeDialog = () => {
+    if (loading) return;
+    setOpen(false);
+  };
+
+  const resolve = async () => {
+    try {
+      setLoading(true);
+      await onResolve?.();
+      closeDialog();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <RadixAlertDialog.Root open={open} onOpenChange={setOpen}>
@@ -91,16 +109,15 @@ const AlertDialog = ({
           </AlertDialogDescription>
           {extraContent}
           <UIFlexBox justify="end" gap={3}>
-            <RadixAlertDialog.Cancel asChild>
+            <RadixAlertDialog.Cancel asChild disabled={loading}>
               <UIButton onClick={onReject} color="light">
                 Cancel
               </UIButton>
             </RadixAlertDialog.Cancel>
-            <RadixAlertDialog.Action asChild>
-              <UIButton onClick={onResolve} color="danger">
-                Yes confirm!
-              </UIButton>
-            </RadixAlertDialog.Action>
+
+            <UIButton onClick={resolve} color="danger" loading={loading}>
+              Yes confirm!
+            </UIButton>
           </UIFlexBox>
         </AlertDialogContent>
       </RadixAlertDialog.Portal>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 type Props = {
   title: string;
   subtitle?: string;
-  actions?: ReactNode;
+  actions?: ReactNode | null;
   backButton?: boolean;
 };
 

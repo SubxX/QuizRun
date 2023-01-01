@@ -4,30 +4,14 @@ import { supabase } from '@web/supabase/supabaseClient';
 export const getOrganizationDetails = async (id: string): Promise<IOrganization> => {
     const { data: organization, error } = await supabase
         .from('organization')
-        .select(`*, 
-            organization_departments (
-                id, 
-                department( 
-                    name,
-                    description,
-                    image,
-                    id
-                ) 
-            )`
-        )
+        .select()
         .eq('id', id)
         .single()
 
     if (error) throw new Error(error.message, { cause: error });
     if (!organization) throw new Error('404');
 
-
-    // Mapping department data
-    const format = (d: any) => ({ dep_id: d.department.id, ...d.department, id: d.id, })
-    organization.departments = organization.organization_departments.map(format)
-    delete organization.organization_departments
-
-    return organization as any
+    return organization
 };
 
 export const getAllOrganizations = async (): Promise<IOrganization[]> => {
@@ -38,10 +22,22 @@ export const getAllOrganizations = async (): Promise<IOrganization[]> => {
     return data;
 };
 
-export const createOrganization = async (payload: Omit<IOrganization, 'departments' | 'created_at' | 'id'>): Promise<IOrganization> => {
+export const createOrganization = async (payload: Omit<IOrganization, 'created_at' | 'id'>): Promise<IOrganization> => {
     const { data, error } = await supabase
         .from('organization')
         .insert(payload)
+        .select()
+        .single()
+    if (error) throw new Error(error.message, { cause: error });
+    return data;
+};
+
+export const editOrganization = async (payload: Omit<IOrganization, 'created_at' | 'created_by'>): Promise<IOrganization> => {
+    const { id, ...rest } = payload
+    const { data, error } = await supabase
+        .from('organization')
+        .update(rest)
+        .eq('id', id)
         .select()
         .single()
     if (error) throw new Error(error.message, { cause: error });

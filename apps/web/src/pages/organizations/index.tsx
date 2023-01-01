@@ -3,11 +3,11 @@ import Container from '@web/layouts/dashboard-layout/components/Container';
 import OrganizationCard from './components/OrganizationCard';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import useFetch from '@web/hooks/useFetch';
-import { Organization } from '@web/store/organization.store';
+import { IOrganization } from '@web/store/organization.store';
 import { getAllOrganizations } from '@web/api/organization.api';
 
 const Organizations = () => {
-  const { data: organizations } = useFetch<Organization[]>(() =>
+  const { data: organizations } = useFetch<IOrganization[]>(() =>
     getAllOrganizations()
   );
 
