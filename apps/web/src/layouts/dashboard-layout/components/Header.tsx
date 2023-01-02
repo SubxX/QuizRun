@@ -1,20 +1,45 @@
-import { UIBox, UIText, UIIconButton, UIFlexBox } from '@quizrun/ui';
+import { UIBox, UIText, UIIconButton, UIFlexBox, config } from '@quizrun/ui';
 import { ReactNode } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { CSS } from '@stitches/react';
 
 type Props = {
   title: string;
   subtitle?: string;
   actions?: ReactNode | null;
   backButton?: boolean;
+  css?: CSS<typeof config>;
+  isSticky?: boolean;
 };
 
-const Header = ({ subtitle, title, backButton, actions }: Props) => {
+const stickyStyles = {
+  background: '$dark',
+  padding: '$4 0',
+  marginBottom: '$4',
+  position: 'sticky',
+  top: 0,
+  left: 0,
+  zIndex: 9,
+};
+
+const Header = ({
+  subtitle,
+  title,
+  backButton,
+  actions,
+  css = {},
+  isSticky,
+}: Props) => {
   const navigate = useNavigate();
 
   return (
-    <UIFlexBox as="header" gap="3" items="center" css={{ marginBottom: '$8' }}>
+    <UIFlexBox
+      as="header"
+      gap="3"
+      items="center"
+      css={{ marginBottom: '$8', ...(isSticky ? stickyStyles : {}), ...css }}
+    >
       {backButton && (
         <UIIconButton
           onClick={navigate.bind(this, -1)}

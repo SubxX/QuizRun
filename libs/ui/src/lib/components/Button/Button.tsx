@@ -7,8 +7,8 @@ import { rotate } from '../../animations/animations';
 
 const StyledButton = styled('button', {
   borderRadius: '6px',
-  padding: '8px 16px',
-  fontSize: '$sm',
+  padding: '6px 14px',
+  fontSize: '$xs',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
@@ -29,7 +29,7 @@ const StyledButton = styled('button', {
     color: {
       primary: {
         backgroundColor: '$primary',
-        color: '$white',
+        color: 'rgba($white-rgb,0.8)',
       },
       danger: {
         backgroundColor: 'rgba(205, 43, 48, 0.1)',
@@ -40,7 +40,7 @@ const StyledButton = styled('button', {
       },
       light: {
         backgroundColor: 'rgba($white-rgb,0.1)',
-        color: '$white',
+        color: 'rgba($white-rgb,0.5)',
       },
     },
     fullWidth: {

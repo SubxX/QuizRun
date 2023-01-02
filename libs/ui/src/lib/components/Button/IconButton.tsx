@@ -6,8 +6,6 @@ import { rotate } from '../../animations/animations';
 
 const StyledIconButton = styled('button', {
   background: 'rgba($white-rgb,0.1)',
-  width: 40,
-  height: 40,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

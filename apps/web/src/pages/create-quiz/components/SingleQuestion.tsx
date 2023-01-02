@@ -24,6 +24,8 @@ type Props = {
   removeQuestion: (index: number) => void;
 };
 
+const MAX_OPTION = 6;
+
 const SingleQuestion = ({ index, control, removeQuestion }: Props) => {
   const {
     fields: options,
@@ -32,6 +34,14 @@ const SingleQuestion = ({ index, control, removeQuestion }: Props) => {
   } = useFieldArray({
     control,
     name: `questions.${index}.answers`,
+    rules: {
+      required: 'This field is required',
+      minLength: { value: 2, message: 'Add atleast 2 option' },
+      maxLength: {
+        value: MAX_OPTION,
+        message: `Max ${MAX_OPTION} option allowed`,
+      },
+    },
   });
 
   const addOption = () => append({ isCorrect: false, value: '' });
@@ -81,11 +91,16 @@ const SingleQuestion = ({ index, control, removeQuestion }: Props) => {
           </UIBox>
           <UISeparator css={{ margin: '$5 0 ' }} />
 
-          <UIFlexBox>
+          <UIFlexBox items="center">
             <UIText css={{ color: '$light-white', flex: 1 }}>
               Add answers
             </UIText>
-            <UIIconButton size="sm" onClick={addOption}>
+
+            <UIIconButton
+              size="sm"
+              onClick={addOption}
+              disabled={options.length === MAX_OPTION}
+            >
               <IoAddOutline />
             </UIIconButton>
           </UIFlexBox>

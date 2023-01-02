@@ -20,7 +20,15 @@ const CreateQuiz = () => {
     name: 'questions',
   });
 
-  const addQuestion = () => append({ name: '', description: '', answers: [] });
+  const addQuestion = () =>
+    append({
+      name: '',
+      description: '',
+      answers: [
+        { value: '', isCorrect: false },
+        { value: '', isCorrect: false },
+      ],
+    });
   const removeQuestion = (i: number) => remove(i);
 
   const submit = (value: any) => {
@@ -28,23 +36,22 @@ const CreateQuiz = () => {
   };
 
   return (
-    <Container>
+    <Container css={{ paddingTop: 0 }}>
       <UIBox as="form" onSubmit={handleSubmit(submit)}>
         <Header
           backButton
           title="Create Quiz"
-          subtitle="Create new quiz for your orgnization"
-          actions={
-            <UIButton type="submit" fullWidth css={{ marginTop: '$5' }}>
-              Save
-            </UIButton>
-          }
+          // subtitle="Create new quiz for your orgnization"
+          actions={<UIButton type="submit">Save</UIButton>}
+          isSticky
         />
         <UIBox
           css={{
             display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
             gap: '$5',
+            '@md': {
+              gridTemplateColumns: '1fr 2fr',
+            },
           }}
         >
           <UIBox css={{ spaceY: '$3' }}>
@@ -84,7 +91,7 @@ const CreateQuiz = () => {
                     placeholder="Select department"
                     onChange={onChange}
                     value={value}
-                    error={errors?.name?.message}
+                    error={errors?.department?.message}
                   />
                 </>
               )}
@@ -113,6 +120,10 @@ const CreateQuiz = () => {
           </UIBox>
 
           <UIBox css={{ spaceY: '$3' }}>
+            <UIText color="light-white" fontSize="lg">
+              Questions
+            </UIText>
+
             {fields.map((field, index) => (
               <SingleQuestion
                 key={field.id}
