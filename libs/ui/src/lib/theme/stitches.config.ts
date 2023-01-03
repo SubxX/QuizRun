@@ -114,7 +114,7 @@ export const globalStyles = globalCss({
   ".w-full": {
     width: '100%'
   },
-  ".flex-one": {
+  ".flex-1": {
     flex: 1
   },
   '.truncate': {

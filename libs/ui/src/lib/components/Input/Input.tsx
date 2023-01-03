@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { ToolTip, UILabel } from '../';
 import Adornment from './Adornment';
-import { styled, theme } from '../../theme/stitches.config';
+import { styled } from '../../theme/stitches.config';
 import { UIBox } from '../Box';
 import { TbAlertOctagon } from 'react-icons/tb';
 
@@ -30,6 +30,10 @@ export const StyledInput = styled('input', {
   },
   '&[aria-invalid="true"]': {
     borderColor: '$error',
+  },
+  '&:disabled': {
+    opacity: 0.6,
+    cursor: 'not-allowed',
   },
 });
 

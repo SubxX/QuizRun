@@ -5,6 +5,7 @@ import {
   UIBox,
   UIInput,
   UITextarea,
+  UISelect,
 } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
@@ -81,19 +82,27 @@ const CreateQuiz = () => {
               name={'department'}
               rules={{ required: 'Department is require' }}
               render={({
-                field: { onChange, value = '' },
+                field: { onChange, value },
                 formState: { errors },
               }) => (
-                <>
-                  <UIInput
+                <UISelect onValueChange={onChange} value={value}>
+                  <UISelect.Trigger
+                    placeholder="Test"
                     label="Department"
-                    id="quiz-department"
-                    placeholder="Select department"
-                    onChange={onChange}
-                    value={value}
                     error={errors?.department?.message}
                   />
-                </>
+
+                  <UISelect.Content>
+                    <UISelect.Group>
+                      <UISelect.Label>Fruits</UISelect.Label>
+                      <UISelect.Item value="apple">Apple</UISelect.Item>
+                      <UISelect.Item value="banana">Banana</UISelect.Item>
+                      <UISelect.Item value="blueberry">Blueberry</UISelect.Item>
+                      <UISelect.Item value="grapes">Grapes</UISelect.Item>
+                      <UISelect.Item value="pineapple">Pineapple</UISelect.Item>
+                    </UISelect.Group>
+                  </UISelect.Content>
+                </UISelect>
               )}
             />
 

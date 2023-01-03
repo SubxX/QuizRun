@@ -48,7 +48,7 @@ const Header = ({ Icon, title, subtitle, actions }: CardHeaderProps) => {
             <Icon size={18} />
           </UIBox>
         )}
-        <span className="flex-one">{title}</span>
+        <span className="flex-1">{title}</span>
         {Boolean(actions) && (
           <UIFlexBox gap="2" css={{ flex: 'none' }}>
             {actions}
