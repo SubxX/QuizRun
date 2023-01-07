@@ -16,10 +16,10 @@ import {
   IoCheckmarkCircleSharp,
 } from 'react-icons/io5';
 import { Control, useFieldArray, Controller } from 'react-hook-form';
-import { IQuizForm } from '../interface/quiz.interface';
+import { IQuizQuestionsForm } from '../interface/quiz.interface';
 
 type Props = {
-  control: Control<IQuizForm, any>;
+  control: Control<IQuizQuestionsForm, any>;
   index: number;
   removeQuestion: (index: number) => void;
 };

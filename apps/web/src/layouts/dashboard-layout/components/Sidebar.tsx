@@ -1,4 +1,3 @@
-import useSwitchInstitute from '@web/hooks/useSwitchInstitute';
 import {
   UIIconButton,
   ToolTip,

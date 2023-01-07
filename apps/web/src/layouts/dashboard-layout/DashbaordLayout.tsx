@@ -16,7 +16,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (user?.id) initlize();
-  }, [user]);
+  }, [user?.id]);
 
   if (loading) return <p>Loading</p>;
   if (error?.message === '401') return <Navigate to="/auth/signin" />;

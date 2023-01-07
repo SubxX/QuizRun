@@ -26,7 +26,6 @@ export const useDepartmentStore = create<DepartmentState>()(
         loading: true,
         error: null,
         fetch: async () => {
-            if (get().data.length) return
             try {
                 set({ loading: true })
                 const { data, error } = await supabase.from('department').select()

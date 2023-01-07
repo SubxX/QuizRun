@@ -140,20 +140,14 @@ const CreateEditOrganization = ({
         </UIFlexBox>
       </UIBox>
 
-      <UIBox css={{ marginTop: '$5', spaceY: '$3' }}>
-        <UIButton fullWidth loading={loading}>
+      <UIFlexBox justify="end" css={{ marginTop: '$5', spaceX: '$2' }}>
+        <UIButton type="submit" loading={loading}>
           {isEditing ? 'Save' : 'Submit'}
         </UIButton>
-        <UIButton
-          fullWidth
-          color="light"
-          type="button"
-          onClick={closeDialog}
-          disabled={loading}
-        >
+        <UIButton color="light" onClick={closeDialog} disabled={loading}>
           Cancel
         </UIButton>
-      </UIBox>
+      </UIFlexBox>
     </UIBox>
   );
 };

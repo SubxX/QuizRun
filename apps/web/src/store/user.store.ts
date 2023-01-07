@@ -24,7 +24,7 @@ export const useUserStore = create<UserState>()(
 
                 if (error) throw new Error(error.name, { cause: error });
                 if (!session) throw new Error("401");
-                set({ error: null })
+                set({ error: null, user: session.user })
             } catch (error: any) {
                 set({ error: error as Error, ...(error?.message === '401' ? { user: null } : {}) })
             } finally {

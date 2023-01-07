@@ -75,6 +75,14 @@ export const { theme, styled, globalCss, keyframes, config } = createStitches({
       '& > * + *': {
         marginLeft: value
       }
+    }),
+    lineClamper: (value: number) => ({
+      display: '-webkit-box',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      '-webkit-line-clamp': value,
+      lineClamp: value,
+      '-webkit-box-orient': 'vertical',
     })
   }
 })

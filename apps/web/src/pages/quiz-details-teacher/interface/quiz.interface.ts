@@ -13,5 +13,10 @@ export type IQuizForm = {
     name: string;
     description: string;
     department: string;
+}
+
+export type IQuizQuestionsForm = {
     questions: IQuestion[];
-};
+}
+
+export interface IQuiz extends IQuizForm, IQuizQuestionsForm { }

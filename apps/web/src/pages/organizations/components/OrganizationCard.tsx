@@ -22,16 +22,7 @@ const OrganizationCard = ({ org }: { org: IOrganization }) => {
         </UIText>
         <UIText
           as="span"
-          css={{
-            marginTop: '$2',
-            display: '-webkit-box',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            '-webkit-line-clamp': 3,
-            lineClamp: 3,
-            '-webkit-box-orient': 'vertical',
-            minHeight: 52,
-          }}
+          css={{ lineClamper: 3, marginTop: '$2', minHeight: 52 }}
         >
           {org.description}
         </UIText>
