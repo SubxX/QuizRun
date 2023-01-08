@@ -27,7 +27,7 @@ const Card = styled('div', {
 
 type CardHeaderProps = {
   title: string;
-  subtitle: string;
+  subtitle?: string;
   Icon?: IconType;
   actions?: ReactNode;
 };
@@ -55,9 +55,11 @@ const Header = ({ Icon, title, subtitle, actions }: CardHeaderProps) => {
           </UIFlexBox>
         )}
       </UIFlexBox>
-      <UIText fontSize="sm" css={{ marginTop: '$2', opacity: 0.5 }}>
-        {subtitle}
-      </UIText>
+      {Boolean(subtitle) && (
+        <UIText fontSize="sm" css={{ marginTop: '$2', opacity: 0.5 }}>
+          {subtitle}
+        </UIText>
+      )}
     </UIBox>
   );
 };

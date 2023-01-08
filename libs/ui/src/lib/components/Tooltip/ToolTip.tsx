@@ -42,27 +42,24 @@ type Props = {
 };
 
 const ToolTip = ({
-  defaultOpen,
   delayDuration = 0.25,
-  disableHoverableContent,
   children,
   sideOffset = 8,
   title,
-  align = 'start',
+  align = 'center',
   side = 'right',
+  ...rest
 }: Props) => {
   return (
-    <TooltipPrimitive.Root
-      defaultOpen={defaultOpen}
-      delayDuration={delayDuration}
-      disableHoverableContent={disableHoverableContent}
-    >
+    <TooltipPrimitive.Root delayDuration={delayDuration} {...rest}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
       <TooltipPrimitive.Portal>
-        <TooltipContent align={align} side={side} sideOffset={sideOffset}>
-          {title}
-          <TooltipPrimitive.Arrow width={11} height={5} />
-        </TooltipContent>
+        {Boolean(title) && (
+          <TooltipContent align={align} side={side} sideOffset={sideOffset}>
+            {title}
+            <TooltipPrimitive.Arrow width={11} height={5} />
+          </TooltipContent>
+        )}
       </TooltipPrimitive.Portal>
     </TooltipPrimitive.Root>
   );

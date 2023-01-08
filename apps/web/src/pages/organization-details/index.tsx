@@ -4,7 +4,7 @@ import {
   UIText,
   UIFlexBox,
   UIDropdownMenu,
-  UIDalog,
+  UIDialog,
   UIAlertDialog,
 } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
@@ -117,9 +117,9 @@ const Page = () => {
       </UIGridBox>
 
       {/*  Edit Organization Dialog */}
-      <UIDalog open={open}>
-        <UIDalog.Content>
-          <UIDalog.Header
+      <UIDialog open={open}>
+        <UIDialog.Content>
+          <UIDialog.Header
             title="Edit organization"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
           />
@@ -128,8 +128,8 @@ const Page = () => {
             orgData={organization}
             updateOrganization={mutateData}
           />
-        </UIDalog.Content>
-      </UIDalog>
+        </UIDialog.Content>
+      </UIDialog>
     </Container>
   );
 };

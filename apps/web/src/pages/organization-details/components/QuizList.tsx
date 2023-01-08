@@ -1,4 +1,4 @@
-import { UICard, UIDalog, UIText, useBoolean } from '@quizrun/ui';
+import { UICard, UIDialog, UIText, useBoolean } from '@quizrun/ui';
 import { CgPlayListAdd } from 'react-icons/cg';
 import CreateEditQuiz from '@web/shared/CreateEditQuiz';
 
@@ -30,15 +30,15 @@ const QuizList = () => {
       </UICard>
 
       {/* Quiz Dialog for adding & editing a quiz */}
-      <UIDalog open={open}>
-        <UIDalog.Content>
-          <UIDalog.Header
+      <UIDialog open={open}>
+        <UIDialog.Content>
+          <UIDialog.Header
             title="Create Quiz"
             description="Manage your organization quizes from one place add/edit your quize anytime."
           />
           <CreateEditQuiz closeDialog={off} />
-        </UIDalog.Content>
-      </UIDalog>
+        </UIDialog.Content>
+      </UIDialog>
     </>
   );
 };

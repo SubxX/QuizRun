@@ -1,11 +1,11 @@
 export type IAnswer = {
-    isCorrect: boolean;
     value: string;
 };
 
 export type IQuestion = {
     name: string;
     description?: string;
+    correctAnswer: number
     answers: IAnswer[];
 };
 

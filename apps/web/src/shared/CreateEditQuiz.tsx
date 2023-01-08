@@ -11,7 +11,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { useUserStore } from '@web/store/user.store';
 import { useDepartmentStore } from '@web/store/department.store';
-import { IQuizForm } from '@web/pages/create-quiz/interface/quiz.interface';
+import { IQuizForm } from '@web/pages/quiz-details-teacher/interface/quiz.interface';
 
 type Props = {
   closeDialog: any;

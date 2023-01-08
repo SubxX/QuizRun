@@ -1,4 +1,4 @@
-import { UIDalog, ToolTip } from '@quizrun/ui';
+import { UIDialog, ToolTip } from '@quizrun/ui';
 import { AiOutlinePlus } from 'react-icons/ai';
 import StyledSessionSelector from './SessionSelector';
 import { useState } from 'react';
@@ -22,15 +22,15 @@ const AddOrganization = () => {
         </StyledSessionSelector>
       </ToolTip>
 
-      <UIDalog open={open}>
-        <UIDalog.Content>
-          <UIDalog.Header
+      <UIDialog open={open}>
+        <UIDialog.Content>
+          <UIDialog.Header
             title="Create organization"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
           />
           <CreateEditOrganization closeDialog={closeDialog} />
-        </UIDalog.Content>
-      </UIDalog>
+        </UIDialog.Content>
+      </UIDialog>
     </>
   );
 };

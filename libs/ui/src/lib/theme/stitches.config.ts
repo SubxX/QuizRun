@@ -139,6 +139,7 @@ export const globalStyles = globalCss({
   },
   button: {
     border: 'none',
+    background: 'transparent',
     '&:hover,&:focus': {
       outline: 'none',
     }

@@ -1,80 +1,87 @@
-import { UIButton, UICard, UIText, UIBox } from '@quizrun/ui';
+import {
+  UIText,
+  UIBox,
+  UIDialog,
+  useBoolean,
+  UIButton,
+  UIFlexBox,
+  UIIconButton,
+  ToolTip,
+} from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { BiAddToQueue } from 'react-icons/bi';
-import SingleQuestion from './components/SingleQuestion';
-import { IQuizQuestionsForm } from './interface/quiz.interface';
+import CreateEditQuestion from './components/CreateEditQuestion';
+import { RiEditLine } from 'react-icons/ri';
+import QuestionCard from './components/QuestionCard';
+
+const questions = [
+  {
+    name: 'Who created HTML',
+    answers: [{ value: 'asd' }, { value: 'test' }, { value: 'haha' }],
+  },
+  {
+    name: 'Who created CSS',
+    description:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta explicabo, tempore magni corrupti odio dolor dignissimos culpa, reiciendis, odit iure labore provident distinctio saepe quibusdam suscipit cumque ducimus recusandae iste?',
+    answers: [{ value: 'asd' }, { value: 'test' }],
+  },
+  {
+    name: 'Who created Javascript',
+    answers: [
+      { value: 'asd' },
+      { value: 'test' },
+      { value: 'test' },
+      { value: 'test' },
+    ],
+  },
+  {
+    name: 'Who created Java',
+    answers: [{ value: 'asd' }, { value: 'test' }],
+  },
+];
 
 const QuizDetailsTeacher = () => {
-  const { control, handleSubmit } = useForm<IQuizQuestionsForm>();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'questions',
-  });
-
-  const addQuestion = () =>
-    append({
-      name: '',
-      description: '',
-      answers: [
-        { value: '', isCorrect: false },
-        { value: '', isCorrect: false },
-      ],
-    });
-  const removeQuestion = (i: number) => remove(i);
-
-  const submit = (value: any) => {
-    console.log(value);
-  };
+  const { value: open, off: closeDialog, on: openDialog } = useBoolean();
 
   return (
-    <Container css={{ paddingTop: 0 }}>
-      <UIBox as="form" onSubmit={handleSubmit(submit)}>
+    <Container>
+      <UIBox>
         <Header
           backButton
-          title="Create Quiz"
-          // subtitle="Create new quiz for your orgnization"
-          actions={<UIButton type="submit">Save</UIButton>}
-          isSticky
+          title="Html Quiz"
+          subtitle="The HyperText Markup Language or HTML is the standard markup language for documents designed"
+          actions={
+            <ToolTip title="Edit Quiz">
+              <UIIconButton>
+                <RiEditLine size={18} />
+              </UIIconButton>
+            </ToolTip>
+          }
         />
-        <UIBox css={{ spaceY: '$3' }}>
-          <UIText color="light-white" fontSize="lg">
+
+        <UIFlexBox justify="between" items="center">
+          <UIText color="custom-white" fontSize="xl">
             Questions
           </UIText>
+          <UIButton onClick={openDialog}>Add Question</UIButton>
+        </UIFlexBox>
 
-          {fields.map((field, index) => (
-            <SingleQuestion
-              key={field.id}
-              control={control}
-              index={index}
-              removeQuestion={removeQuestion}
-            />
+        <UIBox css={{ spaceY: '$3', marginTop: '$6' }}>
+          {questions.map((qs, i) => (
+            <QuestionCard key={i} {...qs} />
           ))}
-          <UICard
-            css={{
-              border: '2px dashed rgba($white-rgb,0.1)',
-              width: '100%',
-              marginTop: '$5',
-            }}
-            as="button"
-            hover
-            onClick={addQuestion}
-            type="button"
-          >
-            <UICard.Content
-              css={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '$light-white',
-              }}
-            >
-              <BiAddToQueue size={20} />
-              <UIText css={{ marginLeft: '$2' }}>Add</UIText>
-            </UICard.Content>
-          </UICard>
         </UIBox>
+
+        {/*  Question creation dialog */}
+        <UIDialog open={open}>
+          <UIDialog.Content>
+            <UIDialog.Header
+              title="Create Question"
+              description="Create or edit question under this quiz"
+            />
+            <CreateEditQuestion closeDialog={closeDialog} />
+          </UIDialog.Content>
+        </UIDialog>
       </UIBox>
     </Container>
   );
