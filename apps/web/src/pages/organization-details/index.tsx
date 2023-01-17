@@ -18,16 +18,15 @@ import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 import { BsTrash } from 'react-icons/bs';
 import { useState } from 'react';
 import CreateEditOrganization from '@web/shared/CreateEditOrganization';
-import { deleteOrganization } from '@web/api/organization.api';
-import { useGetMyOrganizationStore } from '@web/store/organization.store';
 import PermissionHandler from './components/PermissionHandler';
 import { preventDefault } from '@web/utils/app.utils';
+import { useDeleteOrganizationMutation } from '@web/queries/organization.query';
 
 const Page = () => {
-  const { organization, mutateData } = useOrgDetailsContext();
+  const { organization } = useOrgDetailsContext();
   const type = useSearchParams()[0].get('type');
   const navigate = useNavigate();
-  const { removeOrganization } = useGetMyOrganizationStore();
+  const { mutateAsync: deleteOrganization } = useDeleteOrganizationMutation();
 
   const [open, setOpen] = useState(false);
   const closeDialog = () => setOpen(false);
@@ -35,7 +34,6 @@ const Page = () => {
   const deleteOrganizationHandler = async () => {
     try {
       await deleteOrganization(organization?.id as string);
-      removeOrganization(organization?.id as string);
       navigate('/', { replace: true });
     } catch (error) {
       console.log(error);
@@ -126,7 +124,6 @@ const Page = () => {
           <CreateEditOrganization
             closeDialog={closeDialog}
             orgData={organization}
-            updateOrganization={mutateData}
           />
         </UIDialog.Content>
       </UIDialog>

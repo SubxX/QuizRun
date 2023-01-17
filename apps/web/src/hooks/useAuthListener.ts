@@ -1,19 +1,21 @@
-import { useUserStore } from "@web/store/user.store";
 import { supabase } from "@web/supabase/supabaseClient";
 import { useEffect } from "react";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function useAuthListener() {
-    const { set, clear } = useUserStore()
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
     useEffect(() => {
 
-        supabase.auth.onAuthStateChange((event, session) => {
+        supabase.auth.onAuthStateChange((event) => {
             if (event === 'SIGNED_IN') {
-                session ? set(session.user) : clear()
+                navigate('/')
             }
 
             if (event === 'SIGNED_OUT') {
-                clear()
+                queryClient.removeQueries()
             }
         })
 

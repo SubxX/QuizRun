@@ -1,12 +1,13 @@
 import { UICard, UIFlexBox, UIText } from '@quizrun/ui';
-import { IDepartment, useDepartmentStore } from '@web/store/department.store';
+import { useDepartmentsQuery } from '@web/queries/department.query';
 import { useMemo } from 'react';
 import { useOrgDetailsContext } from '../Context';
 import { BsClipboardData } from 'react-icons/bs';
+import { IDepartment } from '@web/api/department.api';
 
 const DepartmentList = () => {
   const { organization } = useOrgDetailsContext();
-  const { data, loading } = useDepartmentStore();
+  const { data = [], isLoading } = useDepartmentsQuery();
 
   const departmentMap = useMemo(
     () =>
@@ -18,7 +19,7 @@ const DepartmentList = () => {
     [data]
   );
 
-  if (loading)
+  if (isLoading)
     return (
       <UIText fontSize="sm" color="light-white">
         Loading

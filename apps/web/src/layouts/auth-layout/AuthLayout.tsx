@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { UIBox } from '@quizrun/ui';
-import { useUserStore } from '@web/store/user.store';
+import { AUTH_TOKEN_KEY } from '@web/supabase/supabaseClient';
 
 const AuthLayout = () => {
-  const { user } = useUserStore();
+  const user = localStorage.getItem(AUTH_TOKEN_KEY);
   if (user) return <Navigate to="/" />;
 
   return (

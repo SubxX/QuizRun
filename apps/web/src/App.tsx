@@ -1,14 +1,20 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Router from './routes/Router';
 import { globalStyles } from '@quizrun/ui';
 import useAuthListener from './hooks/useAuthListener';
 
+// All initlizer related hooks goes here
+const Initilizer = () => {
+  useAuthListener();
+  return null;
+};
+
 function App() {
   globalStyles();
-  useAuthListener();
 
   return (
     <BrowserRouter>
+      <Initilizer />
       <Router />
     </BrowserRouter>
   );

@@ -1,25 +1,13 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import { UIBox } from '@quizrun/ui';
-import { useEffect } from 'react';
-import { useUserStore } from '@web/store/user.store';
 import ErrorView from './components/ErrorView';
-import useInitilzer from './hooks/useInitilzer';
+import { useUserQuery } from '@web/queries/auth.queries';
 
 const DashboardLayout = () => {
-  const { loading, error, checkSession, user } = useUserStore();
-  const { initlize } = useInitilzer();
+  const { error, data: user, isLoading } = useUserQuery();
 
-  useEffect(() => {
-    checkSession();
-  }, []);
-
-  useEffect(() => {
-    if (user?.id) initlize();
-  }, [user?.id]);
-
-  if (loading) return <p>Loading</p>;
-  if (error?.message === '401') return <Navigate to="/auth/signin" />;
+  if (isLoading) return <p>Loading</p>;
   if (error) return <ErrorView />;
 
   return (

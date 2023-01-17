@@ -1,7 +1,7 @@
 import { UICard, UIText, UIBox } from '@quizrun/ui';
 import { MdFoundation } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { IOrganization } from '@web/store/organization.store';
+import { IOrganization } from '@web/api/organization.api';
 
 const OrganizationCard = ({ org }: { org: IOrganization }) => {
   return (

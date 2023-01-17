@@ -2,14 +2,10 @@ import { UIGridBox } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import OrganizationCard from './components/OrganizationCard';
 import Header from '@web/layouts/dashboard-layout/components/Header';
-import useFetch from '@web/hooks/useFetch';
-import { IOrganization } from '@web/store/organization.store';
-import { getAllOrganizations } from '@web/api/organization.api';
+import { useAllOrganizationsQuery } from '@web/queries/organization.query';
 
 const Organizations = () => {
-  const { data: organizations } = useFetch<IOrganization[]>(() =>
-    getAllOrganizations()
-  );
+  const { data: organizations } = useAllOrganizationsQuery();
 
   return (
     <Container>

@@ -11,20 +11,15 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '@web/hooks/useAuth';
 import AddOrganization from './AddOrganization';
-import { useGetMyOrganizationStore } from '@web/store/organization.store';
-import { useEffect } from 'react';
-import { useUserStore } from '@web/store/user.store';
+import { useUserQuery } from '@web/queries/auth.queries';
 import { NavLink } from 'react-router-dom';
+import { useMyOrganizationsQuery } from '@web/queries/organization.query';
 
 const Sidebar = () => {
-  const { user } = useUserStore();
-  const { fetch, data: myOrgs } = useGetMyOrganizationStore();
+  const { data: user } = useUserQuery();
+  const { data: myOrgs = [] } = useMyOrganizationsQuery(user?.id as string);
   const navigate = useNavigate();
   const { signout } = useAuth();
-
-  useEffect(() => {
-    if (user?.id) fetch(user?.id);
-  }, [user?.id]);
 
   const logout = async () => {
     await signout();

@@ -8,20 +8,17 @@ import {
   UIFlexBox,
 } from '@quizrun/ui';
 import { useForm, Controller } from 'react-hook-form';
-
-import { useUserStore } from '@web/store/user.store';
-import { useDepartmentStore } from '@web/store/department.store';
+import { useDepartmentsQuery } from '@web/queries/department.query';
 import { IQuizForm } from '@web/pages/quiz-details-teacher/interface/quiz.interface';
 
 type Props = {
   closeDialog: any;
   quizData?: IQuizForm;
-  updateQuiz?: (quiz: IQuizForm) => void;
 };
 
-const CreateEditQuiz = ({ closeDialog, quizData, updateQuiz }: Props) => {
+const CreateEditQuiz = ({ closeDialog, quizData }: Props) => {
   const { handleSubmit, control } = useForm<IQuizForm>();
-  const { data } = useDepartmentStore();
+  const { data = [] } = useDepartmentsQuery();
 
   const { value: loading, set: setLoading } = useBoolean();
   const isEditing = Boolean(quizData);

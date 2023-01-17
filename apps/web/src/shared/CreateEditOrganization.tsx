@@ -10,16 +10,13 @@ import {
 } from '@quizrun/ui';
 import { BiBuilding } from 'react-icons/bi';
 import { useForm, Controller } from 'react-hook-form';
+import { useUserQuery } from '@web/queries/auth.queries';
+import { IOrganization } from '@web/api/organization.api';
+import { useDepartmentsQuery } from '@web/queries/department.query';
 import {
-  createOrganization,
-  editOrganization,
-} from '@web/api/organization.api';
-import { useUserStore } from '@web/store/user.store';
-import {
-  IOrganization,
-  useGetMyOrganizationStore,
-} from '@web/store/organization.store';
-import { useDepartmentStore } from '@web/store/department.store';
+  useCreateOrganizationMutation,
+  useUpdateOrganizationMutation,
+} from '@web/queries/organization.query';
 
 type OrganizationForm = {
   name: string;
@@ -30,14 +27,9 @@ type OrganizationForm = {
 type Props = {
   closeDialog: any;
   orgData?: IOrganization;
-  updateOrganization?: (org: IOrganization) => void;
 };
 
-const CreateEditOrganization = ({
-  closeDialog,
-  orgData,
-  updateOrganization,
-}: Props) => {
+const CreateEditOrganization = ({ closeDialog, orgData }: Props) => {
   const { control, handleSubmit, setValue, watch } = useForm<OrganizationForm>({
     defaultValues: {
       name: orgData?.name ?? '',
@@ -45,10 +37,12 @@ const CreateEditOrganization = ({
       departments: orgData?.departments ?? [],
     },
   });
-  const { user } = useUserStore();
   const { value: loading, set: setLoading } = useBoolean();
-  const { addOrganization } = useGetMyOrganizationStore();
-  const { data: departments } = useDepartmentStore();
+  const { data: user } = useUserQuery();
+  const { data: departments = [] } = useDepartmentsQuery();
+
+  const { mutateAsync: addOrganization } = useCreateOrganizationMutation();
+  const { mutateAsync: updateOrganization } = useUpdateOrganizationMutation();
 
   const formDeparments = watch('departments');
   const isEditing = Boolean(orgData);
@@ -58,17 +52,9 @@ const CreateEditOrganization = ({
       setLoading(true);
 
       if (!isEditing) {
-        const newOrg = await createOrganization({
-          ...payload,
-          created_by: user.id as string,
-        });
-        addOrganization(newOrg);
+        addOrganization({ ...payload, created_by: user?.id as string });
       } else {
-        const updatedOrg = await editOrganization({
-          ...payload,
-          id: orgData?.id as string,
-        });
-        updateOrganization?.(updatedOrg);
+        await updateOrganization({ ...payload, id: orgData?.id as string });
       }
 
       closeDialog();

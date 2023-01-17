@@ -1,5 +1,14 @@
-import { IOrganization } from '@web/store/organization.store';
 import { supabase } from '@web/supabase/supabaseClient';
+
+export interface IOrganization {
+    id: string
+    created_at?: string
+    created_by: string
+    name: string
+    description: string
+    logo?: string
+    departments: string[]
+}
 
 export const getOrganizationDetails = async (id: string): Promise<IOrganization> => {
     const { data: organization, error } = await supabase
@@ -44,12 +53,18 @@ export const editOrganization = async (payload: Omit<IOrganization, 'created_at'
     return data;
 };
 
-export const deleteOrganization = async (orgId: string): Promise<boolean> => {
+export const deleteOrganization = async (orgId: string): Promise<string> => {
     const { error } = await supabase
         .from('organization')
         .delete()
         .eq('id', orgId)
 
     if (error) throw new Error(error.message, { cause: error });
-    return true;
+    return orgId;
 };
+
+export const getMyOrganizations = async (user_id: string): Promise<IOrganization[]> => {
+    const { data, error } = await supabase.from('organization').select().eq('created_by', user_id)
+    if (error) throw new Error(error?.message, { cause: error })
+    return data
+}

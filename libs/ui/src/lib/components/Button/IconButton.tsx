@@ -46,7 +46,9 @@ const StyledIconButton = styled('button', {
   },
 });
 
-type Props = ComponentProps<typeof StyledIconButton> & { loading?: boolean };
+type Props = ComponentProps<typeof StyledIconButton> & {
+  loading?: boolean;
+};
 
 const IconButton = forwardRef<HTMLButtonElement, Props>((props, ref) => {
   const { children, loading, disabled, type = 'button', ...rest } = props;
