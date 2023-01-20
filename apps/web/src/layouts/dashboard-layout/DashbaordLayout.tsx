@@ -1,13 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import { UIBox } from '@quizrun/ui';
 import ErrorView from './components/ErrorView';
 import { useUserQuery } from '@web/queries/auth.queries';
 
 const DashboardLayout = () => {
-  const { error, data: user, isLoading } = useUserQuery();
+  const { error, isLoading } = useUserQuery();
 
   if (isLoading) return <p>Loading</p>;
+
+  if ((error as Error)?.message === '401')
+    return <Navigate to="/auth/signin" />;
+
   if (error) return <ErrorView />;
 
   return (

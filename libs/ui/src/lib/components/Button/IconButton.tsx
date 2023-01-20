@@ -5,22 +5,31 @@ import { ComponentProps } from '@stitches/react';
 import { rotate } from '../../animations/animations';
 
 const StyledIconButton = styled('button', {
-  background: 'rgba($white-rgb,0.1)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  color: 'rgb($white-rgb,0.5)',
   transition: 'color 0.25s ease',
   cursor: 'pointer',
-  '&:not(:disabled):hover,&:not(:disabled):focus': {
-    background: 'rgba($white-rgb,0.15)',
-    color: 'rgba($white-rgb,0.8)',
-  },
+  backdropFilter: 'blur(16px)',
+  // '&:not(:disabled):hover,&:not(:disabled):focus': {
+  //   background: 'rgba($white-rgb,0.15)',
+  //   color: 'rgba($white-rgb,0.8)',
+  // },
   '&:disabled': {
     opacity: 0.8,
     cursor: 'not-allowed',
   },
   variants: {
+    color: {
+      light: {
+        background: 'rgba($white-rgb,0.1)',
+        color: 'rgb($white-rgb,0.5)',
+      },
+      primary: {
+        backgroundColor: '$primary',
+        color: 'rgba($white-rgb,0.8)',
+      },
+    },
     rounded: {
       true: {
         borderRadius: '$full',
@@ -43,6 +52,7 @@ const StyledIconButton = styled('button', {
   defaultVariants: {
     rounded: false,
     size: 'base',
+    color: 'light',
   },
 });
 

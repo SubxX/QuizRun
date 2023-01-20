@@ -3,7 +3,6 @@ import {
   UIButton,
   UIInput,
   UITextarea,
-  useBoolean,
   UIFlexBox,
   UIIconButton,
   UISeparator,
@@ -11,30 +10,30 @@ import {
   ToolTip,
 } from '@quizrun/ui';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
-import { IQuestion } from '../interface/quiz.interface';
+import { IQuestion } from '@web/api/questions.api';
 import { BiTrash } from 'react-icons/bi';
 import { IoAddOutline } from 'react-icons/io5';
-// import {
-//   IoCheckmarkCircleOutline,
-//   IoCheckmarkCircleSharp,
-// } from 'react-icons/io5';
+import { useCreateQuestionMutation } from '@web/queries/questions.queries';
+import { useUserQuery } from '@web/queries/auth.queries';
+import { IQuiz } from '@web/api/quiz.api';
 
+type IQuestionForm = Omit<IQuestion, 'quiz' | 'created_at'>;
 type Props = {
-  closeDialog: any;
+  closeDialog?: any;
   questionData?: IQuestion;
-  updateQuestion?: (qestion: IQuestion) => void;
+  quizData?: IQuiz;
 };
 const MAX_OPTION = 6;
 
-const CreateEditQuiz = ({
-  closeDialog,
-  questionData,
-  updateQuestion,
-}: Props) => {
-  const { handleSubmit, control, register } = useForm<IQuestion>();
+const CreateEditQuiz = ({ closeDialog, questionData, quizData }: Props) => {
+  const { data: user } = useUserQuery();
+  const { mutateAsync: createQuestion, isLoading } =
+    useCreateQuestionMutation();
 
-  const { value: loading, set: setLoading } = useBoolean();
+  const { handleSubmit, control, register } = useForm<IQuestionForm>();
+
   const isEditing = Boolean(questionData);
+  const loading = isLoading;
 
   const {
     fields: options,
@@ -56,14 +55,16 @@ const CreateEditQuiz = ({
   const addOption = () => append({ value: '' });
   const removeOption = (index: number) => remove(index);
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: IQuestionForm) => {
     try {
-      setLoading(true);
-      console.log(values);
+      await createQuestion({
+        ...values,
+        created_by: user?.id as string,
+        quiz: quizData?.id as string,
+      });
+      closeDialog();
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 

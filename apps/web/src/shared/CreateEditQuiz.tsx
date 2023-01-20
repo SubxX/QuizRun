@@ -4,33 +4,53 @@ import {
   UIInput,
   UITextarea,
   UISelect,
-  useBoolean,
   UIFlexBox,
 } from '@quizrun/ui';
 import { useForm, Controller } from 'react-hook-form';
 import { useDepartmentsQuery } from '@web/queries/department.query';
-import { IQuizForm } from '@web/pages/quiz-details-teacher/interface/quiz.interface';
+import { IQuiz } from '@web/api/quiz.api';
+import {
+  useCreateQuizMutation,
+  useUpdateQuizMutation,
+} from '@web/queries/quiz.queries';
+import { useUserQuery } from '@web/queries/auth.queries';
 
+type IQuizForm = Omit<IQuiz, 'id' | 'created_at' | 'created_by' | 'questions'>;
 type Props = {
   closeDialog: any;
-  quizData?: IQuizForm;
+  quizData?: IQuiz;
+  organization: string;
 };
 
-const CreateEditQuiz = ({ closeDialog, quizData }: Props) => {
-  const { handleSubmit, control } = useForm<IQuizForm>();
+const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
+  const { data: user } = useUserQuery();
   const { data = [] } = useDepartmentsQuery();
+  const isEdit = Boolean(quizData);
 
-  const { value: loading, set: setLoading } = useBoolean();
+  const { handleSubmit, control } = useForm<IQuizForm>({
+    defaultValues: {
+      name: quizData?.name ?? '',
+      department: quizData?.department,
+      description: quizData?.description ?? '',
+      organization: quizData?.organization ?? organization,
+    },
+  });
+
   const isEditing = Boolean(quizData);
+  const { mutateAsync: createQuiz, isLoading: addLoading } =
+    useCreateQuizMutation();
+  const { mutateAsync: updateQuiz, isLoading: editLoading } =
+    useUpdateQuizMutation();
+  const loading = addLoading || editLoading;
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: IQuizForm) => {
     try {
-      setLoading(true);
-      console.log(values);
+      isEdit
+        ? await updateQuiz({ ...values, id: quizData?.id as string })
+        : await createQuiz({ ...values, created_by: user?.id as string });
+      closeDialog();
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -64,7 +84,7 @@ const CreateEditQuiz = ({ closeDialog, quizData }: Props) => {
         render={({ field: { onChange, value }, formState: { errors } }) => (
           <UISelect onValueChange={onChange} value={value}>
             <UISelect.Trigger
-              placeholder="Test"
+              placeholder="Select Department"
               label="Department"
               error={errors?.department?.message}
             />

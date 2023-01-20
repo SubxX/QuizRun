@@ -6,17 +6,17 @@ import {
   UIDropdownMenu,
   UIDialog,
   UIAlertDialog,
+  useBoolean,
 } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { AiFillSetting } from 'react-icons/ai';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import DepartmentList from './components/DepartmentList';
-import QuizList from './components/QuizList';
+import { Link, useNavigate, useSearchParams, NavLink } from 'react-router-dom';
+import DepartmentList from './components/tabs/DepartmentList';
+import QuizList from './components/tabs/QuizList';
 import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 
 import { BsTrash } from 'react-icons/bs';
-import { useState } from 'react';
 import CreateEditOrganization from '@web/shared/CreateEditOrganization';
 import PermissionHandler from './components/PermissionHandler';
 import { preventDefault } from '@web/utils/app.utils';
@@ -28,8 +28,11 @@ const Page = () => {
   const navigate = useNavigate();
   const { mutateAsync: deleteOrganization } = useDeleteOrganizationMutation();
 
-  const [open, setOpen] = useState(false);
-  const closeDialog = () => setOpen(false);
+  const {
+    value: editOpen,
+    off: closeEditDialog,
+    on: openEditDialog,
+  } = useBoolean();
 
   const deleteOrganizationHandler = async () => {
     try {
@@ -54,7 +57,7 @@ const Page = () => {
                 </UIIconButton>
               </UIDropdownMenu.Trigger>
               <UIDropdownMenu.Content align="end">
-                <UIDropdownMenu.Item onClick={() => setOpen(true)}>
+                <UIDropdownMenu.Item onClick={openEditDialog}>
                   Edit
                 </UIDropdownMenu.Item>
 
@@ -115,14 +118,14 @@ const Page = () => {
       </UIGridBox>
 
       {/*  Edit Organization Dialog */}
-      <UIDialog open={open}>
+      <UIDialog open={editOpen}>
         <UIDialog.Content>
           <UIDialog.Header
             title="Edit organization"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
           />
           <CreateEditOrganization
-            closeDialog={closeDialog}
+            closeDialog={closeEditDialog}
             orgData={organization}
           />
         </UIDialog.Content>

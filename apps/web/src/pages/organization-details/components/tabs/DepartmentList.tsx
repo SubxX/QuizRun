@@ -1,7 +1,7 @@
 import { UICard, UIFlexBox, UIText } from '@quizrun/ui';
 import { useDepartmentsQuery } from '@web/queries/department.query';
 import { useMemo } from 'react';
-import { useOrgDetailsContext } from '../Context';
+import { useOrgDetailsContext } from '../../Context';
 import { BsClipboardData } from 'react-icons/bs';
 import { IDepartment } from '@web/api/department.api';
 

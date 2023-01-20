@@ -132,7 +132,7 @@ export const globalStyles = globalCss({
   },
   a: {
     color: "inherit",
-    textDecoration: "inherit"
+    textDecoration: "inherit",
   },
   'ul, ol': {
     listStyle: 'none',

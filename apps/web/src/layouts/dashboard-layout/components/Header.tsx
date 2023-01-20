@@ -16,10 +16,12 @@ type Props = {
 const stickyStyles = {
   background: '$dark',
   padding: '$4 0',
-  marginBottom: '$4',
+  marginBottom: '$5',
   position: 'sticky',
   top: 0,
   left: 0,
+  zIndex: 1,
+  borderBottom: '1px solid rgba($white-rgb,0.1)',
 };
 
 const Header = ({
@@ -49,7 +51,13 @@ const Header = ({
       )}
 
       <UIBox css={{ flex: 1 }}>
-        <UIText as="h4" fontSize="2xl" weight="medium" className="truncate">
+        <UIText
+          as="h4"
+          fontSize="2xl"
+          weight="medium"
+          className="truncate"
+          css={{ whiteSpace: 'normal' }}
+        >
           {title}
         </UIText>
         {Boolean(subtitle) && (
@@ -60,7 +68,7 @@ const Header = ({
       </UIBox>
 
       {Boolean(actions) && (
-        <UIFlexBox css={{ alignSelf: 'flex-start', flex: 'none' }} gap="1">
+        <UIFlexBox css={{ alignSelf: 'flex-start', flex: 'none' }} gap="2">
           {actions}
         </UIFlexBox>
       )}

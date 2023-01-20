@@ -2,27 +2,62 @@ import * as RUIDialog from '@radix-ui/react-dialog';
 import { styled } from '../../theme/stitches.config';
 import { AiOutlineClose } from 'react-icons/ai';
 import { UIIconButton } from '../Button';
-import { fadeIn, fadeOut, contentShow } from '../../animations/animations';
+import {
+  fadeIn,
+  fadeOut,
+  contentShow,
+  slideInFromLeft,
+  slideOutToLeft,
+} from '../../animations/animations';
 import { UIBox } from '../Box';
 import { ReactNode, forwardRef } from 'react';
+import { VariantProps } from '@stitches/react';
 
 const DialogContent = styled(RUIDialog.Content, {
   backgroundColor: '$blackish',
-  borderRadius: '$lg',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  maxWidth: '400px',
-  maxHeight: '85vh',
-  padding: '$5',
-  animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
-  spaceY: '$3',
-  overflowY: 'auto',
+  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+  animationDuration: '150ms',
   '&:focus': { outline: 'none' },
+
+  variants: {
+    drawer: {
+      true: {
+        willChange: 'transform',
+        width: '100%',
+        height: '100vh',
+        top: 0,
+        right: 0,
+        '@media(min-width:500px)': {
+          width: 400,
+        },
+        '&[data-state="open"]': {
+          animationName: `${slideInFromLeft}`,
+        },
+        '&[data-state="closed"]': {
+          animationName: `${slideOutToLeft}`,
+        },
+      },
+      false: {
+        width: '90vw',
+        maxWidth: '400px',
+        maxHeight: '85vh',
+        padding: '$5',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        animationName: `${contentShow}`,
+        spaceY: '$3',
+        overflowY: 'auto',
+        borderRadius: '$lg',
+      },
+    },
+  },
+  defaultVariants: {
+    drawer: false,
+  },
 });
 
 const DialogTitle = styled(RUIDialog.Title, { fontSize: '$2xl' });
@@ -48,16 +83,17 @@ const Dialog = RUIDialog.Root;
 const Trigger = RUIDialog.Trigger;
 const Close = RUIDialog.Close;
 
-export const Content = forwardRef<HTMLDivElement, { children: ReactNode }>(
-  ({ children, ...props }, forwardedRef) => (
-    <RUIDialog.Portal>
-      <DialogOverlay />
-      <DialogContent {...props} ref={forwardedRef}>
-        {children}
-      </DialogContent>
-    </RUIDialog.Portal>
-  )
-);
+export const Content = forwardRef<
+  HTMLDivElement,
+  { children: ReactNode } & VariantProps<typeof DialogContent>
+>(({ children, ...props }, forwardedRef) => (
+  <RUIDialog.Portal>
+    <DialogOverlay />
+    <DialogContent {...props} ref={forwardedRef}>
+      {children}
+    </DialogContent>
+  </RUIDialog.Portal>
+));
 
 type HeaderProps = {
   title: string;

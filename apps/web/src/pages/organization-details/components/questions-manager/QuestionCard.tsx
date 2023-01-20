@@ -7,16 +7,12 @@ import {
   UIIconButton,
 } from '@quizrun/ui';
 import { MdDragIndicator } from 'react-icons/md';
-import { IQuestion } from '../interface/quiz.interface';
+import { IQuestion } from '@web/api/questions.api';
 import { BiTrash } from 'react-icons/bi';
 
-const QuestionCard = ({
-  name,
-  description,
-  answers,
-}: Omit<IQuestion, 'correctAnswer'>) => {
+const QuestionCard = ({ name, description, answers }: IQuestion) => {
   return (
-    <UICard>
+    <UICard css={{ background: '$card' }}>
       <UICard.Content css={{ display: 'flex', gap: '$4' }}>
         <button>
           <MdDragIndicator />
