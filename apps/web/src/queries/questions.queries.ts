@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { getQuestionsByQuiz, createQuestion, updateQuestion, IQuestion } from '@web/api/questions.api'
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from 'react-query'
+import { getQuestionsByQuiz, createQuestion, updateQuestion, IQuestion, deleteQuestion, updateQuestionsOrder } from '@web/api/questions.api'
 
 export const QUESTION = {
     QUIZ_QUESTIONS: 'quiz_questions'
@@ -7,11 +7,12 @@ export const QUESTION = {
 
 
 // Queries
-export const useGetQuestionsByQuizQuery = (quizId: string) => useQuery(
-    [QUESTION.QUIZ_QUESTIONS, quizId],
-    getQuestionsByQuiz.bind(this, quizId),
-    { enabled: Boolean(quizId) }
-)
+export const useGetQuestionsByQuizQuery = (quizId: string, options?: UseQueryOptions<IQuestion[]>) =>
+    useQuery<IQuestion[]>(
+        [QUESTION.QUIZ_QUESTIONS, quizId],
+        getQuestionsByQuiz.bind(this, quizId),
+        { enabled: Boolean(quizId), ...options }
+    )
 
 // Mutation
 export const useCreateQuestionMutation = () => {
@@ -19,6 +20,7 @@ export const useCreateQuestionMutation = () => {
     return useMutation(createQuestion, {
         onSuccess: (qs) => {
             queryClient.setQueryData<IQuestion[]>([QUESTION.QUIZ_QUESTIONS, qs.quiz], (prev = []) => ([...prev, qs]))
+
         }
     })
 }
@@ -29,6 +31,27 @@ export const useUpdateQuestionMutation = () => {
             queryClient.setQueryData<IQuestion[]>([QUESTION.QUIZ_QUESTIONS, qs.quiz],
                 (prev = []) => prev.map((p) => p.id === qs.id ? qs : p)
             )
+        }
+    })
+}
+export const useDeleteQuestionMutation = () => {
+    const queryClient = useQueryClient()
+    return useMutation(deleteQuestion, {
+        onSuccess: (qs) => {
+            queryClient.setQueryData<IQuestion[]>([QUESTION.QUIZ_QUESTIONS, qs.quiz],
+                (prev = []) => prev.filter((p) => p.id !== qs.id)
+            )
+        }
+    })
+}
+
+export const useUpdateQuestionsOrderMutation = () => {
+    const queryClient = useQueryClient()
+    return useMutation(updateQuestionsOrder, {
+        onSuccess: (questions) => {
+            const quiz = questions?.[0]?.quiz
+            if (!quiz) return
+            queryClient.setQueryData<IQuestion[]>([QUESTION.QUIZ_QUESTIONS, quiz], questions)
         }
     })
 }

@@ -25,7 +25,7 @@ export const createQuiz = async (payload: Omit<IQuiz, 'created_at' | 'id'>): Pro
 export const getQuizesByOrganization = async (orgId: string): Promise<IQuiz[]> => {
     const { data, error } = await supabase
         .from('quiz')
-        .select()
+        .select(`*, questions (*)`)
         .eq('organization', orgId)
     if (error) throw new Error(error.message, { cause: error });
     if (!data) throw new Error('404');

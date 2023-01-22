@@ -5,25 +5,61 @@ import {
   UIIconButton,
   ToolTip,
   UIFlexBox,
+  UIText,
 } from '@quizrun/ui';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import CreateEditQuestion from './CreateEditQuestion';
 import QuestionCard from './QuestionCard';
 import { MdOutlineClear, MdAddCircle } from 'react-icons/md';
 import { FaRandom } from 'react-icons/fa';
-import { IoIosAdd } from 'react-icons/io';
-import { useGetQuestionsByQuizQuery } from '@web/queries/questions.queries';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import {
+  useGetQuestionsByQuizQuery,
+  useUpdateQuestionsOrderMutation,
+} from '@web/queries/questions.queries';
 import { IQuiz } from '@web/api/quiz.api';
-
-//
+import { MdDragIndicator } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import { IQuestion } from '@web/api/questions.api';
+import { AiFillSave } from 'react-icons/ai';
+import { randomizeArrayOrder } from '@web/utils/app.utils';
 
 type props = { closeDialog: () => void; quizData?: IQuiz };
 
 const QuestionsManager = ({ closeDialog, quizData }: props) => {
   const { value: form, on: showForm, off: hideForm } = useBoolean(); // For questions dialog state
   const { data: questions = [] } = useGetQuestionsByQuizQuery(
-    quizData?.id as string
+    quizData?.id as string,
+    { onSuccess: (data) => setLocalQuestions(data) }
   );
+  const [localQuestions, setLocalQuestions] = useState<IQuestion[]>([]);
+  const [orderChanged, setOrderChanged] = useState(false);
+  const { mutate: updateOrder, isLoading: orderChangeLoading } =
+    useUpdateQuestionsOrderMutation();
+
+  useEffect(() => {
+    setOrderChanged(
+      localQuestions.some((itm, i) => itm?.id !== questions[i]?.id)
+    );
+  }, [localQuestions, questions]);
+
+  function onDragEnd(result: any) {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+    const newItems = [...localQuestions];
+    const [removed] = newItems.splice(result.source.index, 1);
+    newItems.splice(result.destination.index, 0, removed);
+    setLocalQuestions(newItems);
+  }
+
+  const saveOrder = () => updateOrder(localQuestions.map((q) => q.id));
+
+  const randomizeQuestionsOrder = () => {
+    const randomOrderedResult = randomizeArrayOrder([...localQuestions]);
+    setLocalQuestions(randomOrderedResult);
+  };
 
   return (
     <UIBox
@@ -62,10 +98,39 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
         }
       />
 
-      <UIBox css={{ spaceY: '$3', marginTop: '$6' }}>
-        {questions.map((qs, i) => (
-          <QuestionCard key={i} {...qs} />
-        ))}
+      <UIBox css={{ marginTop: '$6' }}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {localQuestions.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided) => (
+                      <div ref={provided.innerRef} {...provided.draggableProps}>
+                        <QuestionCard {...item}>
+                          <button
+                            {...provided.dragHandleProps}
+                            disabled={orderChangeLoading}
+                          >
+                            <MdDragIndicator />
+                          </button>
+                        </QuestionCard>
+                        <div style={{ paddingBottom: 12 }} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        {!questions.length && (
+          <UIText color="light-white" css={{ textAlign: 'center' }}>
+            No questions yet
+          </UIText>
+        )}
       </UIBox>
 
       <UIFlexBox
@@ -78,11 +143,18 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
           zIndex: 2,
         }}
       >
-        {/* <UIIconButton rounded color="primary">
-          <AiFillSave />
-        </UIIconButton> */}
+        {orderChanged && (
+          <UIIconButton
+            rounded
+            color="primary"
+            onClick={saveOrder}
+            loading={orderChangeLoading}
+          >
+            <AiFillSave />
+          </UIIconButton>
+        )}
 
-        <UIIconButton rounded>
+        <UIIconButton rounded onClick={randomizeQuestionsOrder}>
           <FaRandom />
         </UIIconButton>
       </UIFlexBox>
@@ -94,7 +166,11 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
             title="Create question"
             description="add question to this quiz"
           />
-          <CreateEditQuestion closeDialog={hideForm} quizData={quizData} />
+          <CreateEditQuestion
+            closeDialog={hideForm}
+            quizData={quizData}
+            nextOrder={questions.length + 1}
+          />
         </UIDialog.Content>
       </UIDialog>
     </UIBox>
@@ -102,54 +178,3 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
 };
 
 export default QuestionsManager;
-
-// const questions = [
-//   {
-//     id: '1',
-//     name: 'Who created HTML',
-//     answers: [{ value: 'asd' }, { value: 'test' }, { value: 'haha' }],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-//   {
-//     id: '2',
-//     name: 'Who created CSS',
-//     description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta explicabo, tempore magni corrupti odio dolor dignissimos culpa, reiciendis, odit iure labore provide'n't distinctio saepe quibusdam suscipit cumque ducimus recusandae iste?`,
-//     answers: [{ value: 'asd' }, { value: 'test' }],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-//   {
-//     id: '3',
-//     name: 'Who created Javascript',
-//     answers: [
-//       { value: 'asd' },
-//       { value: 'test' },
-//       { value: 'test' },
-//       { value: 'test' },
-//     ],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-//   {
-//     id: '4',
-//     name: 'Who created Java',
-//     answers: [{ value: 'asd' }, { value: 'test' }],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-//   {
-//     id: '5',
-//     name: 'Who created Java',
-//     answers: [{ value: 'asd' }, { value: 'test' }],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-//   {
-//     id: '6',
-//     name: 'Who created Java',
-//     answers: [{ value: 'asd' }, { value: 'test' }],
-//     quiz: '545ba150-5d42-4bdb-8dc1-774bf90db293',
-//     correctAnswer: 0,
-//   },
-// ]

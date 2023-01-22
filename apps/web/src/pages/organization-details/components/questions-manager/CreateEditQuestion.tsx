@@ -22,10 +22,16 @@ type Props = {
   closeDialog?: any;
   questionData?: IQuestion;
   quizData?: IQuiz;
+  nextOrder: number;
 };
 const MAX_OPTION = 6;
 
-const CreateEditQuiz = ({ closeDialog, questionData, quizData }: Props) => {
+const CreateEditQuiz = ({
+  closeDialog,
+  questionData,
+  quizData,
+  nextOrder,
+}: Props) => {
   const { data: user } = useUserQuery();
   const { mutateAsync: createQuestion, isLoading } =
     useCreateQuestionMutation();
@@ -61,6 +67,7 @@ const CreateEditQuiz = ({ closeDialog, questionData, quizData }: Props) => {
         ...values,
         created_by: user?.id as string,
         quiz: quizData?.id as string,
+        order: nextOrder,
       });
       closeDialog();
     } catch (error) {

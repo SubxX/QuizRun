@@ -70,7 +70,7 @@ const QuizList = () => {
           />
           <UICard.Content>
             <UIText fontSize="xs" color="light-white">
-              0 Questions
+              {q?.questions?.length} Questions
             </UIText>
           </UICard.Content>
         </UICard>
