@@ -15,7 +15,6 @@ const Router = () => {
       children: [
         { index: true, element: <Organizations /> },
         { path: 'organization/:id', element: <OrganizationDetails /> },
-        { path: 'email-confirmed', element: <EmailConfirmed /> },
       ],
     },
     {
@@ -25,6 +24,7 @@ const Router = () => {
         { index: true, element: <Navigate to="/auth/signin" replace /> },
         { path: 'signin', element: <Signin /> },
         { path: 'signup', element: <Signup /> },
+        { path: 'email-confirmed', element: <EmailConfirmed /> },
       ],
     },
     {

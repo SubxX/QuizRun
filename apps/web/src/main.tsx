@@ -5,6 +5,7 @@ import App from './App';
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip';
 import { Dialog as DialogRoot } from '@radix-ui/react-dialog';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { NotificationsProvider } from 'reapop';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,11 +19,13 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <DialogRoot>
-        <TooltipProvider delayDuration={200}>
-          <App />
-        </TooltipProvider>
-      </DialogRoot>
+      <NotificationsProvider>
+        <DialogRoot>
+          <TooltipProvider delayDuration={200}>
+            <App />
+          </TooltipProvider>
+        </DialogRoot>
+      </NotificationsProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')

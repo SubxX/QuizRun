@@ -7,7 +7,7 @@ export default function useAuth() {
             const { error, data } = await supabase.auth.signUp({
                 email, password,
                 options: {
-                    emailRedirectTo: `${location.origin}/email-confirmed`
+                    emailRedirectTo: `${location.origin}/auth/email-confirmed`
                 }
             })
             if (error) throw new Error(error?.message, { cause: error })

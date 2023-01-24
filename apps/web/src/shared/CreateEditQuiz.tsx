@@ -14,6 +14,7 @@ import {
   useUpdateQuizMutation,
 } from '@web/queries/quiz.queries';
 import { useUserQuery } from '@web/queries/auth.queries';
+import { useNotifications } from 'reapop';
 
 type IQuizForm = Omit<IQuiz, 'id' | 'created_at' | 'created_by' | 'questions'>;
 type Props = {
@@ -26,6 +27,7 @@ const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
   const { data: user } = useUserQuery();
   const { data = [] } = useDepartmentsQuery();
   const isEdit = Boolean(quizData);
+  const { notify } = useNotifications();
 
   const { handleSubmit, control } = useForm<IQuizForm>({
     defaultValues: {
@@ -48,6 +50,7 @@ const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
       isEdit
         ? await updateQuiz({ ...values, id: quizData?.id as string })
         : await createQuiz({ ...values, created_by: user?.id as string });
+      notify(`Quiz ${isEdit ? 'updated' : 'created'} successfully!`, 'success');
       closeDialog();
     } catch (error) {
       console.log(error);
