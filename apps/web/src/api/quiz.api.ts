@@ -33,6 +33,18 @@ export const getQuizesByOrganization = async (orgId: string): Promise<IQuiz[]> =
     return data;
 };
 
+export const getQuizById = async (id: string): Promise<IQuiz> => {
+    const { data, error } = await supabase
+        .from('quiz')
+        .select(`*, questions (*)`)
+        .eq('id', id)
+        .single()
+    if (error) throw new Error(error.message, { cause: error });
+    if (!data) throw new Error('404');
+
+    return data;
+};
+
 export const updateQuiz = async (payload: Omit<IQuiz, 'created_at' | 'created_by'>): Promise<IQuiz> => {
     const { id, ...rest } = payload
     const { data, error } = await supabase

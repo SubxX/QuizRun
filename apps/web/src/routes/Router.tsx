@@ -6,6 +6,7 @@ import Signup from '../pages/signup';
 import Organizations from '../pages/organizations';
 import EmailConfirmed from '@web/pages/email-confirmed';
 import NotFoundPage from '@web/pages/404';
+import TakeQuiz from '@web/pages/take-quiz';
 
 const Router = () => {
   const routes = useRoutes([
@@ -15,6 +16,7 @@ const Router = () => {
       children: [
         { index: true, element: <Organizations /> },
         { path: 'organization/:id', element: <OrganizationDetails /> },
+        { path: 'quiz/:id', element: <TakeQuiz /> },
       ],
     },
     {

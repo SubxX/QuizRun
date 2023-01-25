@@ -14,6 +14,7 @@ import QuizQuestionsManager from '../questions-manager';
 import { IoIosSettings } from 'react-icons/io';
 import { useEffect, useMemo, useState } from 'react';
 import { IQuiz } from '@web/api/quiz.api';
+import { Link } from 'react-router-dom';
 
 const QuizList = () => {
   const { quizes, id } = useOrgDetailsContext();
@@ -21,12 +22,14 @@ const QuizList = () => {
   const { value: isOpen, on: open, off: close } = useBoolean(); // Add & Edit quiz dialog state
   const { value: drawer, off: closeDrawer, on: openDrawer } = useBoolean(); // Qustions manager dialog state
 
-  const openEditQuiz = (quiz?: IQuiz) => {
+  const openEditQuiz = (e: any, quiz?: IQuiz) => {
+    e.preventDefault();
     open();
     setSelectedQuiz(quiz);
   };
 
-  const openQuestionsManager = (quiz?: IQuiz) => {
+  const openQuestionsManager = (e: any, quiz?: IQuiz) => {
+    e.preventDefault();
     openDrawer();
     setSelectedQuiz(quiz);
   };
@@ -48,7 +51,7 @@ const QuizList = () => {
   return (
     <>
       {quizes.map((q) => (
-        <UICard hover key={q.id}>
+        <UICard as={Link} to={`/quiz/${q.id}`} hover key={q.id}>
           <UICard.Header
             title={q.name}
             subtitle={q.description}
@@ -57,11 +60,11 @@ const QuizList = () => {
                 <>
                   <UIIconButton
                     size="sm"
-                    onClick={openQuestionsManager.bind(this, q)}
+                    onClick={(e) => openQuestionsManager(e, q)}
                   >
                     <IoIosSettings size={18} />
                   </UIIconButton>
-                  <UIIconButton size="sm" onClick={openEditQuiz.bind(this, q)}>
+                  <UIIconButton size="sm" onClick={(e) => openEditQuiz(e, q)}>
                     <RiEditLine size={16} />
                   </UIIconButton>
                 </>
@@ -70,7 +73,7 @@ const QuizList = () => {
           />
           <UICard.Content>
             <UIText fontSize="xs" color="light-white">
-              {q?.questions?.length} Questions
+              {q?.questions?.length ?? 0} Questions
             </UIText>
           </UICard.Content>
         </UICard>
@@ -78,7 +81,7 @@ const QuizList = () => {
 
       {/*  Add Quiz Dialog trigger */}
       <PermissionHandler>
-        <UICard as="button" hover onClick={openEditQuiz.bind(this, undefined)}>
+        <UICard as="button" hover onClick={(e) => openEditQuiz(e, undefined)}>
           <UICard.Content
             css={{ color: '$light-white', spaceX: '$3' }}
             className="flex-center h-full"

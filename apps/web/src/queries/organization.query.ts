@@ -1,6 +1,6 @@
 import { getAllOrganizations, getMyOrganizations, createOrganization, deleteOrganization, editOrganization, getOrganizationDetails, IOrganization } from '@web/api/organization.api'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-
+import { useNotifications } from 'reapop'
 
 export const ORGANIZATION = {
     ALL: 'ORGANIZATION-ALL',
@@ -21,8 +21,11 @@ export const useOrganizationDetailsQuery = (orgId: string) => useQuery([ORGANIZA
 // Mutations
 export const useCreateOrganizationMutation = () => {
     const queryClient = useQueryClient()
+    const { notify } = useNotifications();
+
     return useMutation(createOrganization, {
         onSuccess: (org) => {
+            notify(`Organization created successfully!`, 'success');
             queryClient.setQueryData<IOrganization[]>(ORGANIZATION.MINE, (prev = []) => ([...prev, org]))
         }
     })
@@ -30,8 +33,11 @@ export const useCreateOrganizationMutation = () => {
 
 export const useUpdateOrganizationMutation = () => {
     const queryClient = useQueryClient()
+    const { notify } = useNotifications();
+
     return useMutation(editOrganization, {
         onSuccess: (updatedOrg) => {
+            notify(`Organization updated successfully!`, 'success');
             queryClient.setQueryData<IOrganization>([ORGANIZATION.DETAILS, updatedOrg.id], (prev) => ({ ...prev, ...updatedOrg }))
             queryClient.setQueryData<IOrganization[]>(ORGANIZATION.MINE, (prev = []) => prev.map((org) => (
                 org.id !== updatedOrg.id ? org : updatedOrg
@@ -42,8 +48,11 @@ export const useUpdateOrganizationMutation = () => {
 
 export const useDeleteOrganizationMutation = () => {
     const queryClient = useQueryClient()
+    const { notify } = useNotifications();
+
     return useMutation(deleteOrganization, {
         onSuccess: (orgId) => {
+            notify(`Organization deleted successfully!`, 'success');
             queryClient.setQueryData<IOrganization[]>(ORGANIZATION.MINE, (prev = []) => prev.filter((org) => org.id !== orgId))
         }
     })
