@@ -1,18 +1,8 @@
-import {
-  UIBox,
-  UIButton,
-  UIInput,
-  UITextarea,
-  UIChip,
-  UILabel,
-  UIFlexBox,
-  useBoolean,
-} from '@quizrun/ui';
+import { UIBox, UIButton, UIInput, UITextarea, UIFlexBox } from '@quizrun/ui';
 import { BiBuilding } from 'react-icons/bi';
 import { useForm, Controller } from 'react-hook-form';
 import { useUserQuery } from '@web/queries/auth.queries';
 import { IOrganization } from '@web/api/organization.api';
-import { useDepartmentsQuery } from '@web/queries/department.query';
 import {
   useCreateOrganizationMutation,
   useUpdateOrganizationMutation,
@@ -21,7 +11,6 @@ import {
 type OrganizationForm = {
   name: string;
   description: string;
-  departments: string[];
 };
 
 type Props = {
@@ -30,47 +19,33 @@ type Props = {
 };
 
 const CreateEditOrganization = ({ closeDialog, orgData }: Props) => {
-  const { control, handleSubmit, setValue, watch } = useForm<OrganizationForm>({
+  const { control, handleSubmit } = useForm<OrganizationForm>({
     defaultValues: {
       name: orgData?.name ?? '',
       description: orgData?.description ?? '',
-      departments: orgData?.departments ?? [],
     },
   });
-  const { value: loading, set: setLoading } = useBoolean();
   const { data: user } = useUserQuery();
-  const { data: departments = [] } = useDepartmentsQuery();
 
-  const { mutateAsync: addOrganization } = useCreateOrganizationMutation();
-  const { mutateAsync: updateOrganization } = useUpdateOrganizationMutation();
+  const { mutateAsync: addOrganization, isLoading: createLoading } =
+    useCreateOrganizationMutation();
+  const { mutateAsync: updateOrganization, isLoading: updateLoading } =
+    useUpdateOrganizationMutation();
 
-  const formDeparments = watch('departments');
   const isEditing = Boolean(orgData);
+  const loading = createLoading || updateLoading;
 
   const submitForm = async (payload: OrganizationForm) => {
     try {
-      setLoading(true);
-
       if (!isEditing) {
-        addOrganization({ ...payload, created_by: user?.id as string });
+        await addOrganization({ ...payload, created_by: user?.id as string });
       } else {
         await updateOrganization({ ...payload, id: orgData?.id as string });
       }
-
       closeDialog();
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
-  };
-
-  const handleDepartment = (id: string) => {
-    const value = formDeparments ?? [];
-    setValue(
-      'departments',
-      value.includes(id) ? value.filter((v) => v !== id) : [...value, id]
-    );
   };
 
   return (
@@ -110,21 +85,6 @@ const CreateEditOrganization = ({ closeDialog, orgData }: Props) => {
           />
         )}
       />
-
-      <UIBox>
-        <UILabel>Departments</UILabel>
-        <UIFlexBox gap={2} css={{ flexWrap: 'wrap' }}>
-          {departments.map((department) => (
-            <UIChip
-              onClick={handleDepartment.bind(this, department.id)}
-              selected={formDeparments.includes(department.id)}
-              key={`org-form-deps-${department.id}`}
-            >
-              {department.name}
-            </UIChip>
-          ))}
-        </UIFlexBox>
-      </UIBox>
 
       <UIFlexBox justify="end" css={{ marginTop: '$5', spaceX: '$2' }}>
         <UIButton type="submit" loading={loading}>

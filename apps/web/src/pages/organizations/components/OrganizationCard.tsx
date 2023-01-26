@@ -32,7 +32,7 @@ const OrganizationCard = ({ org }: { org: IOrganization }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '$2',
-            margin: '$2 0 $1 0',
+            margin: '$2 0 0 0',
           }}
         >
           <MdFoundation color="white" size={18} />

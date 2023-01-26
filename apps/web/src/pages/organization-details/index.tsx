@@ -11,8 +11,7 @@ import {
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { AiFillSetting } from 'react-icons/ai';
-import { Link, useNavigate, useSearchParams, NavLink } from 'react-router-dom';
-import DepartmentList from './components/tabs/DepartmentList';
+import { useNavigate } from 'react-router-dom';
 import QuizList from './components/tabs/QuizList';
 import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 
@@ -24,7 +23,6 @@ import { useDeleteOrganizationMutation } from '@web/queries/organization.query';
 
 const Page = () => {
   const { organization } = useOrgDetailsContext();
-  const type = useSearchParams()[0].get('type');
   const navigate = useNavigate();
   const { mutateAsync: deleteOrganization } = useDeleteOrganizationMutation();
 
@@ -95,26 +93,11 @@ const Page = () => {
       </UIFlexBox> */}
 
       <UIFlexBox gap="2" css={{ margin: '$6 0', fontSize: '$lg' }}>
-        <UIText
-          as={Link}
-          css={{ color: !type ? '$primary' : 'white' }}
-          to={`${location.pathname}`}
-          replace={true}
-        >
-          Departments
-        </UIText>
-        <UIText
-          as={Link}
-          css={{ color: type === 'quizes' ? '$primary' : 'white' }}
-          to={`${location.pathname}?type=quizes`}
-          replace={true}
-        >
-          Quizes
-        </UIText>
+        <UIText>Quizes</UIText>
       </UIFlexBox>
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {type == 'quizes' ? <QuizList /> : <DepartmentList />}
+        <QuizList />
       </UIGridBox>
 
       {/*  Edit Organization Dialog */}

@@ -47,6 +47,7 @@ const SelectTrigger = styled(RUISelect.SelectTrigger, {
   padding: '$2 $4',
   fontSize: '$sm',
   borderRadius: '$md',
+  minHeight: 39,
   gap: 5,
   background: '#6060601f',
   border: '1px solid rgba($white-rgb,0.3)',

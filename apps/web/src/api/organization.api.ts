@@ -7,7 +7,6 @@ export interface IOrganization {
     name: string
     description: string
     logo?: string
-    departments: string[]
 }
 
 export const getOrganizationDetails = async (id: string): Promise<IOrganization> => {
