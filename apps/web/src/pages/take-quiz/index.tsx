@@ -1,35 +1,25 @@
 import Container from '@web/layouts/dashboard-layout/components/Container';
-import { UIButton, UICard, UIFlexBox, UIText } from '@quizrun/ui';
+import { UIBox } from '@quizrun/ui';
 import BgComponent from './components/BgComponent';
 import ContenxtWrapper, { useQuizDetailsContext } from './Context';
-import { useNavigate } from 'react-router-dom';
+import TakeQuizCard from './components/TakeQuizCard';
+import QuizQuestions from './components/QuizQuestions';
+import SubmittedCard from './components/SubmittedCard';
 
 const Page = () => {
-  const { quiz } = useQuizDetailsContext();
-  const navigate = useNavigate();
+  const { activeQuestion, submission } = useQuizDetailsContext();
 
   return (
     <Container className="flex-center h-full">
-      <UICard css={{ maxWidth: '340px', width: '100%' }}>
-        <UICard.Header title={quiz?.name ?? ''} />
-        <UICard.Content>
-          <UIText fontSize="sm" color="light-white">
-            {quiz?.description ?? ''}
-          </UIText>
-
-          <UIText fontSize="xs" color="light-white" css={{ marginTop: '$1' }}>
-            {quiz?.questions?.length} Questions
-          </UIText>
-
-          <UIFlexBox css={{ marginTop: '$4' }} gap="2">
-            <UIButton>Take quiz</UIButton>
-            <UIButton color="light" onClick={navigate.bind(this, -1)}>
-              Maybe leter
-            </UIButton>
-          </UIFlexBox>
-        </UICard.Content>
-      </UICard>
-
+      <UIBox css={{ maxWidth: '320px', width: '100%' }}>
+        {submission ? (
+          <SubmittedCard />
+        ) : activeQuestion === -1 ? (
+          <TakeQuizCard />
+        ) : (
+          <QuizQuestions />
+        )}
+      </UIBox>
       <BgComponent />
     </Container>
   );

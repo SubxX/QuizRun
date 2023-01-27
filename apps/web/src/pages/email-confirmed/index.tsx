@@ -18,10 +18,10 @@ const EmailConfirmed = () => {
         <UIBox css={{ color: '$primary', marginTop: '-40px' }}>
           <BsCheckCircleFill size={80} />
         </UIBox>
-        <UIText fontSize="3xl" color="primary">
+        <UIText fontSize="2xl" color="primary">
           Congratulations!
         </UIText>
-        <UIText fontSize="sm" color="light-white">
+        <UIText fontSize="xs" color="light-white" css={{ marginTop: '$2' }}>
           Your email has already been confirmed. You can now signin to the app.
         </UIText>
 
