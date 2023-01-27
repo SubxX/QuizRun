@@ -80,11 +80,7 @@ const QuizQuestions = () => {
               items="center"
               css={{ marginTop: '$4' }}
             >
-              <UIButton
-                color="light"
-                onClick={backToPrev}
-                disabled={activeQuestion === 0}
-              >
+              <UIButton color="light" onClick={backToPrev}>
                 Back
               </UIButton>
               <UIButton

@@ -1,4 +1,5 @@
 import { supabase } from '@web/supabase/supabaseClient';
+import { IQuiz } from './quiz.api';
 
 export interface IQuizSubmission {
     quiz: string;
@@ -26,6 +27,15 @@ export const getQuizSubmission = async (userId: string, quizId: string): Promise
         .eq('quiz', quizId)
         .eq('user', userId)
         .single()
+    if (error) throw new Error(error.message, { cause: error });
+    return data;
+};
+
+export const getQuizSubmissionsByQuizId = async (quizId: string): Promise<IQuizSubmission[]> => {
+    const { data, error } = await supabase
+        .from('leaderboard')
+        .select()
+        .eq('quiz', quizId)
     if (error) throw new Error(error.message, { cause: error });
     return data;
 };

@@ -1,11 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNotifications } from 'reapop'
-import { submitQuiz, getQuizSubmission } from '@web/api/take-quiz.api'
+import { submitQuiz, getQuizSubmission, getQuizSubmissionsByQuizId } from '@web/api/take-quiz.api'
 import { useUserQuery } from './auth.queries'
 
 
 export const SUBMISSION = {
-    SINGLE: 'user_quiz_submission'
+    SINGLE: 'user_quiz_submission',
+    ALL: 'quiz_submissions'
 } as const
 
 // Queries
@@ -14,6 +15,14 @@ export const useGetQuizSubmissionQuery = (quizId: string) => {
     return useQuery(
         [SUBMISSION.SINGLE, quizId],
         getQuizSubmission.bind(this, user?.id as string, quizId),
+        { enabled: Boolean(quizId) }
+    )
+}
+
+export const useGetQuizSubmissionsQuery = (quizId: string) => {
+    return useQuery(
+        [SUBMISSION.ALL, quizId],
+        getQuizSubmissionsByQuizId.bind(this, quizId),
         { enabled: Boolean(quizId) }
     )
 }

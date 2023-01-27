@@ -1,8 +1,10 @@
 import { UIBox, UIButton, UIGridBox, UISeparator, UIText } from '@quizrun/ui';
+import { useNavigate } from 'react-router-dom';
 import { useQuizDetailsContext } from '../Context';
 
 const SubmittedCard = () => {
   const { submission } = useQuizDetailsContext();
+  const navigate = useNavigate();
 
   return (
     <UIBox css={{ textAlign: 'center' }}>
@@ -29,7 +31,20 @@ const SubmittedCard = () => {
           Incorrect
         </UIBox>
       </UIGridBox>
-      <UIButton css={{ marginTop: '$5' }}>Take me to the leaderboard</UIButton>
+      {/* <UIButton
+        css={{ marginTop: '$5', width: 180 }}
+        onClick={() => navigate(`/quiz/${id}/leaderboard`)}
+      >
+        Take me to the leaderboard
+      </UIButton> */}
+
+      <UIButton
+        css={{ marginTop: '$3' }}
+        onClick={navigate.bind(this, -1)}
+        color="light"
+      >
+        Take me back
+      </UIButton>
     </UIBox>
   );
 };
