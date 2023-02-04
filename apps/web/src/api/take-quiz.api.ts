@@ -34,7 +34,7 @@ export const getQuizSubmission = async (userId: string, quizId: string): Promise
 export const getQuizSubmissionsByQuizId = async (quizId: string): Promise<IQuizSubmission[]> => {
     const { data, error } = await supabase
         .from('leaderboard')
-        .select()
+        .select(`*, profile(*)`)
         .eq('quiz', quizId)
     if (error) throw new Error(error.message, { cause: error });
     return data;

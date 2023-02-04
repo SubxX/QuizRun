@@ -1,13 +1,22 @@
-import { UICard, UIDialog, UIFlexBox, UIText, useBoolean } from '@quizrun/ui';
-import { CgPlayListAdd } from 'react-icons/cg';
+import {
+  UIDialog,
+  UIFlexBox,
+  UIText,
+  useBoolean,
+  UIGridBox,
+  UIButton,
+  UIIconButton,
+} from '@quizrun/ui';
 import CreateEditQuiz from '@web/shared/CreateEditQuiz';
-import PermissionHandler from '../PermissionHandler';
-import { useOrgDetailsContext } from '../../Context';
-import QuizQuestionsManager from '../questions-manager';
+import PermissionHandler from './PermissionHandler';
+import { useOrgDetailsContext } from '../Context';
+import QuizQuestionsManager from './questions-manager';
 import { useEffect, useMemo, useState } from 'react';
 import { IQuiz } from '@web/api/quiz.api';
 import { BsClipboardData } from 'react-icons/bs';
-import QuizCard from './QuizCard';
+import QuizCard from '@web/shared/QuizCard';
+import { IoIosSettings } from 'react-icons/io';
+import { RiEditLine } from 'react-icons/ri';
 
 const QuizList = () => {
   const { quizes, id } = useOrgDetailsContext();
@@ -15,12 +24,14 @@ const QuizList = () => {
   const { value: isOpen, on: open, off: close } = useBoolean(); // Add & Edit quiz dialog state
   const { value: drawer, off: closeDrawer, on: openDrawer } = useBoolean(); // Qustions manager dialog state
 
-  const openEditQuiz = (quiz?: IQuiz) => {
+  const openEditQuiz = (e: any, quiz?: IQuiz) => {
+    e.preventDefault();
     open();
     setSelectedQuiz(quiz);
   };
 
-  const openQuestionsManager = (quiz?: IQuiz) => {
+  const openQuestionsManager = (e: any, quiz?: IQuiz) => {
+    e.preventDefault();
     openDrawer();
     setSelectedQuiz(quiz);
   };
@@ -41,36 +52,45 @@ const QuizList = () => {
 
   return (
     <>
-      {/*  Add Quiz Dialog trigger */}
-      <PermissionHandler>
-        {(hasAccess) =>
-          hasAccess ? (
-            <UICard as="button" hover onClick={open}>
-              <UICard.Content
-                css={{ color: '$light-white', spaceX: '$3' }}
-                className="flex-center h-full"
-              >
-                <CgPlayListAdd size={40} />
-                <UIText fontSize="sm">Create Quiz</UIText>
-              </UICard.Content>
-            </UICard>
-          ) : !quizes.length ? (
-            <UIFlexBox css={{ color: '$light-white' }} gap="3" items="center">
-              <BsClipboardData size={30} />
-              <UIText fontSize="sm">No quizes</UIText>
-            </UIFlexBox>
-          ) : null
-        }
-      </PermissionHandler>
+      <UIFlexBox
+        gap="2"
+        justify="between"
+        css={{ margin: '$6 0', fontSize: '$lg' }}
+      >
+        <UIText>Quizes</UIText>
+        <PermissionHandler>
+          <UIButton onClick={open}>Add Quiz</UIButton>
+        </PermissionHandler>
+      </UIFlexBox>
 
-      {quizes.map((quiz) => (
-        <QuizCard
-          key={quiz.id}
-          quiz={quiz}
-          openEditQuiz={openEditQuiz}
-          openQuestionsManager={openQuestionsManager}
-        />
-      ))}
+      <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
+        {quizes.map((quiz) => (
+          <QuizCard
+            key={quiz.id}
+            quiz={quiz}
+            actions={
+              <PermissionHandler>
+                <UIIconButton
+                  size="sm"
+                  onClick={(e) => openQuestionsManager(e, quiz)}
+                >
+                  <IoIosSettings size={18} />
+                </UIIconButton>
+                <UIIconButton size="sm" onClick={(e) => openEditQuiz(e, quiz)}>
+                  <RiEditLine size={16} />
+                </UIIconButton>
+              </PermissionHandler>
+            }
+          />
+        ))}
+
+        {!quizes.length && (
+          <UIFlexBox css={{ color: '$light-white' }} gap="3" items="center">
+            <BsClipboardData size={30} />
+            <UIText fontSize="sm">No quizes</UIText>
+          </UIFlexBox>
+        )}
+      </UIGridBox>
 
       {/* Quiz Dialog for adding & editing a quiz */}
       <UIDialog open={isOpen}>

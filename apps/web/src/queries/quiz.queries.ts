@@ -1,14 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createQuiz, IQuiz, getQuizesByOrganization, updateQuiz, getQuizById } from '@web/api/quiz.api'
+import { createQuiz, IQuiz, getQuizesByOrganization, updateQuiz, getQuizById, getAllQuizes } from '@web/api/quiz.api'
 import { useNotifications } from 'reapop'
 
 export const QUIZ = {
+    ALL_QUIZES: 'all_quizes',
     ORGANIZATION_QUIZES: 'organization_quizes',
     SINGLE: 'single_quiz'
 } as const
 
 
 // Queries
+export const useGetAllQuizs = (filters?: any) => useQuery(
+    QUIZ.ALL_QUIZES,
+    getAllQuizes.bind(this, filters)
+)
+
 export const useGetQuizesByOrgQuery = (orgId: string) => useQuery(
     [QUIZ.ORGANIZATION_QUIZES, orgId],
     getQuizesByOrganization.bind(this, orgId),

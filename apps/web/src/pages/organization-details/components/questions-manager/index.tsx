@@ -10,7 +10,7 @@ import {
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import CreateEditQuestion from './CreateEditQuestion';
 import QuestionCard from './QuestionCard';
-import { MdOutlineClear, MdAddCircle } from 'react-icons/md';
+import { MdOutlineClear, MdAddCircle, MdDragIndicator } from 'react-icons/md';
 import { FaRandom } from 'react-icons/fa';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import {
@@ -18,7 +18,6 @@ import {
   useUpdateQuestionsOrderMutation,
 } from '@web/queries/questions.queries';
 import { IQuiz } from '@web/api/quiz.api';
-import { MdDragIndicator } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import { IQuestion } from '@web/api/questions.api';
 import { AiFillSave } from 'react-icons/ai';
@@ -55,6 +54,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
   }
 
   const saveOrder = () => updateOrder(localQuestions.map((q) => q.id));
+  const cancelChanges = () => setLocalQuestions(questions);
 
   const randomizeQuestionsOrder = () => {
     const randomOrderedResult = randomizeArrayOrder([...localQuestions]);
@@ -71,7 +71,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
       }}
     >
       <Header
-        title="Test Quiz"
+        title={quizData?.name ?? 'N/A'}
         subtitle="Manage questions of this quiz"
         isSticky
         css={{ background: '$blackish' }}
@@ -137,26 +137,48 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
         gap="2"
         css={{
           position: 'absolute',
-          bottom: '10px',
+          bottom: '14px',
           left: '50%',
           transform: 'translateX(-50%)',
           zIndex: 2,
         }}
       >
         {orderChanged && (
-          <UIIconButton
-            rounded
-            color="primary"
-            onClick={saveOrder}
-            loading={orderChangeLoading}
-          >
-            <AiFillSave />
-          </UIIconButton>
+          <>
+            <ToolTip title="Save order" side="top">
+              <UIIconButton
+                rounded
+                color="primary"
+                onClick={saveOrder}
+                loading={orderChangeLoading}
+              >
+                <AiFillSave />
+              </UIIconButton>
+            </ToolTip>
+
+            <ToolTip title="Cancel changes" side="top">
+              <UIIconButton
+                rounded
+                onClick={cancelChanges}
+                disabled={orderChangeLoading}
+              >
+                <MdOutlineClear />
+              </UIIconButton>
+            </ToolTip>
+          </>
         )}
 
-        <UIIconButton rounded onClick={randomizeQuestionsOrder}>
-          <FaRandom />
-        </UIIconButton>
+        {localQuestions?.length > 4 && (
+          <ToolTip title="Randomize order" side="top">
+            <UIIconButton
+              rounded
+              onClick={randomizeQuestionsOrder}
+              disabled={orderChangeLoading}
+            >
+              <FaRandom />
+            </UIIconButton>
+          </ToolTip>
+        )}
       </UIFlexBox>
 
       {/* Create / Edit question */}

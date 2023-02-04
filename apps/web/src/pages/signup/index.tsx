@@ -13,6 +13,7 @@ import useAuth from '@web/hooks/useAuth';
 import { useForm, Controller } from 'react-hook-form';
 
 type SignUpForm = {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -24,9 +25,10 @@ const Signup = () => {
   const { control, handleSubmit, getValues } = useForm<SignUpForm>();
 
   const submitForm = async (payload: SignUpForm) => {
+    const { email, password, confirmPassword, ...rest } = payload;
     try {
       setLoading(true);
-      await signup(payload.email, payload.password);
+      await signup(email, password, rest);
     } catch (error) {
       console.log(error);
     } finally {
@@ -47,6 +49,28 @@ const Signup = () => {
       />
 
       <UICard.Content css={{ spaceY: '$2' }}>
+        <Controller
+          name="name"
+          rules={{ required: 'Name is required' }}
+          control={control}
+          render={({
+            field: { onChange, value = '' },
+            formState: { errors },
+          }) => (
+            <UIInput
+              onChange={onChange}
+              value={value}
+              label="Name"
+              type="text"
+              placeholder="Enter name"
+              id="name"
+              autoFocus={true}
+              startAdornment={<MdAlternateEmail />}
+              error={errors?.email?.message}
+            />
+          )}
+        />
+
         <Controller
           name="email"
           rules={{

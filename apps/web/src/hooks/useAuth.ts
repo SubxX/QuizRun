@@ -3,15 +3,16 @@ import { useCallback } from "react";
 
 export default function useAuth() {
     const signup = useCallback(
-        async (email, password) => {
-            const { error, data } = await supabase.auth.signUp({
+        async (email, password, data = {}) => {
+            const { error, data: response } = await supabase.auth.signUp({
                 email, password,
                 options: {
-                    emailRedirectTo: `${location.origin}/auth/email-confirmed`
-                }
+                    emailRedirectTo: `${location.origin}/auth/email-confirmed`,
+                    data
+                },
             })
             if (error) throw new Error(error?.message, { cause: error })
-            return data
+            return response
         },
         [],
     )

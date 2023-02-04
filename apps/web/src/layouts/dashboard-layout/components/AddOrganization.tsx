@@ -12,7 +12,7 @@ const AddOrganization = () => {
 
   return (
     <>
-      <ToolTip title="Add organzation" align="center">
+      <ToolTip title="Create organzation" align="center">
         <StyledSessionSelector
           as="button"
           className="flex-center"

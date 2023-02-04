@@ -56,3 +56,14 @@ export const updateQuiz = async (payload: Omit<IQuiz, 'created_at' | 'created_by
     if (error) throw new Error(error.message, { cause: error });
     return data;
 };
+
+
+export const getAllQuizes = async (filters?: any): Promise<IQuiz[]> => {
+    const { data, error } = await supabase
+        .from('quiz')
+        .select(`*, questions (*)`)
+    if (error) throw new Error(error.message, { cause: error });
+    if (!data) throw new Error('404');
+
+    return data;
+} 

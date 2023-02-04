@@ -1,8 +1,6 @@
 import {
-  UIGridBox,
   UIIconButton,
   UIText,
-  UIFlexBox,
   UIDropdownMenu,
   UIDialog,
   UIAlertDialog,
@@ -12,7 +10,7 @@ import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { AiFillSetting } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import QuizList from './components/tabs/QuizList';
+import QuizList from './components/QuizList';
 import ContenxtWrapper, { useOrgDetailsContext } from './Context';
 
 import { BsTrash } from 'react-icons/bs';
@@ -80,25 +78,7 @@ const Page = () => {
         {organization?.description}
       </UIText>
 
-      {/* <UIFlexBox gap="2" css={{ margin: '$6 0' }}>
-        <UIIconButton>
-          <AiOutlineMail size={18} />
-        </UIIconButton>
-        <UIIconButton>
-          <AiOutlineGlobal size={18} />
-        </UIIconButton>
-        <UIIconButton>
-          <AiOutlineHeart size={18} />
-        </UIIconButton>
-      </UIFlexBox> */}
-
-      <UIFlexBox gap="2" css={{ margin: '$6 0', fontSize: '$lg' }}>
-        <UIText>Quizes</UIText>
-      </UIFlexBox>
-
-      <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        <QuizList />
-      </UIGridBox>
+      <QuizList />
 
       {/*  Edit Organization Dialog */}
       <UIDialog open={editOpen}>

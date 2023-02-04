@@ -8,6 +8,7 @@ import EmailConfirmed from '@web/pages/email-confirmed';
 import NotFoundPage from '@web/pages/404';
 import TakeQuiz from '@web/pages/take-quiz';
 import QuizLeaderboard from '@web/pages/quiz-leaderboard';
+import AllQuizes from '@web/pages/quizes';
 
 const Router = () => {
   const routes = useRoutes([
@@ -15,7 +16,8 @@ const Router = () => {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { index: true, element: <Organizations /> },
+        { index: true, element: <AllQuizes /> },
+        { path: 'organizations', element: <Organizations /> },
         { path: 'organization/:id', element: <OrganizationDetails /> },
         { path: 'quiz/:id', element: <TakeQuiz /> },
         { path: 'quiz/:id/leaderboard', element: <QuizLeaderboard /> },
