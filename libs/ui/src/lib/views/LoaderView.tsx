@@ -12,6 +12,7 @@ const LoaderElement = styled('div', {
   color: '#fff',
   display: 'block',
   userSelect: 'none',
+  margin: 'auto',
   '&:before, &:after': {
     content: '',
     display: 'block',
@@ -36,8 +37,15 @@ type Props = ComponentProps<typeof UIBox> & { text?: string };
 const LoaderView = ({ text, css, ...rest }: Props) => {
   return (
     <UIBox
-      className="h-full flex-center"
-      css={{ spaceY: '$3', flexDirection: 'column', ...css }}
+      css={{
+        spaceY: '$3',
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
+        zIndex: 5,
+        ...css,
+      }}
       {...rest}
     >
       <LoaderElement />
