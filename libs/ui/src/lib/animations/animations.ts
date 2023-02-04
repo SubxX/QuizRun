@@ -55,3 +55,30 @@ export const slideOutToLeft = keyframes({
   from: { transform: 'translateX(0)' },
   to: { transform: 'translateX(100%)' },
 });
+
+export const loaderSpin = keyframes({
+  '0%, 100%': {
+    boxShadow: '0.2em 0px 0 0px currentcolor'
+  },
+  '12%:': {
+    boxShadow: '0.2em 0.2em 0 0 currentcolor'
+  },
+  '25%': {
+    boxShadow: '0 0.2em 0 0px currentcolor'
+  },
+  '37%': {
+    boxShadow: '-0.2em 0.2em 0 0 currentcolor'
+  },
+  '50%': {
+    boxShadow: '-0.2em 0 0 0 currentcolor'
+  },
+  '62%': {
+    boxShadow: '-0.2em -0.2em 0 0 currentcolor'
+  },
+  '75%': {
+    boxShadow: '0px -0.2em 0 0 currentcolor'
+  },
+  '87%': {
+    boxShadow: '0.2em -0.2em 0 0 currentcolor'
+  }
+})
