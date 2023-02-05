@@ -16,6 +16,7 @@ import { IoAddOutline } from 'react-icons/io5';
 import { useCreateQuestionMutation } from '@web/queries/questions.queries';
 import { useUserQuery } from '@web/queries/auth.queries';
 import { IQuiz } from '@web/api/quiz.api';
+import { TbAlertOctagon } from 'react-icons/tb';
 
 type IQuestionForm = Omit<IQuestion, 'quiz' | 'created_at'>;
 type Props = {
@@ -36,7 +37,18 @@ const CreateEditQuiz = ({
   const { mutateAsync: createQuestion, isLoading } =
     useCreateQuestionMutation();
 
-  const { handleSubmit, control, register } = useForm<IQuestionForm>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<IQuestionForm>({
+    defaultValues: {
+      name: '',
+      description: '',
+      answers: [{ value: '' }, { value: '' }],
+      correctAnswer: 0,
+    },
+  });
 
   const isEditing = Boolean(questionData);
   const loading = isLoading;
@@ -87,14 +99,12 @@ const CreateEditQuiz = ({
               field: { onChange, value = '' },
               formState: { errors },
             }) => (
-              <>
-                <UIInput
-                  placeholder="Enter question title"
-                  onChange={onChange}
-                  value={value}
-                  error={errors?.name?.message}
-                />
-              </>
+              <UIInput
+                placeholder="Enter question title"
+                onChange={onChange}
+                value={value}
+                error={errors?.name?.message}
+              />
             )}
           />
           <Controller
@@ -113,7 +123,22 @@ const CreateEditQuiz = ({
         <UISeparator css={{ margin: '$5 0 ' }} />
 
         <UIFlexBox items="center">
-          <UIText css={{ color: '$light-white', flex: 1 }}>Add answers</UIText>
+          <UIFlexBox className="flex-1" items="center">
+            <UIText css={{ color: '$light-white', marginRight: '$2' }}>
+              Add answers
+            </UIText>
+            {Boolean(errors.answers?.root) && (
+              <ToolTip
+                title={errors.answers?.root?.message}
+                align="center"
+                side="bottom"
+              >
+                <UIBox css={{ display: 'inline-flex', color: '$error' }}>
+                  <TbAlertOctagon />
+                </UIBox>
+              </ToolTip>
+            )}
+          </UIFlexBox>
 
           <UIIconButton
             size="sm"
@@ -130,16 +155,17 @@ const CreateEditQuiz = ({
               <Controller
                 control={control}
                 name="correctAnswer"
+                rules={{ required: 'Please select a correct answer' }}
                 render={({ field: { onChange, value, name } }) => (
                   <ToolTip
                     title={value !== i ? 'Mark as correct' : ''}
                     side="bottom"
                   >
                     <input
+                      type="checkbox"
                       name={name}
-                      type="radio"
-                      value={i}
-                      onChange={(e) => onChange({ target: { value: i } })}
+                      checked={i === value}
+                      onChange={() => onChange({ target: { value: i } })}
                     />
                   </ToolTip>
                 )}

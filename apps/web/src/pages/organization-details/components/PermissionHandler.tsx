@@ -11,6 +11,8 @@ const PermissionHandler = ({
   const { data: user } = useUserQuery();
   const isOwner = user?.id === organization?.created_by;
 
+  if (!children) return null;
+
   if (typeof children === 'function') return children(isOwner);
 
   if (!isOwner) return <></>;

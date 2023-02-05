@@ -7,7 +7,7 @@ import { useUserQuery } from '@web/queries/auth.queries';
 const DashboardLayout = () => {
   const { error, isLoading } = useUserQuery();
 
-  if (isLoading) return <LoaderView />;
+  if (isLoading) return <LoaderView css={{ minHeight: '100vh' }} />;
 
   if ((error as Error)?.message === '401')
     return <Navigate to="/auth/signin" />;

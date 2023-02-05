@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createQuiz, IQuiz, getQuizesByOrganization, updateQuiz, getQuizById, getAllQuizes } from '@web/api/quiz.api'
+import { createQuiz, IQuiz, getQuizesByOrganization, updateQuiz, getQuizById, getAllQuizes, deleteQuiz } from '@web/api/quiz.api'
 import { useNotifications } from 'reapop'
 
 export const QUIZ = {
@@ -48,6 +48,21 @@ export const useUpdateQuizMutation = () => {
             notify(`Quiz updated successfully!`, 'success');
             queryClient.setQueryData<IQuiz[]>([QUIZ.ORGANIZATION_QUIZES, quiz.organization],
                 (prev = []) => prev.map((p) => p.id === quiz.id ? quiz : p)
+            )
+        }
+    })
+}
+
+
+export const useDeleteQuizMutation = () => {
+    const queryClient = useQueryClient()
+    const { notify } = useNotifications();
+
+    return useMutation(deleteQuiz, {
+        onSuccess: (quiz) => {
+            notify(`Quiz deleted successfully!`, 'success');
+            queryClient.setQueryData<IQuiz[]>([QUIZ.ORGANIZATION_QUIZES, quiz.organization],
+                (prev = []) => prev.filter((p) => p.id !== quiz.id)
             )
         }
     })

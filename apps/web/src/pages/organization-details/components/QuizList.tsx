@@ -6,6 +6,8 @@ import {
   UIGridBox,
   UIButton,
   UIIconButton,
+  UIAlertDialog,
+  UIDropdownMenu,
 } from '@quizrun/ui';
 import CreateEditQuiz from '@web/shared/CreateEditQuiz';
 import PermissionHandler from './PermissionHandler';
@@ -15,8 +17,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { IQuiz } from '@web/api/quiz.api';
 import { BsClipboardData } from 'react-icons/bs';
 import QuizCard from '@web/shared/QuizCard';
-import { IoIosSettings } from 'react-icons/io';
-import { RiEditLine } from 'react-icons/ri';
+import { useDeleteQuizMutation } from '@web/queries/quiz.queries';
+import { BsTrash, BsThreeDotsVertical } from 'react-icons/bs';
 
 const QuizList = () => {
   const { quizes, id } = useOrgDetailsContext();
@@ -24,14 +26,18 @@ const QuizList = () => {
   const { value: isOpen, on: open, off: close } = useBoolean(); // Add & Edit quiz dialog state
   const { value: drawer, off: closeDrawer, on: openDrawer } = useBoolean(); // Qustions manager dialog state
 
+  const { mutateAsync: deleteQuiz } = useDeleteQuizMutation();
+
+  const preventDefault = (e: any) => e?.preventDefault();
+
   const openEditQuiz = (e: any, quiz?: IQuiz) => {
-    e.preventDefault();
+    preventDefault(e);
     open();
     setSelectedQuiz(quiz);
   };
 
-  const openQuestionsManager = (e: any, quiz?: IQuiz) => {
-    e.preventDefault();
+  const openManager = (e: any, quiz?: IQuiz) => {
+    preventDefault(e);
     openDrawer();
     setSelectedQuiz(quiz);
   };
@@ -70,15 +76,40 @@ const QuizList = () => {
             quiz={quiz}
             actions={
               <PermissionHandler>
-                <UIIconButton
-                  size="sm"
-                  onClick={(e) => openQuestionsManager(e, quiz)}
-                >
-                  <IoIosSettings size={18} />
-                </UIIconButton>
-                <UIIconButton size="sm" onClick={(e) => openEditQuiz(e, quiz)}>
-                  <RiEditLine size={16} />
-                </UIIconButton>
+                <UIDropdownMenu>
+                  <UIDropdownMenu.Trigger asChild>
+                    <UIIconButton size="sm">
+                      <BsThreeDotsVertical size={16} />
+                    </UIIconButton>
+                  </UIDropdownMenu.Trigger>
+                  <UIDropdownMenu.Content align="end" onClick={preventDefault}>
+                    <UIDropdownMenu.Item onClick={(e) => openEditQuiz(e, quiz)}>
+                      Edit
+                    </UIDropdownMenu.Item>
+                    <UIDropdownMenu.Item onClick={(e) => openManager(e, quiz)}>
+                      Manage questions
+                    </UIDropdownMenu.Item>
+
+                    {/* Delete question alert */}
+                    <UIAlertDialog
+                      subtitle="You are about to delete this quiz and its questions"
+                      onResolve={deleteQuiz.bind(this, {
+                        id: quiz.id,
+                        organization: quiz.organization,
+                      })}
+                    >
+                      <UIDropdownMenu.Item
+                        color="danger"
+                        onSelect={preventDefault}
+                      >
+                        Delete
+                        <UIDropdownMenu.RightSlot>
+                          <BsTrash />
+                        </UIDropdownMenu.RightSlot>
+                      </UIDropdownMenu.Item>
+                    </UIAlertDialog>
+                  </UIDropdownMenu.Content>
+                </UIDropdownMenu>
               </PermissionHandler>
             }
           />
@@ -90,29 +121,29 @@ const QuizList = () => {
             <UIText fontSize="sm">No quizes</UIText>
           </UIFlexBox>
         )}
+
+        {/* Quiz Dialog for adding & editing a quiz */}
+        <UIDialog open={isOpen}>
+          <UIDialog.Content>
+            <UIDialog.Header {...quizDialogHeaderProps} />
+            <CreateEditQuiz
+              closeDialog={close}
+              quizData={selectedQuiz}
+              organization={id as string}
+            />
+          </UIDialog.Content>
+        </UIDialog>
+
+        {/*  Add & Manage Quiz Questions Dialog */}
+        <UIDialog open={drawer}>
+          <UIDialog.Content drawer={true}>
+            <QuizQuestionsManager
+              closeDialog={closeDrawer}
+              quizData={selectedQuiz}
+            />
+          </UIDialog.Content>
+        </UIDialog>
       </UIGridBox>
-
-      {/* Quiz Dialog for adding & editing a quiz */}
-      <UIDialog open={isOpen}>
-        <UIDialog.Content>
-          <UIDialog.Header {...quizDialogHeaderProps} />
-          <CreateEditQuiz
-            closeDialog={close}
-            quizData={selectedQuiz}
-            organization={id as string}
-          />
-        </UIDialog.Content>
-      </UIDialog>
-
-      {/*  Add & Manage Quiz Questions Dialog */}
-      <UIDialog open={drawer}>
-        <UIDialog.Content drawer={true}>
-          <QuizQuestionsManager
-            closeDialog={closeDrawer}
-            quizData={selectedQuiz}
-          />
-        </UIDialog.Content>
-      </UIDialog>
     </>
   );
 };
