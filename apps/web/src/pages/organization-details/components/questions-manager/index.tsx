@@ -26,15 +26,16 @@ import { randomizeArrayOrder } from '@web/utils/app.utils';
 type props = { closeDialog: () => void; quizData?: IQuiz };
 
 const QuestionsManager = ({ closeDialog, quizData }: props) => {
-  const { value: form, on: showForm, off: hideForm } = useBoolean(); // For questions dialog state
+  const { value: form, set: setFormVisibility, on: showForm } = useBoolean(); // For questions dialog state
+  const [selectedQuestion, setSelectedQuestion] = useState<IQuestion>();
+
   const { data: questions = [] } = useGetQuestionsByQuizQuery(
     quizData?.id as string,
     { onSuccess: (data) => setLocalQuestions(data) }
   );
   const [localQuestions, setLocalQuestions] = useState<IQuestion[]>([]);
   const [orderChanged, setOrderChanged] = useState(false);
-  const { mutate: updateOrder, isLoading: orderChangeLoading } =
-    useUpdateQuestionsOrderMutation();
+  const { mutate: updateOrder, isLoading } = useUpdateQuestionsOrderMutation();
 
   useEffect(() => {
     setOrderChanged(
@@ -44,9 +45,8 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
 
   function onDragEnd(result: any) {
     // dropped outside the list
-    if (!result.destination) {
-      return;
-    }
+    if (!result.destination) return;
+    // Else
     const newItems = [...localQuestions];
     const [removed] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, removed);
@@ -59,6 +59,16 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
   const randomizeQuestionsOrder = () => {
     const randomOrderedResult = randomizeArrayOrder([...localQuestions]);
     setLocalQuestions(randomOrderedResult);
+  };
+
+  const openEditQuestion = (question: IQuestion) => {
+    setSelectedQuestion(question);
+    setFormVisibility(true);
+  };
+
+  const closeQuestionDialog = () => {
+    setFormVisibility(false);
+    setSelectedQuestion(undefined);
   };
 
   return (
@@ -107,10 +117,13 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided) => (
                       <div ref={provided.innerRef} {...provided.draggableProps}>
-                        <QuestionCard {...item}>
+                        <QuestionCard
+                          question={item}
+                          openEditQuestion={openEditQuestion}
+                        >
                           <button
                             {...provided.dragHandleProps}
-                            disabled={orderChangeLoading}
+                            disabled={isLoading}
                           >
                             <MdDragIndicator />
                           </button>
@@ -150,7 +163,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
                 rounded
                 color="primary"
                 onClick={saveOrder}
-                loading={orderChangeLoading}
+                loading={isLoading}
               >
                 <AiFillSave />
               </UIIconButton>
@@ -160,7 +173,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
               <UIIconButton
                 rounded
                 onClick={cancelChanges}
-                disabled={orderChangeLoading}
+                disabled={isLoading}
               >
                 <MdOutlineClear />
               </UIIconButton>
@@ -173,7 +186,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
             <UIIconButton
               rounded
               onClick={randomizeQuestionsOrder}
-              disabled={orderChangeLoading}
+              disabled={isLoading}
             >
               <FaRandom />
             </UIIconButton>
@@ -189,7 +202,8 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
             description="add question to this quiz"
           />
           <CreateEditQuestion
-            closeDialog={hideForm}
+            questionData={selectedQuestion}
+            closeDialog={closeQuestionDialog}
             quizData={quizData}
             nextOrder={questions.length + 1}
           />

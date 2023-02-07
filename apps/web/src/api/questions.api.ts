@@ -34,7 +34,7 @@ export const createQuestion = async (payload: Omit<IQuestion, | 'id'>): Promise<
     return data;
 };
 
-export const updateQuestion = async (payload: IQuestion): Promise<IQuestion> => {
+export const updateQuestion = async (payload: Omit<IQuestion, | 'quiz'>): Promise<IQuestion> => {
     const { id, ...rest } = payload
     const { data, error } = await supabase
         .from('questions')

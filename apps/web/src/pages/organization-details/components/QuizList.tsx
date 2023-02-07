@@ -51,7 +51,7 @@ const QuizList = () => {
     () => ({
       title: selectedQuiz ? `Edit "${selectedQuiz.name}" quiz` : 'Create Quiz',
       description:
-        'Manage your organization quizes from one place add/edit your quize anytime.',
+        'Manage your organization quizzes from one place add/edit your quiz anytime.',
     }),
     [selectedQuiz]
   );
@@ -63,7 +63,7 @@ const QuizList = () => {
         justify="between"
         css={{ margin: '$6 0', fontSize: '$lg' }}
       >
-        <UIText>Quizes</UIText>
+        <UIText>Quizzes</UIText>
         <PermissionHandler>
           <UIButton onClick={open}>Add Quiz</UIButton>
         </PermissionHandler>
@@ -118,7 +118,7 @@ const QuizList = () => {
         {!quizes.length && (
           <UIFlexBox css={{ color: '$light-white' }} gap="3" items="center">
             <BsClipboardData size={30} />
-            <UIText fontSize="sm">No quizes</UIText>
+            <UIText fontSize="sm">No quizzes</UIText>
           </UIFlexBox>
         )}
 

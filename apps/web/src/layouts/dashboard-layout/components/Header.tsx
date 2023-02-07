@@ -53,10 +53,13 @@ const Header = ({
       <UIBox css={{ flex: 1 }}>
         <UIText
           as="h4"
-          fontSize="2xl"
+          fontSize="lg"
           weight="medium"
           className="truncate"
-          css={{ whiteSpace: 'normal' }}
+          css={{
+            whiteSpace: 'normal',
+            '@md': { fontSize: '$2xl' },
+          }}
         >
           {title}
         </UIText>

@@ -13,7 +13,10 @@ import { useForm, Controller, useFieldArray } from 'react-hook-form';
 import { IQuestion } from '@web/api/questions.api';
 import { BiTrash } from 'react-icons/bi';
 import { IoAddOutline } from 'react-icons/io5';
-import { useCreateQuestionMutation } from '@web/queries/questions.queries';
+import {
+  useCreateQuestionMutation,
+  useUpdateQuestionMutation,
+} from '@web/queries/questions.queries';
 import { useUserQuery } from '@web/queries/auth.queries';
 import { IQuiz } from '@web/api/quiz.api';
 import { TbAlertOctagon } from 'react-icons/tb';
@@ -34,8 +37,13 @@ const CreateEditQuiz = ({
   nextOrder,
 }: Props) => {
   const { data: user } = useUserQuery();
-  const { mutateAsync: createQuestion, isLoading } =
+  const { mutateAsync: createQuestion, isLoading: crateLoading } =
     useCreateQuestionMutation();
+  const { mutateAsync: updateQuestion, isLoading: updateLoading } =
+    useUpdateQuestionMutation();
+
+  const isEditing = Boolean(questionData);
+  const loading = crateLoading || updateLoading;
 
   const {
     handleSubmit,
@@ -43,15 +51,12 @@ const CreateEditQuiz = ({
     formState: { errors },
   } = useForm<IQuestionForm>({
     defaultValues: {
-      name: '',
-      description: '',
-      answers: [{ value: '' }, { value: '' }],
-      correctAnswer: 0,
+      name: questionData?.name ?? '',
+      description: questionData?.description ?? '',
+      answers: questionData?.answers ?? [{ value: '' }, { value: '' }],
+      correctAnswer: questionData?.correctAnswer ?? 0,
     },
   });
-
-  const isEditing = Boolean(questionData);
-  const loading = isLoading;
 
   const {
     fields: options,
@@ -75,12 +80,17 @@ const CreateEditQuiz = ({
 
   const onSubmit = async (values: IQuestionForm) => {
     try {
-      await createQuestion({
+      const newQuestionPayload = {
         ...values,
         created_by: user?.id as string,
         quiz: quizData?.id as string,
         order: nextOrder,
-      });
+      };
+
+      !isEditing
+        ? await createQuestion(newQuestionPayload)
+        : await updateQuestion({ ...values, id: questionData?.id as string });
+
       closeDialog();
     } catch (error) {
       console.log(error);

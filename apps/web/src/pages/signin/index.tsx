@@ -18,7 +18,7 @@ type SigninForm = {
 };
 
 const Signin = () => {
-  const { signin } = useAuth();
+  const { login } = useAuth();
   const { value: loading, set: setLoading } = useBoolean();
   const { control, handleSubmit } = useForm<SigninForm>({
     defaultValues: {
@@ -29,7 +29,7 @@ const Signin = () => {
   const onSubmit = async ({ email, password }: SigninForm) => {
     try {
       setLoading(true);
-      await signin(email, password);
+      await login(email, password);
     } catch (error) {
       console.log(error);
     } finally {

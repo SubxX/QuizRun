@@ -27,10 +27,13 @@ export default function useAuth() {
         [],
     )
 
-    const signin = useCallback(
+    const login = useCallback(
         async (email, password) => {
             const { error, data } = await supabase.auth.signInWithPassword({ email, password })
-            if (error) throw new Error(error?.message, { cause: error })
+            if (error) {
+                notify(error?.message ?? `Unable to login`, 'error');
+                throw new Error(error?.message, { cause: error })
+            }
             return data
         },
         [],
@@ -45,5 +48,5 @@ export default function useAuth() {
         [],
     )
 
-    return { signup, signin, signout }
+    return { signup, login, signout }
 }
