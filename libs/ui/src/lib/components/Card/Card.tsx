@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
+import { pulse } from '../../animations/animations';
 import { styled } from '../../theme/stitches.config';
 import { UIBox, UIFlexBox } from '../Box';
 import { UIText } from '../Text';
@@ -20,6 +21,12 @@ const Card = styled('div', {
           transform: 'scale(1.015)',
           boxShadow: '0px 0px 33px 0px rgba(0,0,0,0.25)',
         },
+      },
+    },
+    loading: {
+      true: {
+        opacity: 0.5,
+        animation: `1020ms linear ${pulse} infinite`,
       },
     },
   },

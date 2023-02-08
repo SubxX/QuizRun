@@ -1,5 +1,6 @@
 import { supabase } from '@web/supabase/supabaseClient';
 import { IQuestion } from './questions.api'
+import { IOrganization } from './organization.api';
 
 export interface IQuiz {
     id: string
@@ -8,7 +9,7 @@ export interface IQuiz {
     name: string
     description: string
     department: string
-    organization: string
+    organization: string | Partial<IOrganization>
     questions?: IQuestion[]
 }
 
@@ -36,7 +37,7 @@ export const getQuizesByOrganization = async (orgId: string): Promise<IQuiz[]> =
 export const getQuizById = async (id: string): Promise<IQuiz> => {
     const { data, error } = await supabase
         .from('quiz')
-        .select(`*, questions (*)`)
+        .select(`*, questions (*), organization (id,name)`)
         .eq('id', id)
         .single()
     if (error) throw new Error(error.message, { cause: error });
@@ -60,7 +61,7 @@ export const updateQuiz = async (payload: Omit<IQuiz, 'created_at' | 'created_by
 export const getAllQuizes = async (filters?: any): Promise<IQuiz[]> => {
     const { data, error } = await supabase
         .from('quiz')
-        .select(`*, questions (*)`)
+        .select(`*, questions (*), organization(id,name)`)
     if (error) throw new Error(error.message, { cause: error });
     if (!data) throw new Error('404');
 

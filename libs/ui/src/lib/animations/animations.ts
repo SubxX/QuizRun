@@ -30,6 +30,12 @@ export const fadeOut = keyframes({
   '100%': { opacity: 0 },
 });
 
+export const pulse = keyframes({
+  '0%': { opacity: 0.5 },
+  '50%': { opacity: 0.1 },
+  '100%': { opacity: 0.5 },
+});
+
 
 export const contentShow = keyframes({
   '0%': { opacity: 0, transform: 'translate(-50%, -48%) scale(.96)' },

@@ -1,20 +1,20 @@
-import { UIGridBox, LoaderView } from '@quizrun/ui';
+import { UIGridBox, LoaderView, UICard } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { useGetAllQuizs } from '@web/queries/quiz.queries';
+import CardsSkeletonLoader from '@web/shared/CardsSkeletonLoader';
 import QuizCard from '@web/shared/QuizCard';
 
-const ALlQuizes = () => {
-  const { data: quizes = [], isLoading } = useGetAllQuizs();
-
-  if (isLoading) return <LoaderView />;
-
+const ALlQuizzes = () => {
+  const { data: quizzes = [], isLoading } = useGetAllQuizs();
   return (
     <Container>
-      <Header title="Quizes" />
+      <Header title="Quizzes" />
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {quizes.map((quiz) => (
+        {isLoading && <CardsSkeletonLoader />}
+
+        {quizzes.map((quiz) => (
           <QuizCard key={quiz.id} quiz={quiz} />
         ))}
       </UIGridBox>
@@ -22,4 +22,4 @@ const ALlQuizes = () => {
   );
 };
 
-export default ALlQuizes;
+export default ALlQuizzes;
