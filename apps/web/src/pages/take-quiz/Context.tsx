@@ -8,12 +8,14 @@ import {
   SetStateAction,
 } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ErrorView, NotFoundView, UIButton, LoaderView } from '@quizrun/ui';
+import { ErrorView, NotFoundView, UIBox, UIButton } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import { useGetQuizByIdQuery } from '@web/queries/quiz.queries';
 import { IQuiz } from '@web/api/quiz.api';
 import { useGetQuizSubmissionQuery } from '@web/queries/take-quiz.util';
 import { IQuizSubmission } from '@web/api/take-quiz.api';
+import Loader from './Loader';
+import BgComponent from './components/BgComponent';
 
 const QuizDetails = createContext(
   {} as {
@@ -21,7 +23,7 @@ const QuizDetails = createContext(
     id?: string;
     activeQuestion: number;
     setActiveQuestion: Dispatch<SetStateAction<number>>;
-    submission?: IQuizSubmission;
+    submission?: IQuizSubmission | null;
   }
 );
 
@@ -37,6 +39,7 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
     id as string
   );
 
+  const loading = isLoading || sLoading;
   const err = error as Error;
 
   const values = useMemo(
@@ -49,8 +52,6 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
     }),
     [id, quiz, activeQuestion, submission]
   );
-
-  if (isLoading || sLoading) return <LoaderView />;
 
   if (err)
     return (
@@ -70,7 +71,16 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
       </Container>
     );
 
-  return <QuizDetails.Provider value={values}>{children}</QuizDetails.Provider>;
+  return (
+    <QuizDetails.Provider value={values}>
+      <Container className="flex-center h-full">
+        <UIBox css={{ maxWidth: '320px', width: '100%' }}>
+          {loading ? <Loader /> : children}
+        </UIBox>
+        <BgComponent />
+      </Container>
+    </QuizDetails.Provider>
+  );
 };
 
 export default ContenxtWrapper;

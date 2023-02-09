@@ -1,17 +1,18 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { IOrganization } from '@web/api/organization.api';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ErrorView, NotFoundView, UIButton, LoaderView } from '@quizrun/ui';
+import { ErrorView, NotFoundView, UIButton } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import { useOrganizationDetailsQuery } from '@web/queries/organization.query';
 import { useGetQuizesByOrgQuery } from '@web/queries/quiz.queries';
 import { IQuiz } from '@web/api/quiz.api';
+import Loader from './Loader';
 
 const OrganizationDetails = createContext(
   {} as {
     organization?: IOrganization;
     id?: string;
-    quizes: IQuiz[];
+    quizzes: IQuiz[];
   }
 );
 
@@ -22,7 +23,9 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const { data, isLoading, error } = useOrganizationDetailsQuery(id as string);
-  const { data: quizes = [] } = useGetQuizesByOrgQuery(data?.id as string);
+  const { data: quizzes = [], isLoading: quizesLoading } =
+    useGetQuizesByOrgQuery(id as string);
+  const loading = isLoading || quizesLoading;
 
   const err = error as Error;
 
@@ -30,12 +33,12 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
     () => ({
       organization: data,
       id,
-      quizes,
+      quizzes,
     }),
-    [id, data, quizes]
+    [id, data, quizzes]
   );
 
-  if (isLoading) return <LoaderView />;
+  if (loading) return <Loader />;
 
   if (err)
     return (

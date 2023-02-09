@@ -1,6 +1,5 @@
-import { UIDialog, ToolTip } from '@quizrun/ui';
+import { UIDialog, ToolTip, UIAvatar } from '@quizrun/ui';
 import { AiOutlinePlus } from 'react-icons/ai';
-import StyledSessionSelector from './SessionSelector';
 import { useState } from 'react';
 import CreateEditOrganization from '@web/shared/CreateEditOrganization';
 
@@ -12,21 +11,19 @@ const AddOrganization = () => {
 
   return (
     <>
-      <ToolTip title="Create organzation" align="center">
-        <StyledSessionSelector
-          as="button"
-          className="flex-center"
-          onClick={openDialog}
-        >
-          <AiOutlinePlus size={20} />
-        </StyledSessionSelector>
+      <ToolTip title="Create organization" align="center">
+        <button onClick={openDialog} className="cursor-pointer">
+          <UIAvatar size="sm">
+            <AiOutlinePlus size={20} />
+          </UIAvatar>
+        </button>
       </ToolTip>
 
       <UIDialog open={open}>
         <UIDialog.Content>
           <UIDialog.Header
             title="Create organization"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis culpa dolorum"
+            description="Create your own organization on quizRun you can manage all your quizzes from here."
           />
           <CreateEditOrganization closeDialog={closeDialog} />
         </UIDialog.Content>

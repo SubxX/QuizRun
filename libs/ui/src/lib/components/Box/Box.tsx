@@ -1,3 +1,4 @@
+import { pulse } from '../../animations/animations';
 import { styled } from '../../theme/stitches.config';
 
 const Box = styled('div', {
@@ -16,6 +17,14 @@ const Box = styled('div', {
       },
       blakish: {
         background: '$blackish',
+      },
+    },
+    loading: {
+      true: {
+        opacity: 0.5,
+        animation: `1020ms linear ${pulse} infinite`,
+        background: '$blackish',
+        borderRadius: '$lg',
       },
     },
   },

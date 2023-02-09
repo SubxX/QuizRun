@@ -20,13 +20,15 @@ export const submitQuiz = async (payload: Omit<IQuizSubmission, 'created_at' | '
     return data;
 };
 
-export const getQuizSubmission = async (userId: string, quizId: string): Promise<IQuizSubmission> => {
+export const getQuizSubmission = async (userId: string, quizId: string): Promise<IQuizSubmission | null> => {
     const { data, error } = await supabase
         .from('leaderboard')
         .select()
         .eq('quiz', quizId)
         .eq('user', userId)
         .single()
+
+    if (error?.code === 'PGRST116') return null // It means there no data
     if (error) throw new Error(error.message, { cause: error });
     return data;
 };

@@ -55,6 +55,7 @@ const QuizCard = ({ quiz, actions, footerActions, as = Link }: Props) => {
                 <UIAvatar
                   onClick={visitOrganization}
                   aria-label={`Visit ${organization?.name}`}
+                  className="cursor-pointer"
                 >
                   {organization?.name}
                 </UIAvatar>

@@ -119,6 +119,9 @@ export const globalStyles = globalCss({
   ".h-full": {
     height: '100%'
   },
+  ".cursor-pointer": {
+    cursor: 'pointer'
+  },
   ".w-full": {
     width: '100%'
   },

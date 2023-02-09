@@ -56,18 +56,15 @@ const Sidebar = () => {
         <UIText fontSize="xl">QR</UIText>
       </UIBox>
 
-      {/* Sidebar Fevourites */}
+      {/* Sidebar Favorites */}
       <UIBox css={{ padding: '$2', marginTop: '$3', flex: 1, width: '100%' }}>
         <UIBox as="ul" css={{ spaceY: '$3' }}>
           {myOrgs.map((org) => (
             <li key={`nav-${org.id}`}>
               <NavLink to={`/organization/${org.id}`}>
                 {({ isActive }) => (
-                  <SessionSelector as="div" data-active={isActive}>
-                    {org.name
-                      .split(' ')
-                      .map((word) => word[0].toUpperCase())
-                      .join('')}
+                  <SessionSelector active={isActive}>
+                    {org.name}
                   </SessionSelector>
                 )}
               </NavLink>

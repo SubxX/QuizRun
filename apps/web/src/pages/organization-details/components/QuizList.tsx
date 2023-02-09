@@ -21,7 +21,7 @@ import { useDeleteQuizMutation } from '@web/queries/quiz.queries';
 import { BsTrash, BsThreeDotsVertical } from 'react-icons/bs';
 
 const QuizList = () => {
-  const { quizes, id } = useOrgDetailsContext();
+  const { id, quizzes } = useOrgDetailsContext();
   const [selectedQuiz, setSelectedQuiz] = useState<IQuiz>();
   const { value: isOpen, on: open, off: close } = useBoolean(); // Add & Edit quiz dialog state
   const { value: drawer, off: closeDrawer, on: openDrawer } = useBoolean(); // Qustions manager dialog state
@@ -70,7 +70,7 @@ const QuizList = () => {
       </UIFlexBox>
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {quizes.map((quiz) => (
+        {quizzes.map((quiz) => (
           <QuizCard
             key={quiz.id}
             quiz={quiz}
@@ -95,7 +95,7 @@ const QuizList = () => {
                       subtitle="You are about to delete this quiz and its questions"
                       onResolve={deleteQuiz.bind(this, {
                         id: quiz.id,
-                        organization: quiz.organization,
+                        organization: id as string,
                       })}
                     >
                       <UIDropdownMenu.Item
@@ -115,7 +115,7 @@ const QuizList = () => {
           />
         ))}
 
-        {!quizes.length && (
+        {!quizzes.length && (
           <UIFlexBox css={{ color: '$light-white' }} gap="3" items="center">
             <BsClipboardData size={30} />
             <UIText fontSize="sm">No quizzes</UIText>

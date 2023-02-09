@@ -1,6 +1,7 @@
 import * as RUIAvatar from '@radix-ui/react-avatar';
 import { ComponentProps } from '@stitches/react';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, ReactNode, useMemo } from 'react';
+import { pulse } from '../../animations/animations';
 import { styled } from '../../theme/stitches.config';
 
 const AvatarRoot = styled(RUIAvatar.Root, {
@@ -13,8 +14,8 @@ const AvatarRoot = styled(RUIAvatar.Root, {
   width: `$$diameter`,
   height: `$$diameter`,
   fontSize: '$$avatarFontsize',
+  color: '$$avatarFontColor',
   borderRadius: '100%',
-  background: '$blackish',
   variants: {
     size: {
       xs: {
@@ -22,13 +23,30 @@ const AvatarRoot = styled(RUIAvatar.Root, {
         $$avatarFontsize: '$fontSizes$xs',
       },
       sm: {
-        $$diameter: '45px',
+        $$diameter: '48px',
         $$avatarFontsize: '$fontSizes$sm',
+      },
+    },
+    color: {
+      default: {
+        background: 'rgba($white-rgb,0.1)',
+        $$avatarFontColor: '$white-muted',
+      },
+      primary: {
+        background: '$primary',
+        $$avatarFontColor: '$white',
+      },
+    },
+    loading: {
+      true: {
+        opacity: 0.5,
+        animation: `1020ms linear ${pulse} infinite`,
       },
     },
   },
   defaultVariants: {
     size: 'xs',
+    color: 'default',
   },
 });
 
@@ -45,8 +63,7 @@ const AvatarFallback = styled(RUIAvatar.Fallback, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'rgba($white-rgb,0.1)',
-  color: '$white-muted',
+  color: 'inherit',
   fontSize: 'inherit',
   lineHeight: 1,
   fontWeight: 500,
@@ -55,18 +72,16 @@ const AvatarFallback = styled(RUIAvatar.Fallback, {
 type CustomProps = {
   src?: string;
   label?: string;
-  children?: string;
+  children?: ReactNode;
 };
 
 type AvatarRootProps = ComponentProps<typeof AvatarRoot>;
-type AvatarProps = Omit<AvatarRootProps, 'children'> & CustomProps;
+type AvatarProps = AvatarRootProps & CustomProps;
 
 export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
   ({ src, children, label, ...rest }, forwardedRef) => {
-    if (typeof children !== 'string')
-      throw new Error('Invalid children type, accepts only string type');
-
-    const fallbackText = useMemo(() => {
+    const fallback = useMemo(() => {
+      if (typeof children !== 'string') return children;
       const wordsArray = children?.split(' ');
       if (wordsArray?.length === 1) return wordsArray[0].substring(0, 2);
       return children
@@ -78,9 +93,9 @@ export const Avatar = forwardRef<HTMLSpanElement, AvatarProps>(
 
     return (
       <AvatarRoot ref={forwardedRef} {...rest}>
-        {Boolean(src) && <AvatarImage src={src} alt={label ?? children} />}
+        {Boolean(src) && <AvatarImage src={src} alt={label} />}
 
-        <AvatarFallback>{fallbackText}</AvatarFallback>
+        <AvatarFallback>{fallback}</AvatarFallback>
       </AvatarRoot>
     );
   }

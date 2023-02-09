@@ -1,16 +1,8 @@
-import { styled } from '@quizrun/ui';
+import { styled, UIAvatar } from '@quizrun/ui';
+import { ComponentProps } from '@stitches/react';
 
-const StyledSessionSelector = styled('button', {
-  height: '48px',
-  width: '48px',
+const SelectorWrapper = styled('div', {
   position: 'relative',
-  cursor: 'pointer',
-  background: 'rgba($white-rgb,0.1)',
-  borderRadius: '$full',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-
   '&::after': {
     content: '',
     position: 'absolute',
@@ -23,22 +15,31 @@ const StyledSessionSelector = styled('button', {
     height: '80%',
     left: '-$2',
   },
-  '&[data-active="true"]': {
-    borderRadius: '$2xl',
-    cursor: 'default',
-    background: '$primary',
-    '&::after': {
-      width: '4px',
+  variants: {
+    active: {
+      true: {
+        '&::after': {
+          width: '4px',
+        },
+      },
     },
   },
-  '&:hover': {
-    background: '$primary',
-    borderRadius: '$2xl',
-  },
-  '&:disabled': {
-    cursor: 'not-allowed',
-    opacity: 0.8,
-  },
 });
+
+type SelectorWrapperType = ComponentProps<typeof SelectorWrapper>;
+
+const StyledSessionSelector = ({
+  children,
+  active,
+  ...rest
+}: SelectorWrapperType) => {
+  return (
+    <SelectorWrapper {...rest} active={active}>
+      <UIAvatar size="sm" color={active ? 'primary' : 'default'}>
+        {children}
+      </UIAvatar>
+    </SelectorWrapper>
+  );
+};
 
 export default StyledSessionSelector;
