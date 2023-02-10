@@ -1,5 +1,8 @@
 Quiz Application is a platform where users can create quizzes and other users can take those quizzes. This application is designed to provide an engaging and educational experience for users. It is an excellent tool for anyone who wants to test their knowledge, learn new things, or simply have fun. Try it out today and see how you measure up!
 
+![image](https://user-images.githubusercontent.com/51792949/218027954-950aec2b-f1cb-4af4-ad91-9d00ea538553.png)
+
+
 ### Features
   - User can create quizzes with multiple choice questions
   - User can take quizzes created by other users
