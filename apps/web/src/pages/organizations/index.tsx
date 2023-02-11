@@ -1,4 +1,4 @@
-import { UICard, UIGridBox } from '@quizrun/ui';
+import { UIGridBox } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import OrganizationCard from './components/OrganizationCard';
 import Header from '@web/layouts/dashboard-layout/components/Header';
@@ -18,9 +18,9 @@ const Organizations = () => {
         }}
         gap="3"
       >
-        {/* {organizations?.map((org) => (
+        {organizations?.map((org) => (
           <OrganizationCard key={org.id} org={org} />
-        ))} */}
+        ))}
       </UIGridBox>
     </Container>
   );

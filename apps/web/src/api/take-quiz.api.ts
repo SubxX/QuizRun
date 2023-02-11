@@ -1,5 +1,4 @@
 import { supabase } from '@web/supabase/supabaseClient';
-import { IQuiz } from './quiz.api';
 
 export interface IQuizSubmission {
     quiz: string;

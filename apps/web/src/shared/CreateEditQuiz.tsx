@@ -14,7 +14,6 @@ import {
   useUpdateQuizMutation,
 } from '@web/queries/quiz.queries';
 import { useUserQuery } from '@web/queries/auth.queries';
-import { useNotifications } from 'reapop';
 
 type IQuizForm = Omit<IQuiz, 'id' | 'created_at' | 'created_by' | 'questions'>;
 type Props = {
@@ -65,16 +64,14 @@ const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
           field: { onChange, value = '' },
           formState: { errors },
         }) => (
-          <>
-            <UIInput
-              label="Quiz Name"
-              id="quiz-name"
-              placeholder="Enter Quiz name"
-              onChange={onChange}
-              value={value}
-              error={errors?.name?.message}
-            />
-          </>
+          <UIInput
+            label="Quiz Name"
+            id="quiz-name"
+            placeholder="Enter Quiz name"
+            onChange={onChange}
+            value={value}
+            error={errors?.name?.message}
+          />
         )}
       />
 
@@ -111,16 +108,14 @@ const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
           field: { onChange, value = '' },
           formState: { errors },
         }) => (
-          <>
-            <UITextarea
-              label="Description"
-              id="quiz_description"
-              placeholder="Enter Quiz description"
-              onChange={onChange}
-              value={value}
-              error={errors?.description?.message}
-            />
-          </>
+          <UITextarea
+            label="Description"
+            id="quiz_description"
+            placeholder="Enter Quiz description"
+            onChange={onChange}
+            value={value}
+            error={errors?.description?.message}
+          />
         )}
       />
 

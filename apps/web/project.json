@@ -5,6 +5,14 @@
   "sourceRoot": "apps/web/src",
   "tags": [],
   "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/web/**/*.{ts,tsx,js,jsx}"],
+        "ignorePath": ".eslintignore"
+      }
+    },
     "serve": {
       "executor": "nx-plugin-vite:serve",
       "options": {

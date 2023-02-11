@@ -15,7 +15,7 @@ const PermissionHandler = ({
 
   if (typeof children === 'function') return children(isOwner);
 
-  if (!isOwner) return <></>;
+  if (!isOwner) return null;
   return children;
 };
 

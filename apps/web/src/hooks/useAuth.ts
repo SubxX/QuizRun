@@ -12,7 +12,7 @@ export default function useAuth() {
             const { error, data: response } = await supabase.auth.signUp({
                 email, password,
                 options: {
-                    emailRedirectTo: `${location.origin}/auth/email-confirmed`,
+                    emailRedirectTo: `${window?.location.origin}/auth/email-confirmed`,
                     data
                 },
             })

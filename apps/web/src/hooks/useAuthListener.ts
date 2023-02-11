@@ -12,7 +12,7 @@ export default function useAuthListener() {
 
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') {
-                if (!redirectableRoutes.includes(location.pathname)) return
+                if (!redirectableRoutes.includes(window?.location?.pathname)) return
                 navigate('/', { replace: true })
             }
 

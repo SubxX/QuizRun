@@ -8,7 +8,7 @@ export const preventDefault = (e?: any) => e?.preventDefault()
 export const randomizeArrayOrder = (array: any[]) => {
     let currentIndex = array.length, randomIndex;
 
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
         // Pick a remaining element.
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;

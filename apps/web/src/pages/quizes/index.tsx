@@ -1,4 +1,4 @@
-import { UIGridBox, LoaderView, UICard } from '@quizrun/ui';
+import { UIGridBox } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import Header from '@web/layouts/dashboard-layout/components/Header';
 import { useGetAllQuizs } from '@web/queries/quiz.queries';

@@ -2,13 +2,12 @@ import {
   forwardRef,
   HTMLProps,
   MutableRefObject,
-  ReactNode,
   useLayoutEffect,
   useRef,
 } from 'react';
 import { ToolTip, UILabel } from '../';
 import Adornment from './Adornment';
-import { styled, theme } from '../../theme/stitches.config';
+import { styled } from '../../theme/stitches.config';
 import { UIBox } from '../Box';
 import { TbAlertOctagon } from 'react-icons/tb';
 

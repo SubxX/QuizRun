@@ -1,4 +1,4 @@
-import { UIBox, UICard } from '@quizrun/ui';
+import { UICard } from '@quizrun/ui';
 import { useMemo } from 'react';
 
 type Props = {
