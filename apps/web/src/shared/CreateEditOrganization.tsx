@@ -7,6 +7,7 @@ import {
   useCreateOrganizationMutation,
   useUpdateOrganizationMutation,
 } from '@web/queries/organization.query';
+import { useNavigate } from 'react-router-dom';
 
 type OrganizationForm = {
   name: string;
@@ -25,6 +26,7 @@ const CreateEditOrganization = ({ closeDialog, orgData }: Props) => {
       description: orgData?.description ?? '',
     },
   });
+  const navigate = useNavigate();
   const { data: user } = useUserQuery();
 
   const { mutateAsync: addOrganization, isLoading: createLoading } =
@@ -38,7 +40,11 @@ const CreateEditOrganization = ({ closeDialog, orgData }: Props) => {
   const submitForm = async (payload: OrganizationForm) => {
     try {
       if (!isEditing) {
-        await addOrganization({ ...payload, created_by: user?.id as string });
+        const newOrg = await addOrganization({
+          ...payload,
+          created_by: user?.id as string,
+        });
+        navigate(`/organization/${newOrg.id}`);
       } else {
         await updateOrganization({ ...payload, id: orgData?.id as string });
       }
