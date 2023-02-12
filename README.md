@@ -4,11 +4,11 @@ Quiz Application is a platform where users can create quizzes and other users ca
 
 ### Features
 
-- User can create quizzes with multiple choice questions
-- User can take quizzes created by other users
-- User can see their score after completing the quiz
-- User can view the results of the quizzes they have taken
-- User can see the top scorers for a particular quiz
+- User can create quizzes with multiple choice questions.
+- User can take quizzes created by other users.
+- User can see their score after completing the quiz.
+- User can view the results of the quizzes they have taken.
+- User can see the top scorers for a particular quiz.
 
 ### Getting Started
 
@@ -20,10 +20,10 @@ To create a quiz, click on the "+" button on the sidebar and create a organizati
 
 To create a quiz provide the following information:
 
-- Quiz title
-- Select a department
-- Quiz description
-- Questions and Answers (with the correct answer indicated)
+- Quiz title.
+- Select a department.
+- Quiz description.
+- Questions and Answers (with the correct answer indicated).
 
 ### Taking a Quiz
 
