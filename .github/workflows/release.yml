@@ -2,12 +2,12 @@ name: Releases
 on:
   push:
     branches:
-      - release
+      - master
     paths-ignore:
       - 'data/**'
 
 concurrency:
-  group: 'release-branch'
+  group: 'master-branch'
 
 jobs:
   changelog:
@@ -46,7 +46,7 @@ jobs:
       # create PR using GitHub CLI
       - name: create PR with release info
         id: create-pr
-        run: gh pr create --base release --head release-from-${{ github.sha }} --title 'Merge new release into release' --body 'Created by Github action'
+        run: gh pr create --base master --head release-from-${{ github.sha }} --title 'Merge new release into master' --body 'Created by Github action'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
