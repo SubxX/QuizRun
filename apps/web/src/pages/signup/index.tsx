@@ -67,6 +67,7 @@ const Signup = () => {
               autoFocus={true}
               startAdornment={<MdAlternateEmail />}
               error={errors?.email?.message}
+              disabled={loading}
             />
           )}
         />
@@ -95,6 +96,7 @@ const Signup = () => {
               autoFocus={true}
               startAdornment={<MdAlternateEmail />}
               error={errors?.email?.message}
+              disabled={loading}
             />
           )}
         />
@@ -116,6 +118,7 @@ const Signup = () => {
               id="password"
               startAdornment={<MdLockOutline />}
               error={errors?.password?.message}
+              disabled={loading}
             />
           )}
         />
@@ -144,6 +147,7 @@ const Signup = () => {
               id="confirm-password"
               startAdornment={<MdLockOutline />}
               error={errors?.confirmPassword?.message}
+              disabled={loading}
             />
           )}
         />
