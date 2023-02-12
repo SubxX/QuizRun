@@ -130,6 +130,7 @@ const QuizList = () => {
               closeDialog={close}
               quizData={selectedQuiz}
               organization={id as string}
+              selectQuiz={(quiz) => openManager(null, quiz)}
             />
           </UIDialog.Content>
         </UIDialog>
