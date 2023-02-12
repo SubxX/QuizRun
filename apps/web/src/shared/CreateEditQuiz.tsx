@@ -20,9 +20,15 @@ type Props = {
   closeDialog: any;
   quizData?: IQuiz;
   organization: string;
+  selectQuiz?: (quiz: IQuiz) => void;
 };
 
-const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
+const CreateEditQuiz = ({
+  closeDialog,
+  quizData,
+  organization,
+  selectQuiz,
+}: Props) => {
   const { data: user } = useUserQuery();
   const { data = [] } = useDepartmentsQuery();
   const isEdit = Boolean(quizData);
@@ -45,9 +51,15 @@ const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
 
   const onSubmit = async (values: IQuizForm) => {
     try {
-      isEdit
-        ? await updateQuiz({ ...values, id: quizData?.id as string })
-        : await createQuiz({ ...values, created_by: user?.id as string });
+      if (isEdit) {
+        await updateQuiz({ ...values, id: quizData?.id as string });
+      } else {
+        const newQuiz = await createQuiz({
+          ...values,
+          created_by: user?.id as string,
+        });
+        selectQuiz?.(newQuiz);
+      }
       closeDialog();
     } catch (error) {
       console.log(error);
