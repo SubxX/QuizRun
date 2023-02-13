@@ -4,9 +4,13 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  build-and-deploy:
     if: github.repository == 'SubxX/QuizRun'
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
