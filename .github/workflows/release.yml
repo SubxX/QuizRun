@@ -35,13 +35,14 @@ jobs:
       # create release info and push it upstream
       - name: conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: TriPSs/conventional-changelog-action@latest
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           version-file: './package.json,./package-lock.json'
           git-branch: 'release-from-${{ github.sha }}'
           skip-on-empty: false
           skip-git-pull: true
+          release-count: 20
 
       # create PR using GitHub CLI
       - name: create PR with release info
