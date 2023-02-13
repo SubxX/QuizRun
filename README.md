@@ -8,7 +8,7 @@ Quiz Application is a platform where users can create quizzes and other users ca
 - User can take quizzes created by other users
 - User can see their score after completing the quiz
 - User can view the results of the quizzes they have taken
-- User can see the top scorers for a particular quiz
+- User can see the top scorers for a particular quiz.
 
 ### Getting Started
 
