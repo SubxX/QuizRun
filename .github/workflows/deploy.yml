@@ -4,10 +4,10 @@ on:
     types: [published]
   workflow_dispatch:
 
-env:
-  VITE_BASE_URL: ${{env.VITE_BASE_URL}}
-  VITE_SUPABASE_KEY: ${{env.VITE_SUPABASE_KEY}}
-  VITE_SUPABASE_URL: ${{env.VITE_SUPABASE_URL}}
+# env:
+#   VITE_BASE_URL: ${{env.VITE_BASE_URL}}
+#   VITE_SUPABASE_KEY: ${{env.VITE_SUPABASE_KEY}}
+#   VITE_SUPABASE_URL: ${{env.VITE_SUPABASE_URL}}
 
 permissions:
   contents: write

@@ -1,9 +1,9 @@
 name: Release
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  # push:
+  #   branches:
+  #     - master
 
 concurrency:
   group: 'master-branch'
