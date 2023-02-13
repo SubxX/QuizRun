@@ -4,7 +4,7 @@ Quiz Application is a platform where users can create quizzes and other users ca
 
 ### Features
 
-- User can create quizzes with multiple choice questions.
+- User can create quizzes with multiple choice questions
 - User can take quizzes created by other users
 - User can see their score after completing the quiz
 - User can view the results of the quizzes they have taken
