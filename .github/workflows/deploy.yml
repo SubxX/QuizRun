@@ -4,6 +4,11 @@ on:
     types: [published]
   workflow_dispatch:
 
+env:
+  VITE_BASE_URL: ${{env.VITE_BASE_URL}}
+  VITE_SUPABASE_KEY: ${{env.VITE_SUPABASE_KEY}}
+  VITE_SUPABASE_URL: ${{env.VITE_SUPABASE_URL}}
+
 permissions:
   contents: write
 
@@ -19,13 +24,16 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: install dependencies
-        run: npm ci
+      - name: Print name
+        run: echo "Hello $VITE_BASE_URL. $VITE_SUPABASE_KEY. $env.VITE_SUPABASE_URL"
 
-      - name: run build
-        run: npx nx run web:build
+      # - name: install dependencies
+      #   run: npm ci
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist/apps/web # The folder the action should deploy.
+      # - name: run build
+      #   run: npx nx run web:build
+
+      # - name: Deploy 🚀
+      #   uses: JamesIves/github-pages-deploy-action@v4
+      #   with:
+      #     folder: dist/apps/web
