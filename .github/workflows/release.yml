@@ -1,5 +1,6 @@
 name: Releases
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -42,7 +43,6 @@ jobs:
           git-branch: 'release-from-${{ github.sha }}'
           skip-on-empty: false
           skip-git-pull: true
-          release-count: 20
 
       # create PR using GitHub CLI
       - name: create PR with release info
