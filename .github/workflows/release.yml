@@ -1,11 +1,11 @@
 name: Releases
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - 'data/**'
+  # push:
+  #   branches:
+  #     - master
+  #   paths-ignore:
+  #     - 'data/**'
 
 concurrency:
   group: 'master-branch'
@@ -43,6 +43,7 @@ jobs:
           git-branch: 'release-from-${{ github.sha }}'
           skip-on-empty: false
           skip-git-pull: true
+          # release-count: 10
 
       # create PR using GitHub CLI
       - name: create PR with release info
