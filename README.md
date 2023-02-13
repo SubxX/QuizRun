@@ -21,7 +21,7 @@ To create a quiz, click on the "+" button on the sidebar and create a organizati
 To create a quiz provide the following information:
 
 - Quiz title.
-- Select a department.
+- Select a department .
 - Quiz description.
 - Questions and Answers (with the correct answer indicated).
 
