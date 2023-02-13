@@ -1,11 +1,9 @@
-name: Releases
+name: Release
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - 'data/**'
+  push:
+    branches:
+      - master
 
 concurrency:
   group: 'master-branch'
@@ -31,7 +29,6 @@ jobs:
         with:
           fetch-depth: 0
 
-
       # fetch branches and switch to the temporary branch
       - name: switch to new branch
         run: git fetch --all && git checkout --track origin/release-from-${{ github.sha }}
@@ -46,7 +43,7 @@ jobs:
           git-branch: 'release-from-${{ github.sha }}'
           skip-on-empty: false
           skip-git-pull: true
-          release-count: 10
+          release-count: 5
 
       # create PR using GitHub CLI
       - name: create PR with release info
