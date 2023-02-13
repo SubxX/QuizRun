@@ -9,6 +9,9 @@ on:
 #   VITE_SUPABASE_KEY: ${{env.VITE_SUPABASE_KEY}}
 #   VITE_SUPABASE_URL: ${{env.VITE_SUPABASE_URL}}
 
+env:
+  env_var: ${{vars.VITE_BASE_URL}}
+
 permissions:
   contents: write
 
@@ -25,7 +28,7 @@ jobs:
           cache: 'npm'
 
       - name: Print name
-        run: echo "Hello $VITE_BASE_URL. $VITE_SUPABASE_KEY. $env.VITE_SUPABASE_URL"
+        run: echo "Hello ${{ vars.VITE_SUPABASE_URL }} ~ $env_var"
 
       # - name: install dependencies
       #   run: npm ci
