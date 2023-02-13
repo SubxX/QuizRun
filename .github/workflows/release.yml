@@ -28,6 +28,9 @@ jobs:
 
       # check out the repository afterwards
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
 
       # fetch branches and switch to the temporary branch
       - name: switch to new branch
