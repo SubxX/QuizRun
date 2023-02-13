@@ -1,3 +1,12 @@
+## [0.4.1](https://github.com/SubxX/QuizRun/compare/v0.4.0...v0.4.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* **workflow:** github pages deploy workflow changes ([f232696](https://github.com/SubxX/QuizRun/commit/f232696db964c4e4db4a3fe41bbb44d6a526c181))
+
+
+
 # [0.4.0](https://github.com/SubxX/QuizRun/compare/v0.3.0...v0.4.0) (2023-02-13)
 
 
@@ -37,16 +46,6 @@
 ### Features
 
 * updated releast workflow ([ce9b5bf](https://github.com/SubxX/QuizRun/commit/ce9b5bf4583e604afc3a36b952d1141256428737))
-
-
-
-## [0.0.14](https://github.com/SubxX/QuizRun/compare/v0.0.13...v0.0.14) (2023-02-13)
-
-
-### Features
-
-* release workflow added release-count option ([4334d78](https://github.com/SubxX/QuizRun/commit/4334d782a41d948b64c0d47cf6b5b1e157575e1b))
-* rlease workflow removed on on-push ([42be60a](https://github.com/SubxX/QuizRun/commit/42be60ac02218afe2ace568ec2075acefba6b6da))
 
 
 
