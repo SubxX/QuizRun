@@ -14,7 +14,7 @@ Quiz Application is a platform where users can create quizzes and other users ca
 
 To get started with the Quiz Application, you need to create an account by providing name, email & password. Once you have created an account, you can start creating quizzes or take quizzes created by other users.
 
-### Creating a Quiz
+### Creating a new Quiz
 
 To create a quiz, click on the "+" button on the sidebar and create a organization first, once you created a organization you can create quizzes under it.
 
