@@ -1,3 +1,7 @@
+## [0.4.2](https://github.com/SubxX/QuizRun/compare/v0.4.1...v0.4.2) (2023-02-13)
+
+
+
 ## [0.4.1](https://github.com/SubxX/QuizRun/compare/v0.4.0...v0.4.1) (2023-02-13)
 
 
@@ -37,15 +41,6 @@
 
 * Readme updated for checking changelog ([b02c52b](https://github.com/SubxX/QuizRun/commit/b02c52b3c558adbdf937db9d4daabdbe86c26ef4))
 * updated Readme  for checking release ([b97549c](https://github.com/SubxX/QuizRun/commit/b97549ce3587a1c1ee416196a7807a60eab6f39b))
-
-
-
-# [0.1.0](https://github.com/SubxX/QuizRun/compare/v0.0.14...v0.1.0) (2023-02-13)
-
-
-### Features
-
-* updated releast workflow ([ce9b5bf](https://github.com/SubxX/QuizRun/commit/ce9b5bf4583e604afc3a36b952d1141256428737))
 
 
 
