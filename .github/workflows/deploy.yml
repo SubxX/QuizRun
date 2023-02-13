@@ -1,0 +1,27 @@
+name: Deploy
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.repository == 'SubxX/QuizRun'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: run build
+        run: npx nx run web:build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/apps/web # The folder the action should deploy.
