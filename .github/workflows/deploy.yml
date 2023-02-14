@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
 
 env:
-  VITE_BASE_URL: ${{vars.VITE_BASE_URL}}
-  VITE_SUPABASE_KEY: ${{vars.VITE_SUPABASE_KEY}}
-  VITE_SUPABASE_URL: ${{vars.VITE_SUPABASE_URL}}
+  VITE_BASE_URL: ${{vars.BASE_URL}}
+  VITE_SUPABASE_KEY: ${{vars.SUPABASE_KEY}}
+  VITE_SUPABASE_URL: ${{vars.SUPABASE_URL}}
 
 permissions:
   contents: write

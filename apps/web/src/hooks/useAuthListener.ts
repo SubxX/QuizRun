@@ -1,18 +1,20 @@
 import { supabase } from "@web/supabase/supabaseClient";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function useAuthListener() {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
+    const { pathname } = useLocation()
+
 
     useEffect(() => {
         const redirectableRoutes = ['/auth/signin']
 
         const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
             if (event === 'SIGNED_IN') {
-                if (!redirectableRoutes.includes(window?.location?.pathname)) return
+                if (!redirectableRoutes.includes(pathname)) return
                 navigate('/', { replace: true })
             }
 
@@ -25,5 +27,5 @@ export default function useAuthListener() {
             listener.subscription.unsubscribe()
         }
 
-    }, [])
+    }, [pathname])
 }
