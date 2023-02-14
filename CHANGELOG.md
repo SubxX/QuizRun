@@ -1,3 +1,12 @@
+# [0.9.0](https://github.com/SubxX/QuizRun/compare/v0.8.0...v0.9.0) (2023-02-14)
+
+
+### Features
+
+* **workflow:** deploy workflow changes ([d1017dd](https://github.com/SubxX/QuizRun/commit/d1017dd38aea3c2065f1a6a590d809a62c9d3abf))
+
+
+
 # [0.8.0](https://github.com/SubxX/QuizRun/compare/v0.7.0...v0.8.0) (2023-02-14)
 
 
@@ -32,10 +41,6 @@
 
 * changed router from browser router to hash router ([b0c7381](https://github.com/SubxX/QuizRun/commit/b0c7381bc4238acb4f9e6c37692566df238d213e))
 * **workflow:** enabled release workflow ([cb7c887](https://github.com/SubxX/QuizRun/commit/cb7c8874698b3c440aa1994884c52aa579acd8c9))
-
-
-
-## [0.4.3](https://github.com/SubxX/QuizRun/compare/v0.4.2...v0.4.3) (2023-02-13)
 
 
 
