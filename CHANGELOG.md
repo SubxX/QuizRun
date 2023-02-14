@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/SubxX/QuizRun/compare/v0.6.0...v0.7.0) (2023-02-14)
+
+
+### Features
+
+* **workflow:** deploy wokflow changes ([88604c1](https://github.com/SubxX/QuizRun/commit/88604c11355c4b24248f199c0f15f94ad5fcd29b))
+
+
+
 # [0.6.0](https://github.com/SubxX/QuizRun/compare/v0.5.0...v0.6.0) (2023-02-14)
 
 
@@ -22,15 +31,6 @@
 
 
 ## [0.4.2](https://github.com/SubxX/QuizRun/compare/v0.4.1...v0.4.2) (2023-02-13)
-
-
-
-## [0.4.1](https://github.com/SubxX/QuizRun/compare/v0.4.0...v0.4.1) (2023-02-13)
-
-
-### Bug Fixes
-
-* **workflow:** github pages deploy workflow changes ([f232696](https://github.com/SubxX/QuizRun/commit/f232696db964c4e4db4a3fe41bbb44d6a526c181))
 
 
 
