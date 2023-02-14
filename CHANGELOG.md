@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/SubxX/QuizRun/compare/v0.5.0...v0.6.0) (2023-02-14)
+
+
+### Features
+
+* **workflow:** trier deploy wokflow on tag creation ([55b9274](https://github.com/SubxX/QuizRun/commit/55b92748f03f9e43ccb1e126a9abddb1e00a18fb))
+
+
+
 # [0.5.0](https://github.com/SubxX/QuizRun/compare/v0.4.3...v0.5.0) (2023-02-14)
 
 
@@ -22,15 +31,6 @@
 ### Bug Fixes
 
 * **workflow:** github pages deploy workflow changes ([f232696](https://github.com/SubxX/QuizRun/commit/f232696db964c4e4db4a3fe41bbb44d6a526c181))
-
-
-
-# [0.4.0](https://github.com/SubxX/QuizRun/compare/v0.3.0...v0.4.0) (2023-02-13)
-
-
-### Features
-
-* added github pages deploy workflow ([2e81156](https://github.com/SubxX/QuizRun/commit/2e811566f9a3d88aec3506100e652b8d34dd1b2d))
 
 
 
