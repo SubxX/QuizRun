@@ -1,8 +1,10 @@
 name: Deploy
 on:
-  push:
-    tags:
-      - '**'
+  workflow_run:
+    workflows: ['Release']
+    types: [requested]
+    branches:
+      - 'master'
   workflow_dispatch:
 
 env:
