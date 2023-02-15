@@ -17,18 +17,12 @@ import { useUserQuery } from '@web/queries/auth.queries';
 
 type IQuizForm = Omit<IQuiz, 'id' | 'created_at' | 'created_by' | 'questions'>;
 type Props = {
-  closeDialog: any;
+  closeDialog: (quiz?: IQuiz) => void;
   quizData?: IQuiz;
   organization: string;
-  selectQuiz?: (quiz: IQuiz) => void;
 };
 
-const CreateEditQuiz = ({
-  closeDialog,
-  quizData,
-  organization,
-  selectQuiz,
-}: Props) => {
+const CreateEditQuiz = ({ closeDialog, quizData, organization }: Props) => {
   const { data: user } = useUserQuery();
   const { data = [] } = useDepartmentsQuery();
   const isEdit = Boolean(quizData);
@@ -51,16 +45,14 @@ const CreateEditQuiz = ({
 
   const onSubmit = async (values: IQuizForm) => {
     try {
+      let newQuiz;
       if (isEdit) {
         await updateQuiz({ ...values, id: quizData?.id as string });
       } else {
-        const newQuiz = await createQuiz({
-          ...values,
-          created_by: user?.id as string,
-        });
-        selectQuiz?.(newQuiz);
+        const payload = { ...values, created_by: user?.id as string };
+        newQuiz = await createQuiz(payload);
       }
-      closeDialog();
+      closeDialog(newQuiz);
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +127,11 @@ const CreateEditQuiz = ({
         <UIButton type="submit" loading={loading}>
           {isEditing ? 'Save' : 'Submit'}
         </UIButton>
-        <UIButton color="light" onClick={closeDialog} disabled={loading}>
+        <UIButton
+          color="light"
+          onClick={() => closeDialog()}
+          disabled={loading}
+        >
           Cancel
         </UIButton>
       </UIFlexBox>
