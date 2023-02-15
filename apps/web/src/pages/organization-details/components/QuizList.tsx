@@ -2,7 +2,6 @@ import {
   UIDialog,
   UIFlexBox,
   UIText,
-  useBoolean,
   UIGridBox,
   UIButton,
   UIIconButton,
@@ -13,39 +12,51 @@ import CreateEditQuiz from '@web/shared/CreateEditQuiz';
 import PermissionHandler from './PermissionHandler';
 import { useOrgDetailsContext } from '../Context';
 import QuizQuestionsManager from './questions-manager';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { IQuiz } from '@web/api/quiz.api';
 import { BsClipboardData } from 'react-icons/bs';
 import QuizCard from '@web/shared/QuizCard';
 import { useDeleteQuizMutation } from '@web/queries/quiz.queries';
 import { BsTrash, BsThreeDotsVertical } from 'react-icons/bs';
+import {
+  NavigateOptions,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
+import { preventDefault } from '@web/utils/app.utils';
 
 const QuizList = () => {
   const { id, quizzes } = useOrgDetailsContext();
-  const [selectedQuiz, setSelectedQuiz] = useState<IQuiz>();
-  const { value: isOpen, on: open, off: close } = useBoolean(); // Add & Edit quiz dialog state
-  const { value: drawer, off: closeDrawer, on: openDrawer } = useBoolean(); // Qustions manager dialog state
-
   const { mutateAsync: deleteQuiz } = useDeleteQuizMutation();
 
-  const preventDefault = (e: any) => e?.preventDefault();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const openEditQuiz = (e: any, quiz?: IQuiz) => {
+  const selectedQuiz = state as IQuiz;
+  const dialogType = useSearchParams()[0]?.get('type');
+
+  const openAddQuiz = (e: any) => {
     preventDefault(e);
-    open();
-    setSelectedQuiz(quiz);
+    navigate(`/organization/${id}?type=add`);
   };
 
-  const openManager = (e: any, quiz?: IQuiz) => {
+  const openEditQuiz = (e: any, quiz: IQuiz) => {
     preventDefault(e);
-    openDrawer();
-    setSelectedQuiz(quiz);
+    navigate(`/organization/${id}?quiz=${quiz.id}&type=edit`, { state: quiz });
   };
 
-  // Clearing selected quiz internal state if both dialog is close
-  useEffect(() => {
-    if (!isOpen && !drawer) setSelectedQuiz(undefined);
-  }, [isOpen, drawer]);
+  const openManager = (e: any, quiz: IQuiz, options: NavigateOptions = {}) => {
+    preventDefault(e);
+    navigate(`/organization/${id}?quiz=${quiz.id}&type=manager`, {
+      state: quiz,
+      ...options,
+    });
+  };
+
+  const closeDialog = (quiz?: IQuiz) => {
+    quiz ? openManager(null, quiz, { replace: true }) : navigate(-1);
+  };
 
   const quizDialogHeaderProps = useMemo(
     () => ({
@@ -65,7 +76,7 @@ const QuizList = () => {
       >
         <UIText>Quizzes</UIText>
         <PermissionHandler>
-          <UIButton onClick={open}>Add Quiz</UIButton>
+          <UIButton onClick={openAddQuiz}>Add Quiz</UIButton>
         </PermissionHandler>
       </UIFlexBox>
 
@@ -121,30 +132,31 @@ const QuizList = () => {
             <UIText fontSize="sm">No quizzes</UIText>
           </UIFlexBox>
         )}
+      </UIGridBox>
 
+      <PermissionHandler>
         {/* Quiz Dialog for adding & editing a quiz */}
-        <UIDialog open={isOpen}>
+        <UIDialog open={dialogType === 'edit' || dialogType === 'add'}>
           <UIDialog.Content>
             <UIDialog.Header {...quizDialogHeaderProps} />
             <CreateEditQuiz
-              closeDialog={close}
+              closeDialog={closeDialog}
               quizData={selectedQuiz}
               organization={id as string}
-              selectQuiz={(quiz) => openManager(null, quiz)}
             />
           </UIDialog.Content>
         </UIDialog>
 
         {/*  Add & Manage Quiz Questions Dialog */}
-        <UIDialog open={drawer}>
+        <UIDialog open={dialogType === 'manager'}>
           <UIDialog.Content drawer={true}>
             <QuizQuestionsManager
-              closeDialog={closeDrawer}
+              closeDialog={closeDialog}
               quizData={selectedQuiz}
             />
           </UIDialog.Content>
         </UIDialog>
-      </UIGridBox>
+      </PermissionHandler>
     </>
   );
 };

@@ -99,7 +99,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
             </ToolTip>
 
             <UIIconButton
-              onClick={closeDialog}
+              onClick={() => closeDialog()}
               aria-label="Close questions manager"
             >
               <MdOutlineClear size={22} />
