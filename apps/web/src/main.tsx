@@ -4,17 +4,9 @@ import './index.css';
 import App from './App';
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip';
 import { Dialog as DialogRoot } from '@radix-ui/react-dialog';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { NotificationsProvider } from 'reapop';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 0,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+import { queryClient } from '@web/modules/queryClient';
 
 ReactDOM.render(
   <React.StrictMode>
