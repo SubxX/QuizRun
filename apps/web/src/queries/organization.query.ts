@@ -1,4 +1,5 @@
 import { getAllOrganizations, getMyOrganizations, createOrganization, deleteOrganization, editOrganization, getOrganizationDetails, IOrganization } from '@web/api/organization.api'
+import { queryClient } from '@web/modules/queryClient'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNotifications } from 'reapop'
 
@@ -7,6 +8,10 @@ export const ORGANIZATION = {
     MINE: 'ORGANIZATION-MINE',
     DETAILS: 'ORGANIZATION-DETAILS'
 } as const
+
+// utils
+export const invalidateOrganizationQuery = (orgId: string) => queryClient.invalidateQueries([ORGANIZATION.DETAILS, orgId])
+
 
 // Queries
 export const useAllOrganizationsQuery = () => useQuery(ORGANIZATION.ALL, getAllOrganizations)
@@ -57,3 +62,4 @@ export const useDeleteOrganizationMutation = () => {
         }
     })
 }
+

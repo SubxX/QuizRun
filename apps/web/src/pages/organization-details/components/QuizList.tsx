@@ -27,12 +27,13 @@ import {
 import { preventDefault } from '@web/utils/app.utils';
 
 const QuizList = () => {
-  const { id, quizzes } = useOrgDetailsContext();
+  const { id, organization } = useOrgDetailsContext();
   const { mutateAsync: deleteQuiz } = useDeleteQuizMutation();
 
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  const quizzes = organization?.quizzes ?? [];
   const selectedQuiz = state as IQuiz;
   const dialogType = useSearchParams()[0]?.get('type');
 
@@ -81,7 +82,7 @@ const QuizList = () => {
       </UIFlexBox>
 
       <UIGridBox columns={{ '@md': '2', '@lg': '3' }} gap="3">
-        {quizzes.map((quiz) => (
+        {quizzes?.map((quiz) => (
           <QuizCard
             key={quiz.id}
             quiz={quiz}
@@ -126,7 +127,7 @@ const QuizList = () => {
           />
         ))}
 
-        {!quizzes.length && (
+        {!quizzes?.length && (
           <UIFlexBox css={{ color: '$light-white' }} gap="3" items="center">
             <BsClipboardData size={30} />
             <UIText fontSize="sm">No quizzes</UIText>

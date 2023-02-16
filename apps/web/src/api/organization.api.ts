@@ -1,4 +1,5 @@
-import { supabase } from '@web/supabase/supabaseClient';
+import { supabase } from '@web/modules/supabaseClient';
+import { IQuiz } from './quiz.api';
 
 export interface IOrganization {
     id: string
@@ -7,12 +8,13 @@ export interface IOrganization {
     name: string
     description: string
     logo?: string
+    quizzes?: IQuiz[]
 }
 
 export const getOrganizationDetails = async (id: string): Promise<IOrganization> => {
     const { data: organization, error } = await supabase
         .from('organization')
-        .select()
+        .select(`*, quizzes (*, questions(*))`)
         .eq('id', id)
         .single()
 

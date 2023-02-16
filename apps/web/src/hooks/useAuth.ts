@@ -1,4 +1,4 @@
-import { supabase } from "@web/supabase/supabaseClient";
+import { supabase } from "@web/modules/supabaseClient";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useNotifications } from "reapop";

@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { UIBox } from '@quizrun/ui';
-import { AUTH_TOKEN_KEY } from '@web/supabase/supabaseClient';
+import { AUTH_TOKEN_KEY } from '@web/modules/supabaseClient';
 
 const AuthLayout = () => {
   const user = localStorage.getItem(AUTH_TOKEN_KEY);

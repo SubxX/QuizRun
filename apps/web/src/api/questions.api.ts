@@ -1,4 +1,4 @@
-import { supabase } from '@web/supabase/supabaseClient';
+import { supabase } from '@web/modules/supabaseClient';
 
 type IAnswer = { value: string }
 

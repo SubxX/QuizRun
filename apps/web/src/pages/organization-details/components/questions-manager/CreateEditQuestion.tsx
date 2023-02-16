@@ -90,7 +90,6 @@ const CreateEditQuiz = ({
       !isEditing
         ? await createQuestion(newQuestionPayload)
         : await updateQuestion({ ...values, id: questionData?.id as string });
-
       closeDialog();
     } catch (error) {
       console.log(error);
