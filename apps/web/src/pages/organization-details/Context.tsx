@@ -4,15 +4,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ErrorView, NotFoundView, UIButton } from '@quizrun/ui';
 import Container from '@web/layouts/dashboard-layout/components/Container';
 import { useOrganizationDetailsQuery } from '@web/queries/organization.query';
-import { useGetQuizesByOrgQuery } from '@web/queries/quiz.queries';
-import { IQuiz } from '@web/api/quiz.api';
 import Loader from './Loader';
 
 const OrganizationDetails = createContext(
   {} as {
     organization?: IOrganization;
     id?: string;
-    quizzes: IQuiz[];
   }
 );
 
@@ -23,9 +20,7 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
 
   const { data, isLoading, error } = useOrganizationDetailsQuery(id as string);
-  const { data: quizzes = [], isLoading: quizesLoading } =
-    useGetQuizesByOrgQuery(id as string);
-  const loading = isLoading || quizesLoading;
+  const loading = isLoading;
 
   const err = error as Error;
 
@@ -33,9 +28,8 @@ const ContenxtWrapper = ({ children }: { children: ReactNode }) => {
     () => ({
       organization: data,
       id,
-      quizzes,
     }),
-    [id, data, quizzes]
+    [id, data]
   );
 
   if (loading) return <Loader />;

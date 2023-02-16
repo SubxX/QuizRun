@@ -1,4 +1,4 @@
-import { supabase } from "@web/supabase/supabaseClient";
+import { supabase } from "@web/modules/supabaseClient";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";

@@ -1,24 +1,33 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createQuiz, IQuiz, getQuizesByOrganization, updateQuiz, getQuizById, getAllQuizes, deleteQuiz } from '@web/api/quiz.api'
+import { useMutation, useQuery } from 'react-query'
+import { createQuiz, IQuiz, updateQuiz, getQuizById, getAllQuizes, deleteQuiz } from '@web/api/quiz.api'
 import { useNotifications } from 'reapop'
+import { ORGANIZATION } from './organization.query'
+import { IOrganization } from '@web/api/organization.api'
+import { queryClient } from '@web/modules/queryClient'
 
 export const QUIZ = {
     ALL_QUIZES: 'all_quizes',
-    ORGANIZATION_QUIZES: 'organization_quizes',
     SINGLE: 'single_quiz'
 } as const
+
+
+// Utils
+const updateOrganization = (quiz: Partial<IQuiz>, type: 'add' | 'update' | 'delete') => {
+    const prev = queryClient.getQueryData<IOrganization>([ORGANIZATION.DETAILS, quiz.organization])
+    if (!prev) return
+
+    const prevQuizzes = (prev?.quizzes ?? [])
+    const quizzes = type === 'delete' ? prevQuizzes.filter(q => q.id !== quiz.id) :
+        type === 'add' ? [...prevQuizzes, quiz] : prevQuizzes.map((p) => p.id === quiz.id ? quiz : p)
+
+    queryClient.setQueryData([ORGANIZATION.DETAILS, quiz.organization], (prev) => ({ ...(prev ?? {}), quizzes }))
+}
 
 
 // Queries
 export const useGetAllQuizs = (filters?: any) => useQuery(
     QUIZ.ALL_QUIZES,
     getAllQuizes.bind(this, filters)
-)
-
-export const useGetQuizesByOrgQuery = (orgId: string) => useQuery(
-    [QUIZ.ORGANIZATION_QUIZES, orgId],
-    getQuizesByOrganization.bind(this, orgId),
-    { enabled: Boolean(orgId) }
 )
 
 export const useGetQuizByIdQuery = (id: string) => useQuery(
@@ -29,41 +38,31 @@ export const useGetQuizByIdQuery = (id: string) => useQuery(
 
 // Mutation
 export const useCreateQuizMutation = () => {
-    const queryClient = useQueryClient()
     const { notify } = useNotifications();
-
     return useMutation(createQuiz, {
         onSuccess: (quiz) => {
             notify(`Quiz created successfully!`, 'success');
-            queryClient.setQueryData<IQuiz[]>([QUIZ.ORGANIZATION_QUIZES, quiz.organization], (prev = []) => ([...prev, quiz]))
+            updateOrganization(quiz, 'add')
         }
     })
 }
 export const useUpdateQuizMutation = () => {
-    const queryClient = useQueryClient()
     const { notify } = useNotifications();
-
     return useMutation(updateQuiz, {
         onSuccess: (quiz) => {
             notify(`Quiz updated successfully!`, 'success');
-            queryClient.setQueryData<IQuiz[]>([QUIZ.ORGANIZATION_QUIZES, quiz.organization],
-                (prev = []) => prev.map((p) => p.id === quiz.id ? quiz : p)
-            )
+            updateOrganization(quiz, 'update')
         }
     })
 }
 
 
 export const useDeleteQuizMutation = () => {
-    const queryClient = useQueryClient()
     const { notify } = useNotifications();
-
     return useMutation(deleteQuiz, {
         onSuccess: (quiz) => {
             notify(`Quiz deleted successfully!`, 'success');
-            queryClient.setQueryData<IQuiz[]>([QUIZ.ORGANIZATION_QUIZES, quiz.organization],
-                (prev = []) => prev.filter((p) => p.id !== quiz.id)
-            )
+            updateOrganization(quiz, 'delete')
         }
     })
 }

@@ -1,4 +1,4 @@
-import { supabase } from '@web/supabase/supabaseClient';
+import { supabase } from '@web/modules/supabaseClient';
 import { IQuestion } from './questions.api'
 import { IOrganization } from './organization.api';
 
@@ -15,7 +15,7 @@ export interface IQuiz {
 
 export const createQuiz = async (payload: Omit<IQuiz, 'created_at' | 'id'>): Promise<IQuiz> => {
     const { data, error } = await supabase
-        .from('quiz')
+        .from('quizzes')
         .insert(payload)
         .select()
         .single()
@@ -23,20 +23,9 @@ export const createQuiz = async (payload: Omit<IQuiz, 'created_at' | 'id'>): Pro
     return data;
 };
 
-export const getQuizesByOrganization = async (orgId: string): Promise<IQuiz[]> => {
-    const { data, error } = await supabase
-        .from('quiz')
-        .select(`*, questions (*)`)
-        .eq('organization', orgId)
-    if (error) throw new Error(error.message, { cause: error });
-    if (!data) throw new Error('404');
-
-    return data;
-};
-
 export const getQuizById = async (id: string): Promise<IQuiz> => {
     const { data, error } = await supabase
-        .from('quiz')
+        .from('quizzes')
         .select(`*, questions (*), organization (id,name)`)
         .eq('id', id)
         .single()
@@ -49,7 +38,7 @@ export const getQuizById = async (id: string): Promise<IQuiz> => {
 export const updateQuiz = async (payload: Omit<IQuiz, 'created_at' | 'created_by'>): Promise<IQuiz> => {
     const { id, ...rest } = payload
     const { data, error } = await supabase
-        .from('quiz')
+        .from('quizzes')
         .update(rest)
         .eq('id', id)
         .select()
@@ -60,7 +49,7 @@ export const updateQuiz = async (payload: Omit<IQuiz, 'created_at' | 'created_by
 
 export const getAllQuizes = async (filters?: any): Promise<IQuiz[]> => {
     const { data, error } = await supabase
-        .from('quiz')
+        .from('quizzes')
         .select(`*, questions (*), organization(id,name)`)
     if (error) throw new Error(error.message, { cause: error });
     if (!data) throw new Error('404');
@@ -71,7 +60,7 @@ export const getAllQuizes = async (filters?: any): Promise<IQuiz[]> => {
 type DeleteQuizPayload = { id: string; organization: string }
 export const deleteQuiz = async (payload: DeleteQuizPayload): Promise<DeleteQuizPayload> => {
     const { error } = await supabase
-        .from('quiz')
+        .from('quizzes')
         .delete()
         .eq('id', payload.id)
 
