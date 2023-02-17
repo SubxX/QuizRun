@@ -9,6 +9,7 @@ import NotFoundPage from '@web/pages/404';
 import TakeQuiz from '@web/pages/take-quiz';
 import QuizLeaderboard from '@web/pages/quiz-leaderboard';
 import AllQuizes from '@web/pages/quizes';
+import ChangePassword from '@web/pages/change-password';
 
 const Router = () => {
   const routes = useRoutes([
@@ -21,6 +22,7 @@ const Router = () => {
         { path: 'organization/:id', element: <OrganizationDetails /> },
         { path: 'quiz/:id', element: <TakeQuiz /> },
         { path: 'quiz/:id/leaderboard', element: <QuizLeaderboard /> },
+        { path: 'change-password', element: <ChangePassword /> },
       ],
     },
     {
