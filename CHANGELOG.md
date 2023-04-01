@@ -1,3 +1,17 @@
+# [0.11.0](https://github.com/SubxX/QuizRun/compare/v0.10.0...v0.11.0) (2023-04-01)
+
+
+### Bug Fixes
+
+* questions order not updating due to contrains ([93d048a](https://github.com/SubxX/QuizRun/commit/93d048a3f9f899fb171273a45533d9b421c05fca))
+
+
+### Features
+
+* user can now change-password ([f9693a4](https://github.com/SubxX/QuizRun/commit/f9693a4b8a0bf4bfac9be7416b126f7ecc3cc2df))
+
+
+
 # [0.10.0](https://github.com/SubxX/QuizRun/compare/v0.9.0...v0.10.0) (2023-02-16)
 
 
@@ -36,15 +50,6 @@
 ### Features
 
 * **workflow:** deploy wokflow changes ([88604c1](https://github.com/SubxX/QuizRun/commit/88604c11355c4b24248f199c0f15f94ad5fcd29b))
-
-
-
-# [0.6.0](https://github.com/SubxX/QuizRun/compare/v0.5.0...v0.6.0) (2023-02-14)
-
-
-### Features
-
-* **workflow:** trier deploy wokflow on tag creation ([55b9274](https://github.com/SubxX/QuizRun/commit/55b92748f03f9e43ccb1e126a9abddb1e00a18fb))
 
 
 
