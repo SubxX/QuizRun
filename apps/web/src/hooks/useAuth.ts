@@ -1,3 +1,4 @@
+import { UserAttributes } from "@supabase/supabase-js";
 import { supabase } from "@web/modules/supabaseClient";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -48,5 +49,14 @@ export default function useAuth() {
         [],
     )
 
-    return { signup, login, signout }
+    const changePassword = useCallback(
+        async (userAttributes: UserAttributes) => {
+            const { error } = await supabase.auth.updateUser(userAttributes)
+            if (error) throw new Error(error?.message, { cause: error })
+            return true
+        },
+        [],
+    )
+
+    return { signup, login, signout, changePassword }
 }

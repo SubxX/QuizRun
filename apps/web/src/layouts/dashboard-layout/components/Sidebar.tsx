@@ -78,10 +78,12 @@ const Sidebar = () => {
 
       {/* Sidebar botttom actions */}
       <UIBox css={{ spaceY: '$3', paddingBottom: '$3' }}>
-        <ToolTip title="Settings">
-          <UIIconButton disabled>
-            <AiFillSetting size={20} />
-          </UIIconButton>
+        <ToolTip title="Change password">
+          <NavLink to={`/change-password`}>
+            <UIIconButton>
+              <AiFillSetting size={20} />
+            </UIIconButton>
+          </NavLink>
         </ToolTip>
 
         <UIAlertDialog

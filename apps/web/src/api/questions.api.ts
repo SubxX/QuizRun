@@ -57,10 +57,10 @@ export const deleteQuestion = async (payload: DeleteQuestionPayload): Promise<De
 };
 
 
-export const updateQuestionsOrder = async (payload: string[]): Promise<IQuestion[]> => {
+export const updateQuestionsOrder = async (payload: IQuestion[]): Promise<IQuestion[]> => {
     const { data, error } = await supabase
         .from('questions')
-        .upsert(payload.map((id, idx) => ({ id, order: idx + 1 })))
+        .upsert(payload.map(({ id, created_by, quiz }, idx) => ({ id, created_by, quiz, order: idx + 1 })))
         .select()
         .order('order', { ascending: true })
     if (error) throw new Error(error.message, { cause: error });
