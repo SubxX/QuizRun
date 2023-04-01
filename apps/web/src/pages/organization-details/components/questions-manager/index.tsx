@@ -53,7 +53,7 @@ const QuestionsManager = ({ closeDialog, quizData }: props) => {
     setLocalQuestions(newItems);
   }
 
-  const saveOrder = () => updateOrder(localQuestions.map((q) => q.id));
+  const saveOrder = () => updateOrder(localQuestions);
   const cancelChanges = () => setLocalQuestions(questions);
 
   const randomizeQuestionsOrder = () => {
